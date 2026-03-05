@@ -1,0 +1,4 @@
+-Hacer la estructura de la base de datos e insertar algunos valores para poder empezar a hacer el nav
+-Hacer el css del index
+-Ver como insertar la galeria de imagenes con la bd, para que salgan fotos aletorias entre las que hay especificas para la galeria
+-Intentar hacer el nav dinámico
