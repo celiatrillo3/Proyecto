@@ -1,0 +1,2 @@
+INSERT INTO usuarios(usuario, email, contraseña, administrador) VALUES ("administrador", "administrador@ejemplo.com", SHA1("abc123."), true);
+SELECT usuario FROM usuarios WHERE email = "administrador@ejemplo.com";

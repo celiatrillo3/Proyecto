@@ -1,0 +1,2 @@
+SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais FROM imagen i JOIN moto m ON i.moto_id = m.id_moto JOIN marca ma ON m.marca_id = ma.id_marca JOIN pais p ON ma.pais_id = p.id_pais WHERE i.ruta_imagen LIKE '%1.JPG';
+SELECT ma.nombre, m.id_moto, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais FROM moto m JOIN marca ma ON m.marca_id = ma.id_marca JOIN pais p ON ma.pais_id = p.id_pais WHERE m.id_moto = 3;
