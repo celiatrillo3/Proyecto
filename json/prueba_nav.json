@@ -1,0 +1,24 @@
+{
+    "marcas":[
+        {
+            "id":1,
+            "nombre": "Derbi",
+            "pais": "España"
+        },
+        {
+            "id":2,
+            "nombre": "Puch",
+            "pais": "Austria"
+        },
+        {
+            "id":3,
+            "nombre": "Motobecane",
+            "pais": "Francia"
+        },
+        {
+            "id":4,
+            "nombre": "Torrot",
+            "pais": "España"
+        }
+    ]
+}

@@ -1,0 +1,864 @@
+/* VARIABLES */
+:root {
+    --color-texto1: #F4F1EA;
+    --color-primario: #293133;
+    --color-acento: #C78916;
+    --color-secundario: #949494;
+    --color-texto2: #000000;
+}
+
+/* FUENTE */
+@font-face {
+    font-family: playfair;
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
+
+
+    font-family: crimsonText;
+    src: url(../fonts/CrimsonText-Regular.ttf);
+}
+
+/* MODIFICAR O CREAR CLASES BOOTSTRAP */
+.vh-75 {
+    height: 75vh !important;
+}
+.fs-10 {
+  font-size: calc(1.375rem + 3.5vw) !important;
+}
+
+/* BODY */
+/* Fondo de la moto */
+#pagina {
+    background-image: url(../img/moto2bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: var(--color-texto);
+    min-height: 100vh;
+
+    font-family: crimsonText;
+}
+
+/* Fondo gris */
+#paginaGris{
+    font-family: crimsonText;
+    min-height: 100vh;
+    background-color: var(--color-primario);
+}
+
+#pagina2 {
+    background: linear-gradient(rgba(41, 49, 51, 0.65),
+            rgba(41, 49, 51, 0.55),
+            rgba(41, 49, 51, 0.65));
+}
+
+a {
+    text-decoration: none;
+}
+
+/* HEADER */
+header {
+    color: var(--color-texto1);
+    background-color: var(--color-primario);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+header a {
+    color: var(--color-texto1);
+}
+
+
+/* TITULO */
+#titulo {
+    font-family: playfair;
+}
+
+#titulo h1{
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #fff, var(--color-acento));
+    background-clip: text;
+    color: transparent;
+}
+
+/* NAV */
+nav a {
+    font-weight: 500;
+    font-size: 20px;
+    font-family: playfair;
+    padding: 10px;
+}
+
+/*NAV DINÁMICO*/
+#contenedorMenuDinamico {
+    position: absolute;
+    top: 100px;
+    left: auto;
+    right: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    /* TRANSICION */
+    opacity: 0;
+    visibility: hidden;
+    /* opacity: 1;
+    visibility: visible; */
+    transition: all 0.3s ease;
+}
+
+.subcontenedorMenuDinamico{
+    margin: 10px;
+    min-width: 140px;
+}
+
+.subcontenedorMenuDinamico:not(:last-child){
+    border-right: var(--color-acento) 1px solid;
+}
+
+#contenedorMenuDinamico a {
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#contenedorMenuDinamico ul{
+    padding-left: 0;
+}
+
+#contenedorMenuDinamico li{
+    list-style: none;
+}
+
+.linea-con-pico {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    height: 20px;
+    background-color: var(--color-primario);
+
+    /* Puntos de recorte */
+    clip-path: polygon(0% 40%,
+            /* Esquina superior izquierda de la barra */
+            45% 40%,
+            /* Inicio de la subida al pico */
+            50% 0%,
+            /* PUNTA DEL PICO (Y al 0% lo manda arriba del todo) */
+            55% 40%,
+            /* Bajada del pico */
+            100% 40%,
+            /* Esquina superior derecha de la barra */
+            100% 100%,
+            /* Esquina inferior derecha */
+            0% 100%
+            /* Esquina inferior izquierda */
+        );
+
+}
+
+#coleccion:hover #contenedorMenuDinamico {
+    opacity: 1;
+    visibility: visible;
+    flex-direction: column;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    font-family: crimsonText;
+    opacity: 100%;
+}
+
+#contenedorMenuDinamico2 {
+    display: none;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+
+#coleccion:hover #contenedorMenuDinamico2 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    font-family: crimsonText;
+}
+
+.enlacesMenu {
+    color: var(--color-texto1);
+    font-family: crimsonText;
+
+    display: block;
+}
+
+#menuSuperior {
+    background-color: var(--color-primario);
+}
+
+#menuLateral {
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+}
+
+
+/* ICONOS */
+.enlacesIconos {
+    font-size: 15px;
+    margin-left: 15px;
+}
+
+.visto {
+    font-family: playfair;
+    padding: 7px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border: var(--color-acento) 2px solid;
+    border-radius: 12px;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.visto:hover {
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    border: var(--color-acento) 2px solid;
+}
+
+.oculto {
+    font-family: playfair;
+    padding: 7px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border: var(--color-acento) 2px solid;
+    border-radius: 12px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.oculto:hover {
+    /* background-color: var(--color-texto1);
+    transform: translateY(-4px);
+    border: var(--color-acento) 2px solid; */
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    border: var(--color-acento) 2px solid;
+}
+
+
+/* MAIN INDEX*/
+
+/* ASIDE ESLOGAN */
+#indexEslogan {
+    font-family: playfair;
+    font-style: italic;
+    font-weight: 500;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+    color: var(--color-acento);
+    min-height: 70px;
+}
+
+/* CARRUSEL DE MARCAS */
+/* El carrusel esta en el index y en el login */
+#carruselPalabras {
+    max-width: 70%;
+    padding: 20px 0;
+    overflow: hidden;
+    position: absolute;
+    bottom: 10px;
+
+    /* DIFUMINADO POR LOS LATERALES */
+    mask-image: linear-gradient(to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent);
+}
+
+#divInteriorCarrusel {
+    display: flex;
+    gap: 60px;
+    width: max-content;
+    animation: mover 20s linear infinite;
+}
+
+#divInteriorCarrusel span {
+    color: var(--color-texto1);
+    font-size: 30px;
+    white-space: nowrap;
+}
+
+@keyframes mover {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+#carruselPalabras:hover #divInteriorCarrusel {
+    animation-play-state: paused;
+}
+
+/* MAIN LOGIN */
+
+/* SECTION LOGIN */
+#contenedorLogin{
+    background-color: var(--color-primario);
+    font-family: playfair;
+    color: var(--color-texto1);
+    border: var(--color-acento) 1px solid;
+    height: 100%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    animation: aparecer 0.8s ease-out;
+    margin-bottom: 150px;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#contenedorLogin h1{
+    color: var(--color-acento);
+    font-weight: bold;
+}
+
+/* LABEL */
+#contenedorLogin label{
+    font-weight: bold;
+}
+
+/* INPUT */
+.loginContenedorInput{
+    border: rgb(244, 241, 234, 0.3) 1px solid;
+    background-color: var(--color-primario) !important;
+}
+.loginContenedorInput i{
+    color: var(--color-acento);
+}
+
+#contenedorLogin input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-texto1);
+}
+
+.loginSeparador::before, .loginSeparador::after{
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--color-texto1);
+}
+
+.loginSeparador span{
+    padding: 0 10px;
+    font-size: 0.9rem;
+}
+
+/* BOTON INICIAR SESION */
+#loginBotonIniciarSesion{
+    background-color: var(--color-acento);
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+#loginBotonIniciarSesion:hover{
+    text-shadow: 0 0 5px var(--color-acento), 
+                 0 0 25px var(--color-acento), 
+                 0 0 50px var(--color-acento);
+
+}
+
+#registro a{
+    color: var(--color-texto1);
+    transition: 0.3s;
+}
+#registro a:hover{
+    color: #fff;
+    text-shadow: 0 0 5px var(--color-acento), 
+                 0 0 25px var(--color-acento), 
+                 0 0 50px var(--color-acento);
+}
+
+/* ICONOS DE MARCAS LOGIN */
+.loginContenedorIconos a{
+    color: var(--color-texto1);
+    text-decoration: none;
+
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-acento);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+}
+
+.loginContenedorIconos a:hover{
+    color: var(--color-primario);
+    background-color: var(--color-acento);
+}
+
+/* MAIN REGISTRO */
+
+/* SECTION REGISTRO */
+#contenedorRegistro{
+    background-color: var(--color-primario);
+    font-family: playfair;
+    color: var(--color-texto1);
+    border: var(--color-acento) 1px solid;
+    height: 100%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    animation: aparecer 0.8s ease-out;
+    margin-bottom: 150px;
+}
+
+#contenedorRegistro h1{
+    color: var(--color-acento);
+    font-weight: bold;
+}
+
+/* LABEL */
+#contenedorLogin label{
+    font-weight: bold;
+}
+
+/* INPUT */
+.registroContenedorInput{
+    border: rgb(244, 241, 234, 0.3) 1px solid;
+    background-color: var(--color-primario) !important;
+}
+.registroContenedorInput i{
+    color: var(--color-acento);
+}
+
+#contenedorRegistro input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-texto1);
+}
+
+/* BOTON INICIAR SESION */
+#registroBotonIniciarSesion{
+    background-color: var(--color-acento);
+    border: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+#registroBotonIniciarSesion:hover{
+    text-shadow: 0 0 5px var(--color-acento), 
+                 0 0 25px var(--color-acento), 
+                 0 0 50px var(--color-acento);
+
+}
+
+/* MAIN coleccion*/
+
+/* BUSCADOR */
+
+/* Contenedor del buscador */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 5px 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 30px;
+}
+
+/* Input */
+.search-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+/* Placeholder */
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Botón */
+.search-container button {
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+/* Hover */
+.search-container button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
+
+/* CONTENEDOR DE LA IMAGEN DE LA MOTO */
+.coleccionImagenMoto{
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: var(--color-primario);
+    background: var(--color-texto1);
+    cursor: pointer;
+}
+.coleccionImagenMoto img{
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* TEXTO DE LAS IMAGENES */
+.coleccionInformacionMoto{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.coleccionInformacionMoto h5 {
+    font-family: playfair;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--color-texto1);
+}
+
+.coleccionInformacionMoto p {
+    font-family: crimsonText;
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    opacity: 1;
+    color: var(--color-texto1);
+}
+
+.coleccionInformacionMoto i {
+    font-size: 2rem;
+    opacity: 1;
+    color: var(--color-texto1);
+}
+
+.coleccionImagenMoto:hover img {
+    transform: scale(1.08);
+}
+
+.coleccionImagenMoto:hover .coleccionInformacionMoto {
+    transform: translateY(0);
+    opacity: 1;
+    padding: 5px;
+}
+
+/* BORDE DE LA FOTO */
+.coleccionImagenMoto::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: var(--color-acento) 3px solid;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease, right 0.3s ease, bottom 0.3s ease;
+}
+
+.coleccionImagenMoto:hover::after{
+    opacity: 1;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+
+
+/* MAIN GALERIA */
+.imgGaleria img{
+    border-radius: 12px;
+}
+
+/* MAIN COLECCION 2 */
+
+/* CONTENEDOR DE LA IMAGEN */
+#coleccion2ContenedorImg{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#coleccion2ContenedorImg div{
+    position: relative;
+}
+.coleccion2Flechas{
+    position: absolute;
+    color: var(--color-acento);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 0;
+}
+.coleccion2Flechas{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.coleccion2Flechas i{
+    font-size: 2rem;
+}
+#coleccion2FlechaI{
+    left: 0;
+}
+#coleccion2FlechaD{
+    right: 0;
+}
+
+#coleccion2Img{
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
+    transition: opacity 0.2s ease-in-out; 
+    opacity: 1;
+}
+.img-oculta {
+    opacity: 0 !important;
+}
+
+/* CONTENEDOR DE LA INFORMACIÓN DE LA MOTO */
+#coleccion2ContenedorInfo{
+    border: 1px solid rgb(199, 137, 22, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
+    padding: 30px;
+}
+#coleccion2ContenedorInfo h2{
+    color: var(--color-acento);
+    font-family: playfair;
+    font-weight: bold;
+    border-bottom: 2px solid var(--color-acento);
+    display: inline-block;
+    margin-bottom: 30px;
+}
+#coleccion2Caracteristicas div{
+    display: flex;
+}
+#coleccion2Caracteristicas p{
+    margin-bottom: 0;
+}
+
+.coleccion2CaracteristicasDiv{
+    margin-bottom: 10px;
+    padding: 8px;
+    border-bottom: 2px dashed rgb(244, 241, 234, 0.2);
+}
+.coleccion2LabelInfo{
+    color: var(--color-acento);
+    width: 100px;
+    font-weight: bold;
+}
+.coleccion2LabelInfo p{
+    margin-left: 15px;
+    color: var(--color-acento);
+}
+.coleccion2CaracteristicasDiv > p{
+    color: var(--color-texto1);
+    
+}
+
+#coleccion2Historia{
+    background-color: rgb(0, 0, 0, 0.4);
+    color: var(--color-texto1);
+    font-style: italic;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+#coleccion2Historia i{
+    color: var(--color-acento);
+}
+#coleccion2Historia p{
+    display: inline;
+}
+#coleccion2ContenedorInfo button{
+    font-family: playfair;
+    padding: 7px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border: var(--color-acento) 2px solid;
+    border-radius: 12px;
+    display: block;
+    transition: all 0.3s ease;
+}
+#coleccion2ContenedorInfo button:hover{
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    border: var(--color-acento) 2px solid;
+}
+
+/* CONTENEDOR COMENTARIOS */
+#coleccion2ContenedorComentarios{
+    border: 1px solid rgb(199, 137, 22, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
+    padding: 30px;
+    margin-top: 30px;
+}
+
+#coleccion2ComentariosTitulo{
+    color: var(--color-acento);
+
+    display: flex;
+    flex-direction: row;
+}
+#coleccion2ComentariosTitulo i{
+    font-size: 2rem;
+}
+#coleccion2ComentariosTitulo h1{
+    margin-top: 0;
+    padding-left: 10px;
+}
+.coleccion2CajaComentario{
+    background-color: rgb(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 12px;
+    color: var(--color-texto1);
+    margin-bottom: 20px;
+}
+.coleccion2CajaComentario div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.coleccion2CajaComentario > p{
+    margin-left: 35px;
+}
+.comentarioUsuario{
+    font-size: 1.5em;
+    color: var(--color-acento);
+}
+.comentarioUsuario > i{
+    padding-right: 10px;
+    margin-top: 2px;
+}
+.comentarioUsuario p{
+    margin-right: 10px;
+}
+.iconoEstrella{
+    font-size: 1.25rem;
+    margin-top: 7px;
+}
+#coleccion2DivIconosEstrella{
+    margin-top: 2px;
+}
+.estrella{
+    font-size: 1rem;
+}
+
+#coleccion2ContenedorComentarios hr{
+    color: var(--color-acento);
+}
+
+#coleccion2DejaComentario{
+    display: flex;
+    flex-direction: row;
+    color: var(--color-acento);
+}
+/* #coleccion2DejaComentario i{
+    margin-right: 10px;
+} */
+#coleccion2DejaComentario > p{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#coleccion2ContenedorComentarios textarea{
+    height: 100px;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box; /* importante */
+    background-color: rgb(0, 0, 0, 0.4);
+    border-radius: 12px;
+    border: 1px solid rgb(199, 137, 22, 0.5);
+    padding: 10px;
+    color: var(--color-texto1);
+}
+#coleccion2ContenedorComentarios button{
+    font-family: playfair;
+    padding: 7px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border: var(--color-acento) 2px solid;
+    border-radius: 12px;
+    display: block;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+
+    display: flex;
+    justify-self: end;
+}
+
+
+/* FOOTER */
+footer {
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    font-family: crimsonText;
+    margin-top: 40px;
+    border-top: 2px solid var(--color-acento);
+}
+
+footer h6 {
+    font-family: playfair;
+    color: var(--color-acento);
+    letter-spacing: 1px;
+}
+
+footer a {
+    color: var(--color-texto1);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--color-acento);
+}
+
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.redes-sociales a {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-acento);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+}
+
+.linea-separadora {
+    border-color: var(--color-acento);
+    opacity: 0.3;
+}

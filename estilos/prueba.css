@@ -1,0 +1,292 @@
+/* VARIABLES */
+:root {
+    --color-texto1: #F4F1EA;
+    --color-primario: #293133;
+    --color-acento: #C78916;
+    --color-secundario: #949494;
+    --color-texto2: #000000;
+    ;
+}
+
+/* FUENTE */
+@font-face {
+    font-family: playfair;
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
+
+
+    font-family: crimsonText;
+    src: url(../fonts/CrimsonText-Regular.ttf);
+
+}
+
+/* MODIFICAR O CREAR CLASES BOOTSTRAP */
+.vh-75 {
+    height: 75vh !important;
+}
+.fs-10 {
+  font-size: calc(1.375rem + 3.5vw) !important;
+}
+
+/* BODY */
+#pagina {
+    /* background-color: var(--color-fondo); */
+    background-image: url(../img/moto2bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: var(--color-texto);
+    min-height: 100vh;
+
+    font-family: crimsonText;
+}
+
+#pagina2 {
+    background: linear-gradient(rgba(41, 49, 51, 0.65),
+            rgba(41, 49, 51, 0.55),
+            rgba(41, 49, 51, 0.65));
+}
+
+a {
+    text-decoration: none;
+}
+
+/* HEADER */
+header {
+    color: var(--color-texto1);
+    background-color: var(--color-primario);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+header a {
+    color: var(--color-texto1);
+}
+
+/* TITULO */
+#titulo {
+    font-family: playfair;
+}
+
+/* NAV */
+nav a {
+    font-weight: 500;
+    font-size: 20px;
+    font-family: playfair;
+    padding: 10px;
+}
+
+/*NAV DINÁMICO*/
+#contenedorMenuDinamico {
+    position: absolute;
+    top: 100px;
+    left: auto;
+    right: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    /* TRANSICION */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+#contenedorMenuDinamico a {
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.linea-con-pico {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    height: 20px;
+    background-color: var(--color-primario);
+    /* El color gris de tu imagen */
+
+    /* Definimos los puntos de recorte (X Y) */
+    clip-path: polygon(0% 40%,
+            /* Esquina superior izquierda de la barra */
+            45% 40%,
+            /* Inicio de la subida al pico */
+            50% 0%,
+            /* PUNTA DEL PICO (Y al 0% lo manda arriba del todo) */
+            55% 40%,
+            /* Bajada del pico */
+            100% 40%,
+            /* Esquina superior derecha de la barra */
+            100% 100%,
+            /* Esquina inferior derecha */
+            0% 100%
+            /* Esquina inferior izquierda */
+        );
+
+}
+
+#coleccion:hover #contenedorMenuDinamico {
+    opacity: 1;
+    visibility: visible;
+    flex-direction: column;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    font-family: crimsonText;
+    opacity: 100%;
+}
+
+#contenedorMenuDinamico2 {
+    display: none;
+    position: relative;
+    left: auto;
+    right: auto;
+}
+
+#coleccion:hover #contenedorMenuDinamico2 {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    font-family: crimsonText;
+}
+
+.enlacesMenu {
+    color: var(--color-texto1);
+    font-family: crimsonText;
+
+    display: block;
+}
+
+#menuSuperior {
+    background-color: var(--color-primario);
+}
+
+#menuLateral {
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+}
+
+/* BUSQUEDA */
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    width: 0; /* Oculta el ancho inicialmente */
+    opacity: 0; /* Oculta visualmente */
+    transition: all 0.5s ease; /* Animación suave */
+    border: none;
+    padding: 10px;
+    outline: none;
+}
+
+/* Clase que se añadirá con JS para mostrar */
+.search-bar.active {
+    width: 200px; /* Ancho cuando se despliega */
+    opacity: 1;
+    border: 1px solid #ccc;
+}
+
+.search-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+}
+
+
+
+/* ICONOS */
+.enlacesIconos {
+    font-size: 15px;
+    margin-left: 15px;
+}
+
+.visto {
+    font-family: playfair;
+
+    padding: 10px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border: var(--color-acento) 2px solid;
+    border-radius: 8px;
+    display: block;
+}
+
+.visto:hover {
+    background-color: var(--color-texto1);
+    transform: translateY(-3px);
+    border: var(--color-acento) 2px solid;
+}
+
+.oculto {
+    font-family: playfair;
+
+    padding: 10px;
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.oculto:hover {
+    background-color: var(--color-texto1);
+    transform: translateY(-4px);
+    border: var(--color-acento) 2px solid;
+}
+
+
+/* MAIN */
+
+/* ASIDE ESLOGAN */
+#eslogan {
+    font-family: playfair;
+    font-style: italic;
+    font-weight: 500;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+    color: var(--color-acento);
+    min-height: 70px;
+}
+
+/* CARRUSEL DE IMAGENES */
+#carruselPalabras {
+    max-width: 70%;
+    padding: 20px 0;
+    overflow: hidden;
+    position: absolute;
+    bottom: 10px;
+
+    /* DIFUMINADO POR LOS LATERALES */
+    mask-image: linear-gradient(to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent);
+}
+
+#divInteriorCarrusel {
+    display: flex;
+    gap: 60px;
+    width: max-content;
+    animation: mover 20s linear infinite;
+}
+
+#divInteriorCarrusel span {
+    color: var(--color-texto1);
+    font-size: 30px;
+    white-space: nowrap;
+}
+
+@keyframes mover {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+#carruselPalabras:hover #divInteriorCarrusel {
+    animation-play-state: paused;
+}

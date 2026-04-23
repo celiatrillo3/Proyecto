@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Comentarios con Puntuación</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<style>
+/* estilos.css - Versión corregida */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Estilos para el rating de estrellas - CORREGIDO */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* IMPORTANTE: Quitamos el :before que causaba la duplicación */
+.rating label:before {
+    content: none;
+}
+
+/* Mostramos el contenido directamente */
+.rating label {
+    content: "★";
+}
+
+.rating input:checked ~ label {
+    color: #ffc107;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: #ffc107;
+}
+
+/* Estilos para mostrar comentarios */
+.comentario {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.comentario-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.comentario-nombre {
+    font-weight: bold;
+    color: #333;
+}
+
+.comentario-fecha {
+    color: #666;
+    font-size: 12px;
+}
+
+.comentario-puntuacion {
+    margin: 10px 0;
+}
+
+.estrellas {
+    color: #ffc107;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.comentario-texto {
+    color: #555;
+    line-height: 1.4;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+<body>
+    <div class="container">
+        <h2>Deja tu comentario</h2>
+        
+        <form id="formComentario" action="guardar_comentario.php" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="comentario">Comentario:</label>
+                <textarea id="comentario" name="comentario" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Puntuación:</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="puntuacion" value="5" required>
+                    <label for="star5" class="star">★</label>
+                    <input type="radio" id="star4" name="puntuacion" value="4">
+                    <label for="star4" class="star">★</label>
+                    <input type="radio" id="star3" name="puntuacion" value="3">
+                    <label for="star3" class="star">★</label>
+                    <input type="radio" id="star2" name="puntuacion" value="2">
+                    <label for="star2" class="star">★</label>
+                    <input type="radio" id="star1" name="puntuacion" value="1">
+                    <label for="star1" class="star">★</label>
+                </div>
+            </div>
+            
+            <button type="submit">Enviar Comentario</button>
+        </form>
+        
+        <div id="comentarios">
+            <h3>Comentarios recientes</h3>
+            <div id="listaComentarios"></div>
+        </div>
+    </div>
+    
+    <script src="comentarios.js"></script>
+</body>
+</html>
