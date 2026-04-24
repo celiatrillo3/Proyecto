@@ -68,3 +68,4 @@ for (const element of listaMotos) {
 
     contedorImgsColeccion.appendChild(div1);
 }
+
