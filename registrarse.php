@@ -32,7 +32,6 @@
                         $db->commit();
                         header("Location: login.php");
                     } catch (Exception $e) {
-                        echo "excepccion";
                         echo $e;
                         $db->rollback();
                     }

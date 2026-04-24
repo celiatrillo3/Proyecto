@@ -166,9 +166,11 @@ function favoritos() {
         idMoto = element['id_moto'];
     }
     console.log(idMoto);
+    console.log(JSON.stringify({ id_moto: idMoto }));
     
     fetch("añadirFavoritos.php", {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json"
         },
@@ -179,6 +181,8 @@ function favoritos() {
     .catch(error => {
         console.error("Error en fetch:", error);
     });
+
+    
 }
 let botonFavoritos = document.getElementById('botonFavoritos');
 botonFavoritos.addEventListener('click', favoritos);
