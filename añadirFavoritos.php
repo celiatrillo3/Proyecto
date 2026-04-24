@@ -18,7 +18,7 @@ $data = json_decode($json, true);
 $idMoto = $data['id_moto'] ?? null;
 
 // Validar que se recibió el id
-if ($idMoto === null) {
+if ($idMoto == null) {
     http_response_code(400);
     echo "ERROR: No se recibió id_moto válido";
     var_dump($idMoto);
@@ -27,8 +27,8 @@ if ($idMoto === null) {
 
 // Aquí tu lógica para guardar en favoritos (ejemplo)
 if (isset($_SESSION['usuario'])) {
-    echo $idMoto;
-    var_dump($data);
+    print_r("uwu");
+    var_dump($idMoto);
     $usuario_id = $_SESSION['usuario'];
     // Conectar a la base de datos y hacer INSERT (evita inyección SQL con prepared statements)
     $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
@@ -45,4 +45,5 @@ if (isset($_SESSION['usuario'])) {
     http_response_code(401);
     echo "ERROR: Usuario no autenticado";
 }
+
 ?>
