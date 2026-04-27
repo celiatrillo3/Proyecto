@@ -56,7 +56,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colección</title>
+    <title>Colección - Museo del ciclomotor clásico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilos/normalize.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
@@ -160,15 +160,15 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
             </header>
             <main class="container pt-5 pb-3">
                 <div class="row">
-                    <div class="d-flex flex-row">
-                        <div id="coleccion2ContenedorImg" class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="row">
+                        <div id="coleccion2ContenedorImg" class="col-sm-12 col-md-9 col-lg-6 mb-4">
                             <div>
                                 <img id="coleccion2Img" class="img-fluid">
                                 <a href="#" class="coleccion2Flechas " id="coleccion2FlechaI" onclick="imgAtras()"><i class="fi fi-rs-angle-left"></i></a>
                                 <a href="#" class="coleccion2Flechas" id="coleccion2FlechaD" onclick="imgAlante()"><i class="fi fi-rs-angle-right"></i></a>
                             </div>
                         </div>
-                        <div id="coleccion2ContenedorInfo" class="col-sm-12 col-md-6 col-lg-6">
+                        <div id="coleccion2ContenedorInfo" class="col-sm-12 col-md-9 col-lg-6">
                             <h2 id="coleccion2MarcaModelo"></h2>
                             <div id="coleccion2Caracteristicas">
                                 <div class="coleccion2CaracteristicasDiv">
@@ -213,6 +213,9 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                             <i class="fi fi-rs-comments"></i>
                             <h1>Comentarios</h1>
                         </div>
+                        <div id="coleccion2Comentarios">
+                            
+                        </div>
                         <hr>
                         <form action="?moto=<?php echo $_GET['moto']; ?>" method="POST">
                             <div id="coleccion2DejaComentario">
@@ -255,7 +258,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                             <div class="redes-sociales">
                                 <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>
                         </div>
                         <div class="col-md-4">

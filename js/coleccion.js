@@ -1,6 +1,3 @@
-let listaMotos = JSON.stringify(listaMotosJson);
-listaMotos = JSON.parse(listaMotos);
-console.log(listaMotos);
 let contedorImgsColeccion = document.getElementById('contenedorImgsColeccion');
 for (const element of listaMotos) {
     //DIV1
