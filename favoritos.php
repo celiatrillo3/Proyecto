@@ -109,7 +109,7 @@
                 </div>
             </header>
             <main class="container-fluid py-5">
-                <div class="colecionBuscador">
+                <div class="coleccionBuscador" id="coleccionContenedorBuscador">
                     <form action="coleccion.php" method="post" class="search-container">
                         <input type="text" placeholder="Busca algo" name="buscadorInput" autocomplete="off" id="buscadorFavoritos">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass mt-1"></i></button>
@@ -176,18 +176,20 @@
                         }
                     }
                 }else{
-                    echo "<div class='favoritosDivError'>Iniciar sessión para ver tus favoritos</div>";
+                    echo "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
                     $desactivarBuscador = true;
                 }
                 ?>
                 <script>
                     let listaMotos = <?php echo json_encode($listaResultadoFavoritos, JSON_UNESCAPED_UNICODE); ?>;
                     let desactivarBusqueda = <?php echo json_encode($desactivarBuscador); ?>;
-                    let buscadorFavoritos = document.getElementById('buscadorFavoritos');
+                    let buscadorFavoritos = document.getElementById('coleccionContenedorBuscador');
                     if (desactivarBusqueda) {
                         buscadorFavoritos.setAttribute('style', 'display: none;');
+                        console.log("if");
                     }else{
                         buscadorFavoritos.removeAttribute('style');
+                        console.log("else");
                     }
                 </script>
             </main>
