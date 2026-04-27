@@ -107,7 +107,7 @@ divIconosEstrella.addEventListener('click', function (event) {
     //Escribir comentarios de la base de datos
 for (const comentario of listaComentarios) {
 
-    let divComentariosTitulo = document.getElementById('coleccion2ComentariosTitulo');
+    let divComentarios= document.getElementById('coleccion2Comentarios');
 
     let div = document.createElement('div');
     div.setAttribute('class', 'coleccion2CajaComentario');
@@ -155,7 +155,7 @@ for (const comentario of listaComentarios) {
     div.appendChild(div2);
     div.appendChild(p);
 
-    divComentariosTitulo.insertAdjacentElement('afterend', div);
+    divComentarios.appendChild(div);
 }
 
 function favoritos() {
@@ -185,54 +185,3 @@ function favoritos() {
 }
 let botonFavoritos = document.getElementById('botonFavoritos');
 botonFavoritos.addEventListener('click', favoritos);
-
-// let id;
-// for (const element of listaMotos) {
-//     id = element['id_moto'];
-// }
-
-// function favoritos(idMoto) {
-//     console.log("Enviando ID:", idMoto);
-//     fetch("./añadirFavoritos.php", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ id_moto: idMoto })  // Mejor mandar un objeto
-//     })
-//     .then(response => response.json())
-//     .then(data => console.log("Respuesta PHP:", data))
-//     .catch(error => console.error("Error fetch:", error));
-// }
-
-// // Asigna el evento pasando el ID concreto (ejemplo)
-// let boton = document.getElementById('botonFavoritos');
-// boton.addEventListener('click', () => favoritos(id)); // Cambia 123 por el ID real
-
-// function favoritos() {
-//     // Obtener el id_moto desde listaMotos
-//     let idMoto = listaMotos[0]['id_moto']; // más directo que un bucle
-//     console.log("Enviando id_moto:", idMoto);
-
-//     fetch("añadirFavoritos.php", {   // Ruta RELATIVA porque coleccion2.php y este PHP están en la misma carpeta
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({ id_moto: idMoto })   // IMPORTANTE: enviar un objeto, no solo el número
-//     })
-//     .then(response => response.text())
-//     .then(data => {
-//         console.log("Respuesta del servidor:", data);
-//         alert(data); // o muestra un mensaje en el DOM
-//     })
-//     .catch(error => {
-//         console.error("Error en fetch:", error);
-//         alert("Error de conexión");
-//     });
-// }
-
-// // Asignar el evento (ya lo tienes, pero asegúrate de que el botón existe)
-// let botonFavoritos = document.getElementById('botonFavoritos');
-// if (botonFavoritos) {
-//     botonFavoritos.removeEventListener('click', favoritos); // por si acaso
-//     botonFavoritos.addEventListener('click', favoritos);
-// }

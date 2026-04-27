@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos</title>
+    <title>Favoritos - Museo del ciclomotor clásico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilos/normalize.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
@@ -111,7 +111,7 @@
             <main class="container-fluid py-5">
                 <div class="colecionBuscador">
                     <form action="coleccion.php" method="post" class="search-container">
-                        <input type="text" placeholder="Search anything" name="buscadorInput autocomplete="off"">
+                        <input type="text" placeholder="Busca algo" name="buscadorInput" autocomplete="off" id="buscadorFavoritos">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass mt-1"></i></button>
                     </form>
                 </div>
@@ -120,59 +120,75 @@
                 </div>
                 <?php
                 $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
-                if (isset($_POST['buscadorInput'])) {
-                    echo $_POST['buscadorInput'];
-                    $busqueda = $_POST['buscadorInput'];
-                    $busqueda = $db->real_escape_string($busqueda);
+                $desactivarBuscador = false;
+                if (isset($_SESSION['usuario'])) {
+                    if (isset($_POST['buscadorInput'])) {
+                        echo $_POST['buscadorInput'];
+                        $busqueda = $_POST['buscadorInput'];
+                        $busqueda = $db->real_escape_string($busqueda);
 
-                    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                            FROM imagen i 
-                            JOIN moto m ON i.moto_id = m.id_moto 
-                            JOIN marca ma ON m.marca_id = ma.id_marca 
-                            JOIN pais p ON ma.pais_id = p.id_pais
-                            JOIN favoritos f ON f.moto_id = m.id_moto 
-                            WHERE i.ruta_imagen LIKE '%1.JPG'
-                            AND (ma.nombre LIKE '%" . $busqueda . "%'
-                            OR m.modelo LIKE '%" . $busqueda . "%'
-                            OR m.año LIKE '%" . $busqueda . "%'
-                            OR m.color LIKE '%" . $busqueda . "%'
-                            OR p.nombre_pais LIKE '%" . $busqueda . "%');";
+                        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                                    FROM imagen i 
+                                    JOIN moto m ON i.moto_id = m.id_moto 
+                                    JOIN marca ma ON m.marca_id = ma.id_marca 
+                                    JOIN pais p ON ma.pais_id = p.id_pais
+                                    JOIN favoritos f ON f.moto_id = m.id_moto
+                                    WHERE i.ruta_imagen LIKE '%1.JPG'
+                                    AND (ma.nombre LIKE '%" . $busqueda . "%'
+                                    OR m.modelo LIKE '%" . $busqueda . "%'
+                                    OR m.año LIKE '%" . $busqueda . "%'
+                                    OR m.color LIKE '%" . $busqueda . "%'
+                                    OR p.nombre_pais LIKE '%" . $busqueda . "%')
+                                    AND f.usuario_id LIKE" . $_SESSION['usuario'] . ";";
 
-                    $resultado = $db->query($sentencia);
-                    if ($resultado->num_rows > 0) {
-                        $listaResultadoBuscador = [];
-                        while ($busqueda = $resultado->fetch_assoc()) {
-                            array_push($listaResultadoBuscador, $busqueda);
+                        $resultado = $db->query($sentencia);
+                        if ($resultado->num_rows > 0) {
+                            $listaResultadoBuscadorFavoritos = [];
+                            while ($busqueda = $resultado->fetch_assoc()) {
+                                array_push($listaResultadoBuscadorFavoritos, $busqueda);
+                            }
                         }
-                        echo "if num rows";
+                        unset($_POST['buscadorInput']);
                     }
-                    unset($_POST['buscadorInput']);
-                }
 
-                $listaResultado = [];
-                if (isset($listaResultadoBuscador)) {
-                    $listaResultado = $listaResultadoBuscador;
-                    unset($listaResultadoBuscador);
-                    echo "if";
-                } else {
-                    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                FROM imagen i 
-                JOIN moto m ON i.moto_id = m.id_moto 
-                JOIN marca ma ON m.marca_id = ma.id_marca 
-                JOIN pais p ON ma.pais_id = p.id_pais 
-                JOIN favoritos f ON f.moto_id = m.id_moto
-                WHERE i.ruta_imagen LIKE '%1.JPG';";
-                    $resultado = $db->query($sentencia);
-
-                    while ($moto = $resultado->fetch_assoc()) {
-                        array_push($listaResultado, $moto);
+                    $listaResultadoFavoritos = [];
+                    if (isset($listaResultadoBuscadorFavoritos)) {
+                        $listaResultadoFavoritos = $listaResultadoBuscadorFavoritos;
+                        unset($listaResultadoBuscadorFavoritos);
+                    } else {
+                        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                                FROM imagen i 
+                                JOIN moto m ON i.moto_id = m.id_moto 
+                                JOIN marca ma ON m.marca_id = ma.id_marca 
+                                JOIN pais p ON ma.pais_id = p.id_pais 
+                                JOIN favoritos f ON f.moto_id = m.id_moto
+                                WHERE i.ruta_imagen LIKE '%1.JPG'
+                                AND f.usuario_id LIKE '" . $_SESSION['usuario'] . "';";
+                        $resultado = $db->query($sentencia);
+                        if ($resultado->num_rows > 0) {
+                            while ($motoFavorita = $resultado->fetch_assoc()) {
+                                array_push($listaResultadoFavoritos, $motoFavorita);
+                                $desactivarBuscador = false;
+                            }
+                        }else {
+                            echo "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
+                            $desactivarBuscador= true;
+                        }
                     }
-                    echo "else";
+                }else{
+                    echo "<div class='favoritosDivError'>Iniciar sessión para ver tus favoritos</div>";
+                    $desactivarBuscador = true;
                 }
-
                 ?>
                 <script>
-                    let listaMotosJson = <?php echo json_encode($listaResultado, JSON_UNESCAPED_UNICODE) ?>;
+                    let listaMotos = <?php echo json_encode($listaResultadoFavoritos, JSON_UNESCAPED_UNICODE); ?>;
+                    let desactivarBusqueda = <?php echo json_encode($desactivarBuscador); ?>;
+                    let buscadorFavoritos = document.getElementById('buscadorFavoritos');
+                    if (desactivarBusqueda) {
+                        buscadorFavoritos.setAttribute('style', 'display: none;');
+                    }else{
+                        buscadorFavoritos.removeAttribute('style');
+                    }
                 </script>
             </main>
             <footer>
@@ -188,7 +204,7 @@
                             <div class="redes-sociales">
                                 <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -207,5 +223,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/coleccion.js"></script>
 </body>
-
 </html>
