@@ -119,7 +119,7 @@
 
                 </div>
                 <?php
-                $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
+                require_once "db.php";
                 if (isset($_POST['buscadorInput'])) {
                     echo $_POST['buscadorInput'];
                     $busqueda = $_POST['buscadorInput'];

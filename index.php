@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,8 +60,7 @@
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
-                                    <?php 
-                                        session_start();
+                                    <?php
                                         if (isset($_SESSION['usuario'])){
                                             echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                         }else{

@@ -1,5 +1,6 @@
 <?php
     session_start();
+        require_once "db.php";
     $errorLogin = "";
 
     if (isset($_POST['user'], $_POST['email'], $_POST['password'], $_POST['password2'])) {
@@ -8,7 +9,6 @@
         $password = SHA1($_POST['password']);
         $password2 = SHA1($_POST['password2']);
 
-        $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
         $db->autocommit(false);
 
         $sentencia = "SELECT id_usuario FROM usuarios WHERE usuario = '" . $user ."'";

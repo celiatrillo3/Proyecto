@@ -5,8 +5,9 @@ header("Expires: 0");
 ?>
 <?php
 session_start();
+require_once "db.php";
 if (isset($_GET['moto'])) {
-    $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
+    $_SESSION['vistoRecientemente'] = $_GET['moto'];
     $sentencia = "SELECT  m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
                 FROM moto m 
                 JOIN marca ma ON m.marca_id = ma.id_marca 
@@ -32,7 +33,9 @@ if (isset($_GET['moto'])) {
     while ($comentario = $resultado->fetch_assoc()) {
         array_push($listaResultadoComentarios, $comentario);
     }
+    
 }
+
 if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
     $texto = $_POST['nuevoComentario'];
     $puntuacion = $_POST['puntuacion'];

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,8 +61,7 @@
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
-                                <?php 
-                                    session_start();
+                                <?php
                                     if (isset($_SESSION['usuario'])){
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                     }else{
@@ -111,7 +113,7 @@
                     <!-- En este div se van a mostrar todas las fotos de la galeria que esten en la base de datos a traves de js -->
                 </div>
                 <?php 
-                    $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
+                    require_once "db.php";
 
                     $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id IS NULL;";
                     $resultado = $db->query($sentencia);

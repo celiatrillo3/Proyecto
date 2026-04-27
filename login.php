@@ -1,13 +1,12 @@
 <?php
 session_start();
+require_once "db.php";
 
 $errorLogin = "";
 
 if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
     $user = $_POST['loginUser'];
     $password = SHA1($_POST['loginPassword']);
-
-    $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
 
     $sentencia = "SELECT id_usuario FROM usuarios WHERE usuario = '$user' AND contraseña = '$password'";
 

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +62,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <?php
-                                    session_start();
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                     } else {
@@ -119,7 +121,7 @@
 
                 </div>
                 <?php
-                $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
+                require_once "db.php";
                 $desactivarBuscador = false;
                 if (isset($_SESSION['usuario'])) {
                     if (isset($_POST['buscadorInput'])) {

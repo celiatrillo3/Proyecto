@@ -1,6 +1,6 @@
 <?php
+    require_once "db.php";
     if (isset($_GET['buscadorInput'])) {
-        $db = new mysqli('localhost', 'root', '', 'museo_ciclomotor');
         $busqueda = $_GET['buscadorInput'];
         $busqueda = $db->real_escape_string($busqueda);
 

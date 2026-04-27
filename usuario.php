@@ -1,7 +1,10 @@
 <?php
+session_start();
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
+
+require_once "db.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,16 +119,30 @@ header("Expires: 0");
                     <div>
                         <div>
                             <div>
-                                <p id="usuarioUser">Usuario</p>
+                                <p id="usuarioUser">Usuario: </p>
                             </div>
                             <div>
-                                <p id="usuarioEmail">Correo electrónico</p>
+                                <p id="usuarioEmail">Correo electrónico: </p>
                             </div>
                         </div>
                         <button>CERRAR SESSION</button>
                     </div>
-                    <article></article>
-                    <article></article>
+                    <article>
+                        <h4>VISTO RECIENTEMENTE</h4>
+                        <div id="usuarioVistoReciente">
+                            <?php 
+                                if (isset($_SESSION['vistoRecientemente'])) {
+                                    echo $_SESSION['vistoRecientemente'];
+                                }else {
+                                    echo "no variable de sesion";
+                                }
+                            ?>
+                        </div>
+                    </article>
+                    <article>
+                        <h4>COMENTARIOS RECIENTES</h4>
+                        <div id="usuarioComentarioReciente"></div>
+                    </article>
                 </section>
             </main>
             <footer>
