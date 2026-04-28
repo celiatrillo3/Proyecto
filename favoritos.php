@@ -23,7 +23,7 @@ if (isset($_SESSION['usuario'])) {
                         OR m.año LIKE '%" . $busqueda . "%'
                         OR m.color LIKE '%" . $busqueda . "%'
                         OR p.nombre_pais LIKE '%" . $busqueda . "%')
-                    AND f.usuario_id LIKE" . $_SESSION['usuario'] . ";";
+                    AND f.usuario_id LIKE '" . $_SESSION['usuario'] . "';";
 
         $resultado = $db->query($sentencia);
         if ($resultado->num_rows > 0) {
@@ -56,12 +56,12 @@ if (isset($_SESSION['usuario'])) {
                 $desactivarBuscador = false;
             }
         } else {
-            echo "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
+            $errorFavoritos =  "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
             $desactivarBuscador = true;
         }
     }
 } else {
-    echo "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
+    $errorFavoritos = "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
     $desactivarBuscador = true;
 }
 ?>
@@ -176,13 +176,17 @@ if (isset($_SESSION['usuario'])) {
             </header>
             <main class="container-fluid py-5">
                 <div class="coleccionBuscador" id="coleccionContenedorBuscador">
-                    <form action="coleccion.php" method="post" class="search-container">
+                    <form action="favoritos.php" method="post" class="search-container">
                         <input type="text" placeholder="Busca algo" name="buscadorInput" autocomplete="off" id="buscadorFavoritos">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass mt-1"></i></button>
                     </form>
                 </div>
                 <div class="row g-4" id="contenedorImgsColeccion">
-
+                    <?php 
+                        if (isset($errorFavoritos)) {
+                            echo $errorFavoritos;
+                        }
+                    ?>
                 </div>
                 <script>
                     let listaMotos = <?php echo json_encode($listaResultadoFavoritos, JSON_UNESCAPED_UNICODE); ?>;

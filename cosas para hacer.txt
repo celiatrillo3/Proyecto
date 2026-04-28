@@ -2,8 +2,8 @@
 -> Arreglar el login (ponerle mas espacio entre los elementos) ✓
 -> Arreglar el boton de iniciar sesión ✓
 -> Ponerle transiciones a los botones FAVORITOS e INICIAR SESIÓN ✓
--> Hacer un evento para el buscador para que salga un input para buscar
--> En la base de datos cambiar el atributo rol a admin y q sea un boolean?
--> Hacer funional el boton de ver contraseña
 -> Mejorar considerablemente el menú para dispositivos pequeños
--> Cambiar el menú drop down a las columnas por las épocas
+-> Arreglar el buscador para favoritos.php porque redirige a coleccion.php IMPORTANTE ✓
+-> Acabar usuario.php
+-> Poder eliminar de favoritos
+-> Cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador

@@ -1,8 +1,9 @@
 <?php
 session_start();
+
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
-require_once "buscador.php";
+
 if (isset($_POST['buscadorInput'])) {
     echo $_POST['buscadorInput'];
     $busqueda = $_POST['buscadorInput'];

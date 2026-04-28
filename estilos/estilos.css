@@ -827,6 +827,12 @@ nav a {
 }
 
 
+/* USUARIO */
+#usuarioSection{
+    background-color: var(--color-primario);
+}
+
+
 /* FOOTER */
 footer {
     background-color: var(--color-primario);

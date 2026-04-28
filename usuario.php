@@ -28,7 +28,7 @@ require_once "db.php";
 
 <body>
 
-    <div id="paginaGris">
+    <div id="pagina">
         <div id="pagina2" class="min-vh-100">
             <header>
                 <nav class="navbar navbar-expand-lg" id="menuSuperior">
@@ -116,7 +116,7 @@ require_once "db.php";
                 </div>
             </header>
             <main class="container pt-5 pb-3">
-                <section>
+                <section id="usuarioSection">
                     <div>
                         <div>
                             <div>
