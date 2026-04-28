@@ -2,10 +2,11 @@
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
-?>
-<?php
 session_start();
+
+//Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+
 if (isset($_GET['moto'])) {
     $_SESSION['vistoRecientemente'] = $_GET['moto'];
     $sentencia = "SELECT  m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 

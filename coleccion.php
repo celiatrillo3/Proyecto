@@ -1,3 +1,57 @@
+<?php
+session_start();
+//Llamada al archivo para conectar con la base de datos
+require_once "db.php";
+require_once "buscador.php";
+if (isset($_POST['buscadorInput'])) {
+    echo $_POST['buscadorInput'];
+    $busqueda = $_POST['buscadorInput'];
+    $busqueda = $db->real_escape_string($busqueda);
+
+    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                    FROM imagen i 
+                    JOIN moto m ON i.moto_id = m.id_moto 
+                    JOIN marca ma ON m.marca_id = ma.id_marca 
+                    JOIN pais p ON ma.pais_id = p.id_pais 
+                    WHERE i.ruta_imagen LIKE '%1.JPG'
+                    AND (ma.nombre LIKE '%" . $busqueda . "%'
+                    OR m.modelo LIKE '%" . $busqueda . "%'
+                    OR m.año LIKE '%" . $busqueda . "%'
+                    OR m.color LIKE '%" . $busqueda . "%'
+                    OR p.nombre_pais LIKE '%" . $busqueda . "%');";
+
+    $resultado = $db->query($sentencia);
+    if ($resultado->num_rows > 0) {
+        $listaResultadoBuscador = [];
+        while ($busqueda = $resultado->fetch_assoc()) {
+            array_push($listaResultadoBuscador, $busqueda);
+        }
+        echo "if num rows";
+    }
+}
+
+$listaResultado = [];
+if (isset($listaResultadoBuscador)) {
+    $listaResultado = $listaResultadoBuscador;
+    unset($listaResultadoBuscador);
+    echo "if";
+} else {
+    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                    FROM imagen i 
+                    JOIN moto m ON i.moto_id = m.id_moto 
+                    JOIN marca ma ON m.marca_id = ma.id_marca 
+                    JOIN pais p ON ma.pais_id = p.id_pais 
+                    WHERE i.ruta_imagen LIKE '%1.JPG';";
+    $resultado = $db->query($sentencia);
+
+    while ($moto = $resultado->fetch_assoc()) {
+        array_push($listaResultado, $moto);
+    }
+    echo "else";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +113,6 @@
                                 </li>
                                 <li class="nav-item">
                                     <?php
-                                    session_start();
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                     } else {
@@ -118,56 +171,6 @@
                 <div class="row g-4" id="contenedorImgsColeccion">
 
                 </div>
-                <?php
-                require_once "db.php";
-                if (isset($_POST['buscadorInput'])) {
-                    echo $_POST['buscadorInput'];
-                    $busqueda = $_POST['buscadorInput'];
-                    $busqueda = $db->real_escape_string($busqueda);
-
-                    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                            FROM imagen i 
-                            JOIN moto m ON i.moto_id = m.id_moto 
-                            JOIN marca ma ON m.marca_id = ma.id_marca 
-                            JOIN pais p ON ma.pais_id = p.id_pais 
-                            WHERE i.ruta_imagen LIKE '%1.JPG'
-                            AND (ma.nombre LIKE '%" . $busqueda . "%'
-                            OR m.modelo LIKE '%" . $busqueda . "%'
-                            OR m.año LIKE '%" . $busqueda . "%'
-                            OR m.color LIKE '%" . $busqueda . "%'
-                            OR p.nombre_pais LIKE '%" . $busqueda . "%');";
-
-                    $resultado = $db->query($sentencia);
-                    if ($resultado->num_rows > 0) {
-                        $listaResultadoBuscador = [];
-                        while ($busqueda = $resultado->fetch_assoc()) {
-                            array_push($listaResultadoBuscador, $busqueda);
-                        }
-                        echo "if num rows";
-                    }
-                }
-
-                $listaResultado = [];
-                if (isset($listaResultadoBuscador)) {
-                    $listaResultado = $listaResultadoBuscador;
-                    unset($listaResultadoBuscador);
-                    echo "if";
-                } else {
-                    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                FROM imagen i 
-                JOIN moto m ON i.moto_id = m.id_moto 
-                JOIN marca ma ON m.marca_id = ma.id_marca 
-                JOIN pais p ON ma.pais_id = p.id_pais 
-                WHERE i.ruta_imagen LIKE '%1.JPG';";
-                    $resultado = $db->query($sentencia);
-
-                    while ($moto = $resultado->fetch_assoc()) {
-                        array_push($listaResultado, $moto);
-                    }
-                    echo "else";
-                }
-
-                ?>
                 <script>
                     let listaMotos = <?php echo json_encode($listaResultado, JSON_UNESCAPED_UNICODE) ?>;
                 </script>
@@ -183,7 +186,7 @@
                         <div class="col-md-4 mb-4 mb-md-0">
                             <h6 class="fw-bold  mb-3">SÍGUENOS</h6>
                             <div class="redes-sociales">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>

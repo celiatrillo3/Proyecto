@@ -1,5 +1,69 @@
 <?php
-    session_start();
+session_start();
+
+//Llamada al archivo para conectar con la base de datos
+require_once "db.php";
+
+$desactivarBuscador = false;
+if (isset($_SESSION['usuario'])) {
+    if (isset($_POST['buscadorInput'])) {
+        echo $_POST['buscadorInput'];
+        $busqueda = $_POST['buscadorInput'];
+        $busqueda = $db->real_escape_string($busqueda);
+
+        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                    FROM imagen i 
+                    JOIN moto m ON i.moto_id = m.id_moto 
+                    JOIN marca ma ON m.marca_id = ma.id_marca 
+                    JOIN pais p ON ma.pais_id = p.id_pais
+                    JOIN favoritos f ON f.moto_id = m.id_moto
+                    WHERE i.ruta_imagen LIKE '%1.JPG'
+                    AND (ma.nombre LIKE '%" . $busqueda . "%'
+                        OR m.modelo LIKE '%" . $busqueda . "%'
+                        OR m.año LIKE '%" . $busqueda . "%'
+                        OR m.color LIKE '%" . $busqueda . "%'
+                        OR p.nombre_pais LIKE '%" . $busqueda . "%')
+                    AND f.usuario_id LIKE" . $_SESSION['usuario'] . ";";
+
+        $resultado = $db->query($sentencia);
+        if ($resultado->num_rows > 0) {
+            $listaResultadoBuscadorFavoritos = [];
+            while ($busqueda = $resultado->fetch_assoc()) {
+                array_push($listaResultadoBuscadorFavoritos, $busqueda);
+            }
+        }
+        unset($_POST['buscadorInput']);
+    }
+
+    $listaResultadoFavoritos = [];
+    if (isset($listaResultadoBuscadorFavoritos)) {
+        $listaResultadoFavoritos = $listaResultadoBuscadorFavoritos;
+        unset($listaResultadoBuscadorFavoritos);
+    } else {
+        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
+                    FROM imagen i 
+                    JOIN moto m ON i.moto_id = m.id_moto 
+                    JOIN marca ma ON m.marca_id = ma.id_marca 
+                    JOIN pais p ON ma.pais_id = p.id_pais 
+                    JOIN favoritos f ON f.moto_id = m.id_moto
+                    WHERE i.ruta_imagen LIKE '%1.JPG'
+                    AND f.usuario_id LIKE '" . $_SESSION['usuario'] . "';";
+
+        $resultado = $db->query($sentencia);
+        if ($resultado->num_rows > 0) {
+            while ($motoFavorita = $resultado->fetch_assoc()) {
+                array_push($listaResultadoFavoritos, $motoFavorita);
+                $desactivarBuscador = false;
+            }
+        } else {
+            echo "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
+            $desactivarBuscador = true;
+        }
+    }
+} else {
+    echo "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
+    $desactivarBuscador = true;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -120,68 +184,6 @@
                 <div class="row g-4" id="contenedorImgsColeccion">
 
                 </div>
-                <?php
-                require_once "db.php";
-                $desactivarBuscador = false;
-                if (isset($_SESSION['usuario'])) {
-                    if (isset($_POST['buscadorInput'])) {
-                        echo $_POST['buscadorInput'];
-                        $busqueda = $_POST['buscadorInput'];
-                        $busqueda = $db->real_escape_string($busqueda);
-
-                        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                                    FROM imagen i 
-                                    JOIN moto m ON i.moto_id = m.id_moto 
-                                    JOIN marca ma ON m.marca_id = ma.id_marca 
-                                    JOIN pais p ON ma.pais_id = p.id_pais
-                                    JOIN favoritos f ON f.moto_id = m.id_moto
-                                    WHERE i.ruta_imagen LIKE '%1.JPG'
-                                    AND (ma.nombre LIKE '%" . $busqueda . "%'
-                                    OR m.modelo LIKE '%" . $busqueda . "%'
-                                    OR m.año LIKE '%" . $busqueda . "%'
-                                    OR m.color LIKE '%" . $busqueda . "%'
-                                    OR p.nombre_pais LIKE '%" . $busqueda . "%')
-                                    AND f.usuario_id LIKE" . $_SESSION['usuario'] . ";";
-
-                        $resultado = $db->query($sentencia);
-                        if ($resultado->num_rows > 0) {
-                            $listaResultadoBuscadorFavoritos = [];
-                            while ($busqueda = $resultado->fetch_assoc()) {
-                                array_push($listaResultadoBuscadorFavoritos, $busqueda);
-                            }
-                        }
-                        unset($_POST['buscadorInput']);
-                    }
-
-                    $listaResultadoFavoritos = [];
-                    if (isset($listaResultadoBuscadorFavoritos)) {
-                        $listaResultadoFavoritos = $listaResultadoBuscadorFavoritos;
-                        unset($listaResultadoBuscadorFavoritos);
-                    } else {
-                        $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
-                                FROM imagen i 
-                                JOIN moto m ON i.moto_id = m.id_moto 
-                                JOIN marca ma ON m.marca_id = ma.id_marca 
-                                JOIN pais p ON ma.pais_id = p.id_pais 
-                                JOIN favoritos f ON f.moto_id = m.id_moto
-                                WHERE i.ruta_imagen LIKE '%1.JPG'
-                                AND f.usuario_id LIKE '" . $_SESSION['usuario'] . "';";
-                        $resultado = $db->query($sentencia);
-                        if ($resultado->num_rows > 0) {
-                            while ($motoFavorita = $resultado->fetch_assoc()) {
-                                array_push($listaResultadoFavoritos, $motoFavorita);
-                                $desactivarBuscador = false;
-                            }
-                        }else {
-                            echo "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
-                            $desactivarBuscador= true;
-                        }
-                    }
-                }else{
-                    echo "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
-                    $desactivarBuscador = true;
-                }
-                ?>
                 <script>
                     let listaMotos = <?php echo json_encode($listaResultadoFavoritos, JSON_UNESCAPED_UNICODE); ?>;
                     let desactivarBusqueda = <?php echo json_encode($desactivarBuscador); ?>;
@@ -189,7 +191,7 @@
                     if (desactivarBusqueda) {
                         buscadorFavoritos.setAttribute('style', 'display: none;');
                         console.log("if");
-                    }else{
+                    } else {
                         buscadorFavoritos.removeAttribute('style');
                         console.log("else");
                     }
@@ -227,4 +229,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/coleccion.js"></script>
 </body>
+
 </html>

@@ -4,6 +4,7 @@ header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 
+//Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 ?>
 <!DOCTYPE html>

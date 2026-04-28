@@ -1,5 +1,14 @@
 <?php
-    session_start();
+session_start();
+//Llamada al archivo para conectar con la base de datos
+require_once "db.php";
+
+$sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id IS NULL;";
+$resultado = $db->query($sentencia);
+$listaRutasGaleria = [];
+while ($ruta = $resultado->fetch_assoc()) {
+    array_push($listaRutasGaleria, $ruta);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,13 +70,13 @@
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
-                                <?php
-                                    if (isset($_SESSION['usuario'])){
+                                    <?php
+                                    if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
-                                    }else{
+                                    } else {
                                         echo '<a href="login.php" class="enlacesIconos botonesIconos visto">INICIAR SESIÓN</a>';
                                     }
-                                ?>
+                                    ?>
                                 </li>
                             </ul>
                         </div>
@@ -112,16 +121,6 @@
                 <div id="divGaleria" class="row g-4">
                     <!-- En este div se van a mostrar todas las fotos de la galeria que esten en la base de datos a traves de js -->
                 </div>
-                <?php 
-                    require_once "db.php";
-
-                    $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id IS NULL;";
-                    $resultado = $db->query($sentencia);
-                    $listaRutasGaleria = [];
-                    while ($ruta = $resultado->fetch_assoc()) {
-                        array_push($listaRutasGaleria, $ruta);
-                    }
-                ?>
                 <script>
                     let listaRutasGaleria = <?php echo json_encode($listaRutasGaleria, JSON_UNESCAPED_UNICODE) ?>
                 </script>

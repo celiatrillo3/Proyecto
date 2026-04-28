@@ -1,5 +1,9 @@
 <?php
+    //Funcionamiento del buscador de la web
+
+    //Llamada al archivo para conectar con la base de datos
     require_once "db.php";
+    
     if (isset($_GET['buscadorInput'])) {
         $busqueda = $_GET['buscadorInput'];
         $busqueda = $db->real_escape_string($busqueda);

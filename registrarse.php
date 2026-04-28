@@ -1,5 +1,6 @@
 <?php
     session_start();
+    //Llamada al archivo para conectar con la base de datos
         require_once "db.php";
     $errorLogin = "";
 
