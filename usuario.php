@@ -6,6 +6,13 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+
+$sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = ". $_SESSION['usuario'] .";";
+$resultado = $db->query($sentencia);
+$resultadoUsuario = [];
+while ($usuario = $resultado->fetch_assoc()) {
+    array_push($resultadoUsuario, $usuario);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,12 +122,13 @@ require_once "db.php";
                     </div>
                 </div>
             </header>
-            <main class="container pt-5 pb-3">
-                <section id="usuarioSection">
-                    <div>
+            <main class="container">
+                <section id="usuarioSection" class="ps-4 pe-4 pt-4">
+                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between">
                         <div>
                             <div>
                                 <p id="usuarioUser">Usuario: </p>
+                            
                             </div>
                             <div>
                                 <p id="usuarioEmail">Correo electrónico: </p>
@@ -128,9 +136,17 @@ require_once "db.php";
                         </div>
                         <button>CERRAR SESSION</button>
                     </div>
-                    <article>
+                    <article id="usuarioArticleVisto">
                         <h4>VISTO RECIENTEMENTE</h4>
                         <div id="usuarioVistoReciente">
+                            <img src="" alt="">
+                            <div>
+                                <h2></h2>
+                                <div>
+                                    <i class="fas fa-quote-left me-2"></i>
+                                    <p></p>
+                                </div>
+                            </div>
                             <?php 
                                 if (isset($_SESSION['vistoRecientemente'])) {
                                     echo $_SESSION['vistoRecientemente'];
@@ -140,13 +156,17 @@ require_once "db.php";
                             ?>
                         </div>
                     </article>
-                    <article>
+                    <article id="usuarioArticleComentarios">
                         <h4>COMENTARIOS RECIENTES</h4>
                         <div id="usuarioComentarioReciente"></div>
                     </article>
                 </section>
+                <script>
+                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario, JSON_UNESCAPED_UNICODE); ?>;
+                    console.log(resultadoUsuario);
+                </script>
             </main>
-            <footer>
+            <footer id="footerUsuario">
                 <div class="container-fluid py-5">
                     <div class="row text-center">
                         <div class="col-md-4 mb-4 mb-md-0">
@@ -176,7 +196,7 @@ require_once "db.php";
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/coleccion2.js"></script>
+    <script src="js/usuario.js"></script>
 </body>
 
 </html>

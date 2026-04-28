@@ -27,7 +27,6 @@ if (isset($_POST['buscadorInput'])) {
         while ($busqueda = $resultado->fetch_assoc()) {
             array_push($listaResultadoBuscador, $busqueda);
         }
-        echo "if num rows";
     }
 }
 
@@ -35,7 +34,6 @@ $listaResultado = [];
 if (isset($listaResultadoBuscador)) {
     $listaResultado = $listaResultadoBuscador;
     unset($listaResultadoBuscador);
-    echo "if";
 } else {
     $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
                     FROM imagen i 
@@ -48,7 +46,6 @@ if (isset($listaResultadoBuscador)) {
     while ($moto = $resultado->fetch_assoc()) {
         array_push($listaResultado, $moto);
     }
-    echo "else";
 }
 
 ?>

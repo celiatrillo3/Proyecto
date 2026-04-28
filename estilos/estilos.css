@@ -831,6 +831,21 @@ nav a {
 #usuarioSection{
     background-color: var(--color-primario);
 }
+#usuarioUser, #usuarioEmail{
+    color: var(--color-acento);
+}
+
+#usuarioSection h4{
+    color: var(--color-acento);
+}
+
+#usuarioVistoReciente i{
+    color: var(--color-acento);
+}
+
+#usuarioArticleComentarios h4{
+    margin-bottom: 0;
+}
 
 
 /* FOOTER */
@@ -840,6 +855,9 @@ footer {
     font-family: crimsonText;
     margin-top: 40px;
     border-top: 2px solid var(--color-acento);
+}
+#footerUsuario{
+    margin-top: 0;
 }
 
 footer h6 {
