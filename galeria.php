@@ -3,6 +3,7 @@ session_start();
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
+//Consulta para mostrar todas las fotos de la galeria(En la base de datos solo las fotos de la galería tienen el id de moto en NULL y así se indetifican)
 $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id IS NULL;";
 $resultado = $db->query($sentencia);
 $listaRutasGaleria = [];
@@ -27,7 +28,6 @@ while ($ruta = $resultado->fetch_assoc()) {
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon4.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
 
@@ -70,6 +70,7 @@ while ($ruta = $resultado->fetch_assoc()) {
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
@@ -117,14 +118,19 @@ while ($ruta = $resultado->fetch_assoc()) {
                     </div>
                 </div>
             </header>
+
+            <!-- MAIN -->
             <main class="container-fluid py-5">
                 <div id="divGaleria" class="row g-4">
-                    <!-- En este div se van a mostrar todas las fotos de la galeria que esten en la base de datos a traves de js -->
+                    
                 </div>
                 <script>
+                    //Asignación de variables de php a JavaScipt con JSON
                     let listaRutasGaleria = <?php echo json_encode($listaRutasGaleria, JSON_UNESCAPED_UNICODE) ?>
                 </script>
             </main>
+
+            <!-- FOOTER -->
             <footer>
                 <div class="container-fluid py-5">
                     <div class="row text-center">
@@ -136,7 +142,7 @@ while ($ruta = $resultado->fetch_assoc()) {
                         <div class="col-md-4 mb-4 mb-md-0">
                             <h6 class="fw-bold  mb-3">SÍGUENOS</h6>
                             <div class="redes-sociales">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>

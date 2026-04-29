@@ -73,6 +73,7 @@ while ($usuario = $resultado->fetch_assoc()) {
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';

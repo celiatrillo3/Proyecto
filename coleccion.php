@@ -4,11 +4,12 @@ session_start();
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
+//Si se buscó en el buscador, entra aquí
 if (isset($_POST['buscadorInput'])) {
-    echo $_POST['buscadorInput'];
     $busqueda = $_POST['buscadorInput'];
     $busqueda = $db->real_escape_string($busqueda);
 
+    //Consulta con la búsqueda
     $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
                     FROM imagen i 
                     JOIN moto m ON i.moto_id = m.id_moto 
@@ -27,14 +28,25 @@ if (isset($_POST['buscadorInput'])) {
         while ($busqueda = $resultado->fetch_assoc()) {
             array_push($listaResultadoBuscador, $busqueda);
         }
+    }else{
+        //Si la búsqueda no devuelve nada asigna el error a la variable para mostrarlo mas abajo
+        $errorBusqueda = "<div class='favoritosDivError'>No se encontraron coincidencias</div>";
     }
 }
 
 $listaResultado = [];
+
+//Este if es para comprobar si entro en el de arriba y la consulta devolvió algo para asignaro al array
 if (isset($listaResultadoBuscador)) {
     $listaResultado = $listaResultadoBuscador;
+
+    //Eliminamos la variable porque sino siempre va a entrar en el if
     unset($listaResultadoBuscador);
-} else {
+
+//Si no existe el error muestra todas las motos
+} elseif(!isset($errorBusqueda)) {
+
+    //Consulta normal para tener todas las motos
     $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
                     FROM imagen i 
                     JOIN moto m ON i.moto_id = m.id_moto 
@@ -67,10 +79,8 @@ if (isset($listaResultadoBuscador)) {
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon4.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
-
     <div id="paginaGris">
         <div id="pagina2" class="min-vh-100">
             <header>
@@ -110,6 +120,7 @@ if (isset($listaResultadoBuscador)) {
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
@@ -137,9 +148,7 @@ if (isset($listaResultadoBuscador)) {
                             <li class="nav-item">
                                 <div class="d-flex">
                                     <div class="dropdown me-1">
-                                        <a href="coleccion.php" id="coleccion" class="enlacesMenu ps-3">COLECCIÓN
-                                            <div id="menuDinamico2"></div>
-                                        </a>
+                                        <a href="coleccion.php" id="coleccion" class="enlacesMenu ps-3">COLECCIÓN</a>
                                     </div>
                                 </div>
                             </li>
@@ -159,6 +168,8 @@ if (isset($listaResultadoBuscador)) {
                     </div>
                 </div>
             </header>
+
+            <!-- MAIN -->
             <main class="container-fluid py-5">
                 <div class="colecionBuscador">
                     <form action="coleccion.php" method="post" class="search-container">
@@ -167,12 +178,21 @@ if (isset($listaResultadoBuscador)) {
                     </form>
                 </div>
                 <div class="row g-4" id="contenedorImgsColeccion">
-
+                    <?php 
+                        //Salta el error si la variable existe
+                        if (isset($errorBusqueda)) {
+                            echo $errorBusqueda;
+                            unset($errorBusqueda);
+                        }
+                    ?>
                 </div>
                 <script>
+                    //Asignación de variables de php a JavaScipt con JSON
                     let listaMotos = <?php echo json_encode($listaResultado, JSON_UNESCAPED_UNICODE) ?>;
                 </script>
             </main>
+
+            <!-- FOOTER -->
             <footer>
                 <div class="container-fluid py-5">
                     <div class="row text-center">
@@ -184,7 +204,7 @@ if (isset($listaResultadoBuscador)) {
                         <div class="col-md-4 mb-4 mb-md-0">
                             <h6 class="fw-bold  mb-3">SÍGUENOS</h6>
                             <div class="redes-sociales">
-                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>

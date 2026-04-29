@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon4.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
     <div id="pagina">
@@ -60,6 +59,7 @@
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                         if (isset($_SESSION['usuario'])){
                                             echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
@@ -102,6 +102,7 @@
                                 <a href="favoritos.php" class="enlacesIconos botonesIconos oculto">FAVORITOS</a>
                             </li>
                             <li class="nav-item ">
+                                <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                 <?php 
                                     if (isset($_SESSION['usuario'])){
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
@@ -114,6 +115,8 @@
                     </div>
                 </div>
             </header>
+
+            <!-- MAIN -->
             <main class="min-vh-100 d-flex justify-content-center align-items-center">
                 <!-- Eslogan que cambia -->
                 <aside id="indexEslogan" class="fs-10 text-center">
@@ -156,6 +159,8 @@
                     </div>
                 </div>
             </main>
+
+            <!-- FOOTER -->
             <footer>
                 <div class="container-fluid py-5">
                     <div class="row text-center">

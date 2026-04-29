@@ -4,13 +4,17 @@ session_start();
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
+//Booleana para mostrar o no el buscador
 $desactivarBuscador = false;
+$listaResultadoFavoritos = [];
+
+//Solo muestra motos si el usuario inició sesión
 if (isset($_SESSION['usuario'])) {
     if (isset($_POST['buscadorInput'])) {
-        echo $_POST['buscadorInput'];
         $busqueda = $_POST['buscadorInput'];
         $busqueda = $db->real_escape_string($busqueda);
 
+        //Consulta con la búsqueda
         $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
                     FROM imagen i 
                     JOIN moto m ON i.moto_id = m.id_moto 
@@ -31,15 +35,25 @@ if (isset($_SESSION['usuario'])) {
             while ($busqueda = $resultado->fetch_assoc()) {
                 array_push($listaResultadoBuscadorFavoritos, $busqueda);
             }
-        }
-        unset($_POST['buscadorInput']);
+        }else{
+            //Si la búsqueda no devuelve nada asigna el error a la variable para mostrarlo mas abajo
+            $errorFavoritos = "<div class='favoritosDivError'>No se encontraron coincidencias</div>";
+    }
     }
 
     $listaResultadoFavoritos = [];
+
+    //Este if es para comprobar si entro en el de arriba y la consulta devolvió algo para asignaro al array
     if (isset($listaResultadoBuscadorFavoritos)) {
         $listaResultadoFavoritos = $listaResultadoBuscadorFavoritos;
+
+        //Eliminamos la variable porque sino siempre va a entrar en el if
         unset($listaResultadoBuscadorFavoritos);
-    } else {
+
+    //Si no existe el error muestra todas las motos
+    } elseif(!isset($errorFavoritos)) {
+
+        //Consulta normal para tener todas las motos
         $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.año, p.nombre_pais , m.id_moto
                     FROM imagen i 
                     JOIN moto m ON i.moto_id = m.id_moto 
@@ -56,11 +70,14 @@ if (isset($_SESSION['usuario'])) {
                 $desactivarBuscador = false;
             }
         } else {
+
+            //Salta error si el usuario no guardó nada en favoritos y pone a true la booleana para desactivar el buscador
             $errorFavoritos =  "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
             $desactivarBuscador = true;
         }
     }
 } else {
+    //Salta error si el usuario inició sesión y pone a true la booleana para desactivar el buscador
     $errorFavoritos = "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
     $desactivarBuscador = true;
 }
@@ -82,10 +99,8 @@ if (isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon4.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
-
     <div id="paginaGris">
         <div id="pagina2" class="min-vh-100">
             <header>
@@ -125,6 +140,7 @@ if (isset($_SESSION['usuario'])) {
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
@@ -153,7 +169,6 @@ if (isset($_SESSION['usuario'])) {
                                 <div class="d-flex">
                                     <div class="dropdown me-1">
                                         <a href="coleccion.php" id="coleccion" class="enlacesMenu ps-3">COLECCIÓN
-                                            <div id="menuDinamico2"></div>
                                         </a>
                                     </div>
                                 </div>
@@ -174,6 +189,8 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                 </div>
             </header>
+
+            <!-- MAIN -->
             <main class="container-fluid py-5">
                 <div class="coleccionBuscador" id="coleccionContenedorBuscador">
                     <form action="favoritos.php" method="post" class="search-container">
@@ -183,24 +200,29 @@ if (isset($_SESSION['usuario'])) {
                 </div>
                 <div class="row g-4" id="contenedorImgsColeccion">
                     <?php 
+                        //Salta el error si la variable existe
                         if (isset($errorFavoritos)) {
                             echo $errorFavoritos;
+                            unset($errorFavoritos);
                         }
                     ?>
                 </div>
                 <script>
-                    let listaMotos = <?php echo json_encode($listaResultadoFavoritos, JSON_UNESCAPED_UNICODE); ?>;
+                    //Asignación de variables de php a JavaScipt con JSON
+                    let listaMotos = <?php echo json_encode($listaResultadoFavoritos ?? [], JSON_UNESCAPED_UNICODE); ?>;
                     let desactivarBusqueda = <?php echo json_encode($desactivarBuscador); ?>;
+
+                    //Desactiva el buscador según la variable booleana
                     let buscadorFavoritos = document.getElementById('coleccionContenedorBuscador');
                     if (desactivarBusqueda) {
                         buscadorFavoritos.setAttribute('style', 'display: none;');
-                        console.log("if");
                     } else {
                         buscadorFavoritos.removeAttribute('style');
-                        console.log("else");
                     }
                 </script>
             </main>
+
+            <!-- FOOTER -->
             <footer>
                 <div class="container-fluid py-5">
                     <div class="row text-center">

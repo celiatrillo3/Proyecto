@@ -8,7 +8,10 @@ session_start();
 require_once "db.php";
 
 if (isset($_GET['moto'])) {
+    //Variable de sesión que guarda la actividad del usuario para luego mostrarla en su cuenta
     $_SESSION['vistoRecientemente'] = $_GET['moto'];
+    
+    //Consulta para la información de la moto
     $sentencia = "SELECT  m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
                 FROM moto m 
                 JOIN marca ma ON m.marca_id = ma.id_marca 
@@ -21,6 +24,7 @@ if (isset($_GET['moto'])) {
         array_push($listaResultado, $moto);
     }
 
+    //Consulta para las fotos de la moto
     $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_GET['moto'] . ";";
     $resultado = $db->query($sentencia);
     $listaResultadoRutas = [];
@@ -28,6 +32,7 @@ if (isset($_GET['moto'])) {
         array_push($listaResultadoRutas, $imagen);
     }
 
+    //Consulta de los comentarios de la moto
     $sentencia = "SELECT u.usuario, c.puntuacion, c.texto, c.fecha FROM usuarios u JOIN comentario c ON u.id_usuario = c.usuario_id WHERE c.moto_id = " . $_GET['moto'] . " ORDER BY id_comentario DESC;";
     $resultado = $db->query($sentencia);
     $listaResultadoComentarios = [];
@@ -37,11 +42,12 @@ if (isset($_GET['moto'])) {
     
 }
 
+//Añade un comentario a la moto
 if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
     $texto = $_POST['nuevoComentario'];
     $puntuacion = $_POST['puntuacion'];
-    var_dump($_SESSION['usuario']);
 
+    //Comprueba si el usuario inició sesión
     if (isset($_SESSION['usuario'])) {
         $sentencia = "INSERT INTO comentario(usuario_id, moto_id, texto, puntuacion) VALUES (" . $_SESSION['usuario'] . ", " .  $_GET['moto'] . ", '" . $texto . "', '" . $puntuacion . "');";
         $resultado =  $db->query($sentencia);
@@ -71,10 +77,8 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon4.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
-
     <div id="paginaGris">
         <div id="pagina2" class="min-vh-100">
             <header>
@@ -113,6 +117,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
                                 </li>
                                 <li class="nav-item">
+                                    <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
                                     <?php
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
@@ -162,16 +167,22 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                     </div>
                 </div>
             </header>
+
+            <!-- MAIN -->
             <main class="container pt-5 pb-3">
                 <div class="row">
                     <div class="row">
                         <div id="coleccion2ContenedorImg" class="col-sm-12 col-md-9 col-lg-6 mb-4">
+
+                            <!-- Aquí se detectan los eventos para el carrusel de imagenes de la moto -->
                             <div>
                                 <img id="coleccion2Img" class="img-fluid">
                                 <a href="#" class="coleccion2Flechas " id="coleccion2FlechaI" onclick="imgAtras()"><i class="fi fi-rs-angle-left"></i></a>
                                 <a href="#" class="coleccion2Flechas" id="coleccion2FlechaD" onclick="imgAlante()"><i class="fi fi-rs-angle-right"></i></a>
                             </div>
                         </div>
+
+                        <!-- Información de la moto -->
                         <div id="coleccion2ContenedorInfo" class="col-sm-12 col-md-9 col-lg-6">
                             <h2 id="coleccion2MarcaModelo"></h2>
                             <div id="coleccion2Caracteristicas">
@@ -212,6 +223,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                         </div>
                     </div>
 
+                    <!-- Comentarios de la moto -->
                     <div id="coleccion2ContenedorComentarios" class="col-12">
                         <div id="coleccion2ComentariosTitulo">
                             <i class="fi fi-rs-comments"></i>
@@ -243,12 +255,15 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                 </div>
 
                 <script>
+                    //Asignación de variables de php a JavaScipt con JSON
                     let listaMotos = <?php echo json_encode($listaResultado, JSON_UNESCAPED_UNICODE) ?>;
                     let listaRutas = <?php echo json_encode($listaResultadoRutas, JSON_UNESCAPED_UNICODE) ?>;
                     let listaComentarios = <?php echo json_encode($listaResultadoComentarios, JSON_UNESCAPED_UNICODE) ?>;
                     console.log(listaComentarios);
                 </script>
             </main>
+
+            <!-- FOOTER -->
             <footer>
                 <div class="container-fluid py-5">
                     <div class="row text-center">
@@ -260,7 +275,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                         <div class="col-md-4 mb-4 mb-md-0">
                             <h6 class="fw-bold  mb-3">SÍGUENOS</h6>
                             <div class="redes-sociales">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>

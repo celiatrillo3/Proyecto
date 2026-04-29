@@ -6,4 +6,8 @@
 -> Arreglar el buscador para favoritos.php porque redirige a coleccion.php IMPORTANTE ✓
 -> Acabar usuario.php
 -> Poder eliminar de favoritos
--> Cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador
+-> Cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador ✓
+-> En el menú lateral móvil no pone mi cuenta cuando el usuario inició sesión
+-> Comentar .php
+-> Comentar .js
+-> Comentar .css
