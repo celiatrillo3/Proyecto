@@ -8,6 +8,6 @@
 -> Poder eliminar de favoritos
 -> Cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador ✓
 -> En el menú lateral móvil no pone mi cuenta cuando el usuario inició sesión
--> Comentar .php
+-> Comentar .php (falta login, registro y usuario)
 -> Comentar .js
 -> Comentar .css
