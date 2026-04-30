@@ -11,3 +11,4 @@
 -> Comentar .php (falta login, registro y usuario)
 -> Comentar .js
 -> Comentar .css
+-> Poner enlaces en los errores que salen en favoritos.php y usuario.php

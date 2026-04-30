@@ -34,9 +34,7 @@
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        update: update
-                    })
+                    body: JSON.stringify({update: update})
                 })
                 .then(response => response.text())
                 .then(data => console.log(data))

@@ -9,11 +9,11 @@ require_once "db.php";
 
 if (isset($_SESSION['usuario'])) {
     $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = ". $_SESSION['usuario'] .";";
-$resultado = $db->query($sentencia);
-$resultadoUsuario = [];
-while ($usuario = $resultado->fetch_assoc()) {
-    array_push($resultadoUsuario, $usuario);
-}
+    $resultado = $db->query($sentencia);
+    $resultadoUsuario = [];
+    while ($usuario = $resultado->fetch_assoc()) {
+        array_push($resultadoUsuario, $usuario);
+    }
 }
 
 
@@ -24,11 +24,13 @@ if (isset($_SESSION['vistoReciente'])) {
         JOIN marca ma ON m.marca_id = ma.id_marca 
         WHERE m.id_moto = " . $_SESSION['vistoRecientemente'] . " 
         AND i.ruta_imagen LIKE '%1.JPG%';";
-$resultado = $db->query($sentencia);
-$resultadoVistoRecientemente = [];
-while ($moto = $resultado->fetch_assoc()) {
-    array_push($resultadoVistoRecientemente, $moto);
-}
+    $resultado = $db->query($sentencia);
+    $resultadoVistoRecientemente = [];
+    while ($moto = $resultado->fetch_assoc()) {
+        array_push($resultadoVistoRecientemente, $moto);
+    }
+}else{
+    $errorVistoRecientemente = "<div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div>";
 }
 
 ?>
@@ -153,15 +155,21 @@ while ($moto = $resultado->fetch_assoc()) {
                                 <p id="usuarioEmail" class="pe-2">Correo electrónico: </p>
                             </div>
                         </div>
-                        <button>CERRAR SESSION</button>
+                        <button>CERRAR SESIÓN</button>
                     </div>
                     <article id="usuarioArticleVisto">
                         <h4>VISTO RECIENTEMENTE</h4>
-                        <div id="usuarioVistoReciente" class="d-flex flex-row">
-                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-4 col-md-4 col-lg-4">
-                            <div class="col-sm-8 col-md-8 col-lg-8">
-                                <h2>Atala Califfone</h2>
-                                <div>
+                        <div id="usuarioVistoReciente" class="d-flex flex-row justify-content-center">
+                            <?php 
+                                // if (isset($errorVistoRecientemente)) {
+                                //     echo $errorVistoRecientemente;
+                                //     unset($errorVistoRecientemente);
+                                // }
+                            ?>
+                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-4 col-md-4 col-lg-4 me-4">
+                            <div class="col-sm-6 col-md-6 col-lg-6 my-4">
+                                <h2 id="usuarioMoto">Atala Califfone</h2>
+                                <div id="usuarioHistoriaMoto">
                                     <i class="fas fa-quote-left me-2"></i>
                                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ut harum fugit, ex debitis quos? Exercitationem quos quis enim. Itaque ad ab nostrum enim inventore eum, provident voluptas. Eaque cumque esse eos quisquam saepe ratione minus alias maxime nam, numquam et quibusdam quod aspernatur veritatis sequi odio, accusamus nihil consequuntur.</p>
                                 </div>
