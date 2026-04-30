@@ -256,9 +256,9 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
 
                 <script>
                     //Asignación de variables de php a JavaScipt con JSON
-                    let listaMotos = <?php echo json_encode($listaResultado, JSON_UNESCAPED_UNICODE) ?>;
-                    let listaRutas = <?php echo json_encode($listaResultadoRutas, JSON_UNESCAPED_UNICODE) ?>;
-                    let listaComentarios = <?php echo json_encode($listaResultadoComentarios, JSON_UNESCAPED_UNICODE) ?>;
+                    let listaMotos = <?php echo json_encode($listaResultado ?? [], JSON_UNESCAPED_UNICODE) ?>;
+                    let listaRutas = <?php echo json_encode($listaResultadoRutas ?? [], JSON_UNESCAPED_UNICODE) ?>;
+                    let listaComentarios = <?php echo json_encode($listaResultadoComentarios ?? [], JSON_UNESCAPED_UNICODE) ?>;
                     console.log(listaComentarios);
                 </script>
             </main>

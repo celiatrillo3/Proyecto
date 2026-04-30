@@ -166,7 +166,7 @@ if (isset($_SESSION['vistoReciente'])) {
                                 //     unset($errorVistoRecientemente);
                                 // }
                             ?>
-                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-4 col-md-4 col-lg-4 me-4">
+                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-6 col-md-6 col-lg-6 me-4">
                             <div class="col-sm-6 col-md-6 col-lg-6 my-4">
                                 <h2 id="usuarioMoto">Atala Califfone</h2>
                                 <div id="usuarioHistoriaMoto">
