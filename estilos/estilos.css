@@ -830,7 +830,11 @@ nav a {
 /* USUARIO */
 #usuarioSection{
     background-color: var(--color-primario);
+    color: var(--color-texto1);
 }
+/* #usuarioInfo{
+    color: var(--color-texto1);
+} */
 #usuarioUser, #usuarioEmail{
     color: var(--color-acento);
 }

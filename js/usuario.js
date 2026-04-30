@@ -8,3 +8,7 @@ let usuarioCorreo = document.createElement('p');
 usuarioCorreo.textContent = resultadoUsuario[0]['email'];
 usuarioEmail.parentNode.appendChild(usuarioCorreo);
 console.log(resultadoUsuario[0]['email']);
+
+let vistoReciente = document.getElementById('usuarioVistoReciente');
+let img = document.createElement('img');
+img.setAttribute('src', resultadoVisto['ruta_imagen']);

@@ -7,12 +7,30 @@ header("Expires: 0");
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
-$sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = ". $_SESSION['usuario'] .";";
+if (isset($_SESSION['usuario'])) {
+    $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = ". $_SESSION['usuario'] .";";
 $resultado = $db->query($sentencia);
 $resultadoUsuario = [];
 while ($usuario = $resultado->fetch_assoc()) {
     array_push($resultadoUsuario, $usuario);
 }
+}
+
+
+if (isset($_SESSION['vistoReciente'])) {
+    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.historia 
+        FROM imagen i 
+        JOIN moto m ON i.moto_id = m.id_moto 
+        JOIN marca ma ON m.marca_id = ma.id_marca 
+        WHERE m.id_moto = " . $_SESSION['vistoRecientemente'] . " 
+        AND i.ruta_imagen LIKE '%1.JPG%';";
+$resultado = $db->query($sentencia);
+$resultadoVistoRecientemente = [];
+while ($moto = $resultado->fetch_assoc()) {
+    array_push($resultadoVistoRecientemente, $moto);
+}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,36 +143,29 @@ while ($usuario = $resultado->fetch_assoc()) {
             </header>
             <main class="container">
                 <section id="usuarioSection" class="ps-4 pe-4 pt-4">
-                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between">
+                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between mb-3">
                         <div>
-                            <div>
-                                <p id="usuarioUser">Usuario: </p>
+                            <div class="d-flex flex-row">
+                                <p id="usuarioUser" class="pe-2">Usuario: </p>
                             
                             </div>
-                            <div>
-                                <p id="usuarioEmail">Correo electrónico: </p>
+                            <div class="d-flex flex-row">
+                                <p id="usuarioEmail" class="pe-2">Correo electrónico: </p>
                             </div>
                         </div>
                         <button>CERRAR SESSION</button>
                     </div>
                     <article id="usuarioArticleVisto">
                         <h4>VISTO RECIENTEMENTE</h4>
-                        <div id="usuarioVistoReciente">
-                            <img src="" alt="">
-                            <div>
-                                <h2></h2>
+                        <div id="usuarioVistoReciente" class="d-flex flex-row">
+                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <h2>Atala Califfone</h2>
                                 <div>
                                     <i class="fas fa-quote-left me-2"></i>
-                                    <p></p>
+                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ut harum fugit, ex debitis quos? Exercitationem quos quis enim. Itaque ad ab nostrum enim inventore eum, provident voluptas. Eaque cumque esse eos quisquam saepe ratione minus alias maxime nam, numquam et quibusdam quod aspernatur veritatis sequi odio, accusamus nihil consequuntur.</p>
                                 </div>
                             </div>
-                            <?php 
-                                if (isset($_SESSION['vistoRecientemente'])) {
-                                    echo $_SESSION['vistoRecientemente'];
-                                }else {
-                                    echo "no variable de sesion";
-                                }
-                            ?>
                         </div>
                     </article>
                     <article id="usuarioArticleComentarios">
@@ -163,8 +174,8 @@ while ($usuario = $resultado->fetch_assoc()) {
                     </article>
                 </section>
                 <script>
-                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario, JSON_UNESCAPED_UNICODE); ?>;
-                    console.log(resultadoUsuario);
+                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?> ;
+                    let resultadoVisto = <?php echo json_encode($resultadoVistoRecientemente ?? [], JSON_UNESCAPED_UNICODE); ?> ;
                 </script>
             </main>
             <footer id="footerUsuario">
