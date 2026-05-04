@@ -219,4 +219,6 @@ if (isset($_SESSION['vistoReciente'])) {
     <script src="js/usuario.js"></script>
 </body>
 
+
+
 </html>
