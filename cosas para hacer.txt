@@ -1,14 +1,23 @@
-25-03-26
--> Arreglar el login (ponerle mas espacio entre los elementos) ✓
--> Arreglar el boton de iniciar sesión ✓
+HACER
 -> Ponerle transiciones a los botones FAVORITOS e INICIAR SESIÓN ✓
--> Mejorar considerablemente el menú para dispositivos pequeños
--> Arreglar el buscador para favoritos.php porque redirige a coleccion.php IMPORTANTE ✓
--> Acabar usuario.php
+-> Acabar html y css usuario.php ✓
+-> Hacer  Js de usuario.php para que funcione visto recientemente y comentarios recientes
+-> Botón de cerrar sesión de usuario.php
 -> Poder eliminar de favoritos
--> Cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador ✓
--> En el menú lateral móvil no pone mi cuenta cuando el usuario inició sesión
 -> Comentar .php (falta login, registro y usuario)
 -> Comentar .js
 -> Comentar .css
 -> Poner enlaces en los errores que salen en favoritos.php y usuario.php
+
+
+ARREGLOS
+-> Arreglar el login (ponerle mas espacio entre los elementos) ✓
+-> Arreglar el boton de iniciar sesión ✓
+-> Arreglar el buscador para favoritos.php porque redirige a coleccion.php IMPORTANTE ✓
+-> Arreglar los duplicados de favoritos
+-> Arreglar en el menú lateral móvil porque no pone mi cuenta cuando el usuario inició sesión
+-> Arreglar para que cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador ✓
+
+
+MEJORAS
+-> Mejorar considerablemente el menú para dispositivos pequeños

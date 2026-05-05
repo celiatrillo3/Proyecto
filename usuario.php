@@ -8,7 +8,7 @@ header("Expires: 0");
 require_once "db.php";
 
 if (isset($_SESSION['usuario'])) {
-    $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = ". $_SESSION['usuario'] .";";
+    $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = " . $_SESSION['usuario'] . ";";
     $resultado = $db->query($sentencia);
     $resultadoUsuario = [];
     while ($usuario = $resultado->fetch_assoc()) {
@@ -29,7 +29,7 @@ if (isset($_SESSION['vistoReciente'])) {
     while ($moto = $resultado->fetch_assoc()) {
         array_push($resultadoVistoRecientemente, $moto);
     }
-}else{
+} else {
     $errorVistoRecientemente = "<div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div>";
 }
 
@@ -145,45 +145,100 @@ if (isset($_SESSION['vistoReciente'])) {
             </header>
             <main class="container">
                 <section id="usuarioSection" class="ps-4 pe-4 pt-4">
-                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between mb-3">
+                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between pb-2">
                         <div>
                             <div class="d-flex flex-row">
-                                <p id="usuarioUser" class="pe-2">Usuario: </p>
-                            
+                                <p id="usuarioUser" class="pe-2">USUARIO: </p>
+
                             </div>
                             <div class="d-flex flex-row">
-                                <p id="usuarioEmail" class="pe-2">Correo electrónico: </p>
+                                <p id="usuarioEmail" class="pe-2">CORREO ELECTRÓNICO: </p>
                             </div>
                         </div>
-                        <button>CERRAR SESIÓN</button>
+                        <button class="enlacesIconos botonesIconos visto my-3">CERRAR SESIÓN</button>
                     </div>
-                    <article id="usuarioArticleVisto">
+                    <article id="usuarioArticleVisto" class="pt-4">
                         <h4>VISTO RECIENTEMENTE</h4>
-                        <div id="usuarioVistoReciente" class="d-flex justify-content-center">
-                            <?php 
-                                // if (isset($errorVistoRecientemente)) {
-                                //     echo $errorVistoRecientemente;
-                                //     unset($errorVistoRecientemente);
-                                // }
+                        <div id="usuarioVistoReciente" class="row p-5">
+                            <?php
+                            // if (isset($errorVistoRecientemente)) {
+                            //     echo $errorVistoRecientemente;
+                            //     unset($errorVistoRecientemente);
+                            // }
                             ?>
-                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-10 col-md-8 col-lg-4 me-4">
-                            <div class="col-sm-10 col-md-8 col-lg-6 my-4">
+                            <div class="col-sm-10 col-md-8 col-lg-6 me-4">
+                                <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid ">
+                            </div>
+                            <div class="col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start" id="usuarioContenedorInfoVistoReciente">
                                 <h2 id="usuarioMoto">Atala Califfone</h2>
                                 <div id="usuarioHistoriaMoto">
                                     <i class="fas fa-quote-left me-2"></i>
                                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ut harum fugit, ex debitis quos? Exercitationem quos quis enim. Itaque ad ab nostrum enim inventore eum, provident voluptas. Eaque cumque esse eos quisquam saepe ratione minus alias maxime nam, numquam et quibusdam quod aspernatur veritatis sequi odio, accusamus nihil consequuntur.</p>
                                 </div>
+                                <button type="submit" class="enlacesIconos botonesIconos visto  align-self-end">VER MÁS</button>
                             </div>
                         </div>
                     </article>
-                    <article id="usuarioArticleComentarios">
+                    <article id="usuarioArticleComentarios" class="pt-4">
                         <h4>COMENTARIOS RECIENTES</h4>
-                        <div id="usuarioComentarioReciente"></div>
+                        <div id="usuarioComentarioReciente" class="p-5">
+                            <div class="coleccion2CajaComentario">
+                                <div>
+                                    <div class="comentarioUsuario">
+                                        <i class="fi fi-rs-circle-user"></i>
+                                        <p>usuario</p>
+                                        <div class="coleccion2DivIconosEstrellaComentarios">
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                        </div>
+                                    </div>
+                                    <p>fecha</p>
+                                </div>
+                                <p>texto del comentario</p>
+                            </div>
+                            <div class="coleccion2CajaComentario">
+                                <div>
+                                    <div class="comentarioUsuario">
+                                        <i class="fi fi-rs-circle-user"></i>
+                                        <p>usuario</p>
+                                        <div class="coleccion2DivIconosEstrellaComentarios">
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                        </div>
+                                    </div>
+                                    <p>fecha</p>
+                                </div>
+                                <p>texto del comentario</p>
+                            </div>
+                            <div class="coleccion2CajaComentario">
+                                <div>
+                                    <div class="comentarioUsuario">
+                                        <i class="fi fi-rs-circle-user"></i>
+                                        <p>usuario</p>
+                                        <div class="coleccion2DivIconosEstrellaComentarios">
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-ss-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                            <i class="fi fi-rs-star iconoEstrella"></i>
+                                        </div>
+                                    </div>
+                                    <p>fecha</p>
+                                </div>
+                                <p>texto del comentario</p>
+                            </div>
+                        </div>
                     </article>
                 </section>
                 <script>
-                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?> ;
-                    let resultadoVisto = <?php echo json_encode($resultadoVistoRecientemente ?? [], JSON_UNESCAPED_UNICODE); ?> ;
+                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let resultadoVisto = <?php echo json_encode($resultadoVistoRecientemente ?? [], JSON_UNESCAPED_UNICODE); ?>;
                 </script>
             </main>
             <footer id="footerUsuario">
