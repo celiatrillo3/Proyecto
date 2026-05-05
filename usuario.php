@@ -12,7 +12,8 @@ if (isset($_SESSION['usuario'])) {
     $resultado = $db->query($sentencia);
     $resultadoUsuario = [];
     while ($usuario = $resultado->fetch_assoc()) {
-        array_push($resultadoUsuario, $usuario);
+        array_push($resultadoUsuario, $usuario['usuario']);
+        array_push($resultadoUsuario, $usuario['email']);
     }
 }
 
@@ -29,8 +30,10 @@ if (isset($_SESSION['vistoReciente'])) {
     while ($moto = $resultado->fetch_assoc()) {
         array_push($resultadoVistoRecientemente, $moto);
     }
+    var_dump($resultadoVistoRecientemente);
 } else {
     $errorVistoRecientemente = "<div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div>";
+    echo "error";
 }
 
 ?>
@@ -145,8 +148,8 @@ if (isset($_SESSION['vistoReciente'])) {
             </header>
             <main class="container">
                 <section id="usuarioSection" class="ps-4 pe-4 pt-4">
-                    <div id="usuarioInfo" class="d-flex flex-row justify-content-between pb-2">
-                        <div>
+                    <div id="usuarioInfo" class="row pb-2">
+                        <div class="col-sm-12 col-md-8 col-lg-10">
                             <div class="d-flex flex-row">
                                 <p id="usuarioUser" class="pe-2">USUARIO: </p>
 
@@ -155,7 +158,9 @@ if (isset($_SESSION['vistoReciente'])) {
                                 <p id="usuarioEmail" class="pe-2">CORREO ELECTRÓNICO: </p>
                             </div>
                         </div>
-                        <button class="enlacesIconos botonesIconos visto my-3">CERRAR SESIÓN</button>
+                        <div class="col-sm-12 col-md-4 col-lg-2">
+                            <button class="enlacesIconos botonesIconos visto my-3">CERRAR SESIÓN</button>
+                        </div>
                     </div>
                     <article id="usuarioArticleVisto" class="pt-4">
                         <h4>VISTO RECIENTEMENTE</h4>
@@ -166,16 +171,16 @@ if (isset($_SESSION['vistoReciente'])) {
                             //     unset($errorVistoRecientemente);
                             // }
                             ?>
-                            <div class="col-sm-10 col-md-8 col-lg-6 me-4">
-                                <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid ">
+                            <div class="col-sm-10 col-md-8 col-lg-6 me-4 mb-4">
+                                <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid">
                             </div>
                             <div class="col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start" id="usuarioContenedorInfoVistoReciente">
-                                <h2 id="usuarioMoto">Atala Califfone</h2>
+                                <h2 id="usuarioMoto"></h2>
                                 <div id="usuarioHistoriaMoto">
                                     <i class="fas fa-quote-left me-2"></i>
-                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia ut harum fugit, ex debitis quos? Exercitationem quos quis enim. Itaque ad ab nostrum enim inventore eum, provident voluptas. Eaque cumque esse eos quisquam saepe ratione minus alias maxime nam, numquam et quibusdam quod aspernatur veritatis sequi odio, accusamus nihil consequuntur.</p>
+                                    <p id="usuarioHistoriaP"></p>
                                 </div>
-                                <button type="submit" class="enlacesIconos botonesIconos visto  align-self-end">VER MÁS</button>
+                                <a href=""><button type="submit" class="enlacesIconos botonesIconos visto  align-self-end">VER MÁS</button></a>
                             </div>
                         </div>
                     </article>
@@ -273,7 +278,4 @@ if (isset($_SESSION['vistoReciente'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/usuario.js"></script>
 </body>
-
-
-
 </html>
