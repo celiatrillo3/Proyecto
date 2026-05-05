@@ -159,15 +159,15 @@ if (isset($_SESSION['vistoReciente'])) {
                     </div>
                     <article id="usuarioArticleVisto">
                         <h4>VISTO RECIENTEMENTE</h4>
-                        <div id="usuarioVistoReciente" class="d-flex flex-row justify-content-center">
+                        <div id="usuarioVistoReciente" class="d-flex justify-content-center">
                             <?php 
                                 // if (isset($errorVistoRecientemente)) {
                                 //     echo $errorVistoRecientemente;
                                 //     unset($errorVistoRecientemente);
                                 // }
                             ?>
-                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-6 col-md-6 col-lg-6 me-4">
-                            <div class="col-sm-6 col-md-6 col-lg-6 my-4">
+                            <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid col-sm-10 col-md-8 col-lg-4 me-4">
+                            <div class="col-sm-10 col-md-8 col-lg-6 my-4">
                                 <h2 id="usuarioMoto">Atala Califfone</h2>
                                 <div id="usuarioHistoriaMoto">
                                     <i class="fas fa-quote-left me-2"></i>
