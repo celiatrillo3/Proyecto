@@ -8,7 +8,7 @@ HACER
 -> Comentar .js
 -> Comentar .css
 -> Poner enlaces en los errores que salen en favoritos.php y usuario.ph
--> Hacer que no se carguen todas las fotos en la galería 
+-> Hacer que no se carguen todas las fotos en la galería y de la colección
 
 
 ARREGLOS
