@@ -10,7 +10,7 @@ require_once "db.php";
 if (isset($_GET['moto'])) {
     //Variable de sesión que guarda la actividad del usuario para luego mostrarla en su cuenta
     $_SESSION['vistoReciente'] = $_GET['moto'];
-    
+        
     //Consulta para la información de la moto
     $sentencia = "SELECT  m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
                 FROM moto m 

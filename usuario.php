@@ -12,25 +12,24 @@ if (isset($_SESSION['usuario'])) {
     $resultado = $db->query($sentencia);
     $resultadoUsuario = [];
     while ($usuario = $resultado->fetch_assoc()) {
-        array_push($resultadoUsuario, $usuario['usuario']);
-        array_push($resultadoUsuario, $usuario['email']);
+        array_push($resultadoUsuario, $usuario);
     }
 }
 
 
 if (isset($_SESSION['vistoReciente'])) {
-    $sentencia = "SELECT i.ruta_imagen, ma.nombre, m.modelo, m.historia 
+    $sentencia = "SELECT m.id_moto, i.ruta_imagen, ma.nombre, m.modelo, m.historia 
         FROM imagen i 
         JOIN moto m ON i.moto_id = m.id_moto 
         JOIN marca ma ON m.marca_id = ma.id_marca 
-        WHERE m.id_moto = " . $_SESSION['vistoRecientemente'] . " 
+        WHERE m.id_moto = " . $_SESSION['vistoReciente'] . " 
         AND i.ruta_imagen LIKE '%1.JPG%';";
     $resultado = $db->query($sentencia);
-    $resultadoVistoRecientemente = [];
+    $resultadoVistoReciente = [];
     while ($moto = $resultado->fetch_assoc()) {
-        array_push($resultadoVistoRecientemente, $moto);
+        array_push($resultadoVistoReciente, $moto);
     }
-    var_dump($resultadoVistoRecientemente);
+    var_dump($resultadoVistoReciente);
 } else {
     $errorVistoRecientemente = "<div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div>";
     echo "error";
@@ -171,17 +170,17 @@ if (isset($_SESSION['vistoReciente'])) {
                             //     unset($errorVistoRecientemente);
                             // }
                             ?>
-                            <div class="col-sm-10 col-md-8 col-lg-6 me-4 mb-4">
-                                <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid">
-                            </div>
-                            <div class="col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start" id="usuarioContenedorInfoVistoReciente">
+                            <!-- <div class="col-sm-10 col-md-8 col-lg-6 me-4 mb-4">
+                                <img alt="" class="img-fluid">
+                            </div> -->
+                            <!-- <div class="col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start" id="usuarioContenedorInfoVistoReciente">
                                 <h2 id="usuarioMoto"></h2>
                                 <div id="usuarioHistoriaMoto">
                                     <i class="fas fa-quote-left me-2"></i>
                                     <p id="usuarioHistoriaP"></p>
                                 </div>
                                 <a href=""><button type="submit" class="enlacesIconos botonesIconos visto  align-self-end">VER MÁS</button></a>
-                            </div>
+                            </div> -->
                         </div>
                     </article>
                     <article id="usuarioArticleComentarios" class="pt-4">
@@ -243,7 +242,7 @@ if (isset($_SESSION['vistoReciente'])) {
                 </section>
                 <script>
                     let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                    let resultadoVisto = <?php echo json_encode($resultadoVistoRecientemente ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let resultadoVisto = <?php echo json_encode($resultadoVistoReciente ?? [], JSON_UNESCAPED_UNICODE); ?>;
                 </script>
             </main>
             <footer id="footerUsuario">
