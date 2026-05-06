@@ -161,7 +161,14 @@ if (isset($_SESSION['vistoReciente'])) {
                                 <a href="favoritos.php" class="enlacesIconos botonesIconos oculto">FAVORITOS</a>
                             </li>
                             <li class="nav-item ">
-                                <a href="login.php" class="enlacesIconos botonesIconos oculto">INICIAR SESIÓN</a>
+                                <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
+                                <?php 
+                                    if (isset($_SESSION['usuario'])){
+                                        echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
+                                    }else{
+                                        echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
+                                    }
+                                ?>
                             </li>
                         </ul>
                     </div>

@@ -37,7 +37,7 @@ if (isset($_SESSION['usuario'])) {
             }
         }else{
             //Si la búsqueda no devuelve nada asigna el error a la variable para mostrarlo mas abajo
-            $errorFavoritos = "<div class='favoritosDivError'>No se encontraron coincidencias</div>";
+            $errorFavoritos = "<a href='favoritos.php'><div class='favoritosDivError'>No se encontraron coincidencias</div></a>";
     }
     }
 
@@ -72,13 +72,13 @@ if (isset($_SESSION['usuario'])) {
         } else {
 
             //Salta error si el usuario no guardó nada en favoritos y pone a true la booleana para desactivar el buscador
-            $errorFavoritos =  "<div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div>";
+            $errorFavoritos =  "<a href='coleccion.php'><div class='favoritosDivError'>Aun no guardaste nada en favoritos. A qué esperas?</div></a>";
             $desactivarBuscador = true;
         }
     }
 } else {
     //Salta error si el usuario inició sesión y pone a true la booleana para desactivar el buscador
-    $errorFavoritos = "<div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div>";
+    $errorFavoritos = "<a href='login.php'><div class='favoritosDivError'>Inicia sesión para ver tus favoritos</div></a>";
     $desactivarBuscador = true;
 }
 ?>
@@ -183,7 +183,14 @@ if (isset($_SESSION['usuario'])) {
                                 <a href="favoritos.php" class="enlacesIconos botonesIconos oculto">FAVORITOS</a>
                             </li>
                             <li class="nav-item ">
-                                <a href="login.php" class="enlacesIconos botonesIconos oculto">INICIAR SESIÓN</a>
+                                <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
+                                <?php 
+                                    if (isset($_SESSION['usuario'])){
+                                        echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
+                                    }else{
+                                        echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
+                                    }
+                                ?>
                             </li>
                         </ul>
                     </div>
@@ -234,7 +241,7 @@ if (isset($_SESSION['usuario'])) {
                         <div class="col-md-4 mb-4 mb-md-0">
                             <h6 class="fw-bold  mb-3">SÍGUENOS</h6>
                             <div class="redes-sociales">
-                                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/share/g/14bA9mEYBn1/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://sites.google.com/view/agacc/inicio" target="_blank"><i class="fi fi-rs-motorcycle mt-1"></i></a>
                             </div>

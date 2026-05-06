@@ -1,13 +1,13 @@
 HACER
 -> Ponerle transiciones a los botones FAVORITOS e INICIAR SESIÓN ✓
 -> Acabar html y css usuario.php ✓
--> Hacer  Js de usuario.php para que funcione visto recientemente y comentarios recientes
+-> Hacer  Js de usuario.php para que funcione visto recientemente y comentarios recientes ✓
 -> Botón de cerrar sesión de usuario.php
--> Poder eliminar de favoritos
+-> Poder eliminar de favoritos 
 -> Comentar .php (falta login, registro y usuario)
 -> Comentar .js
 -> Comentar .css
--> Poner enlaces en los errores que salen en favoritos.php y usuario.ph
+-> Poner enlaces en los errores que salen en favoritos.php y usuario.php ✓
 -> Hacer que no se carguen todas las fotos en la galería y de la colección
 
 
@@ -15,8 +15,8 @@ ARREGLOS
 -> Arreglar el login (ponerle mas espacio entre los elementos) ✓
 -> Arreglar el boton de iniciar sesión ✓
 -> Arreglar el buscador para favoritos.php porque redirige a coleccion.php IMPORTANTE ✓
--> Arreglar los duplicados de favoritos
--> Arreglar en el menú lateral móvil porque no pone mi cuenta cuando el usuario inició sesión
+-> Arreglar los duplicados de favoritos ✓
+-> Arreglar en el menú lateral móvil porque no pone mi cuenta cuando el usuario inició sesión ✓
 -> Arreglar para que cuando entras en favoritos.php sin iniciar sesion que desaparezca el buscador ✓
 
 

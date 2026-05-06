@@ -20,11 +20,14 @@
 
     //Inserta en la base de datos con el id del usuario y sino redirige a login.php para poder iniciar sesión
     if (isset($_SESSION['usuario'])) {
-        var_dump($idMoto);
         $idUsuario = $_SESSION['usuario'];
-
-        $sentencia = "INSERT INTO favoritos(usuario_id, moto_id) VALUES ($idUsuario, $idMoto)";
+        
+        $sentencia = "SELECT id_favoritos FROM favoritos WHERE moto_id = " . $idMoto . ";";
         $resultado = $db->query($sentencia);
+        if ($resultado -> num_rows == 0) {
+            $sentencia = "INSERT INTO favoritos(usuario_id, moto_id) VALUES ($idUsuario, $idMoto)";
+            $resultado = $db->query($sentencia);
+        }
     } else {
         header("Location: login.php");
     }
