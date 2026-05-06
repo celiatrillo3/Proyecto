@@ -7,16 +7,38 @@ header("Expires: 0");
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
+//Comprueba si existe el usuario para rellenar los datos y los comentarios
 if (isset($_SESSION['usuario'])) {
+
+    //Consulta la información del usuario para rellenar los datos
     $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = " . $_SESSION['usuario'] . ";";
     $resultado = $db->query($sentencia);
     $resultadoUsuario = [];
     while ($usuario = $resultado->fetch_assoc()) {
         array_push($resultadoUsuario, $usuario);
     }
+
+    //Consulta los tres últimos comentarios del usuario
+    $sentencia = "SELECT u.usuario, c.puntuacion, c.texto, c.fecha, c.moto_id 
+            FROM usuarios u 
+            JOIN comentario c ON u.id_usuario = c.usuario_id
+            WHERE c.usuario_id = " . $_SESSION['usuario'] . "
+            ORDER BY id_comentario DESC LIMIT 3;";
+    $resultado = $db->query($sentencia);
+
+    if ($resultado->num_rows > 0) {
+        $resultadoComentarios = [];
+        while ($comentario = $resultado->fetch_assoc()) {
+            array_push($resultadoComentarios, $comentario);
+        }
+    }else{
+        //Si la búsqueda no devuelve nada asigna el error a la variable para mostrarlo mas abajo
+        $errorComentarios = "<a href='coleccion.php'><div class='favoritosDivError'>¡Comparte tus experiencias o conocimientos!</div></a>";
+    }
 }
 
 
+//Comprueba la última moto vista
 if (isset($_SESSION['vistoReciente'])) {
     $sentencia = "SELECT m.id_moto, i.ruta_imagen, ma.nombre, m.modelo, m.historia 
         FROM imagen i 
@@ -29,11 +51,11 @@ if (isset($_SESSION['vistoReciente'])) {
     while ($moto = $resultado->fetch_assoc()) {
         array_push($resultadoVistoReciente, $moto);
     }
-    var_dump($resultadoVistoReciente);
 } else {
-    $errorVistoRecientemente = "<div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div>";
-    echo "error";
+    //Si no existe la variable de sesión, lanza el error
+    $errorVistoReciente = "<a href='coleccion.php'><div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div></a>";
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -165,84 +187,30 @@ if (isset($_SESSION['vistoReciente'])) {
                         <h4>VISTO RECIENTEMENTE</h4>
                         <div id="usuarioVistoReciente" class="row p-5">
                             <?php
-                            // if (isset($errorVistoRecientemente)) {
-                            //     echo $errorVistoRecientemente;
-                            //     unset($errorVistoRecientemente);
-                            // }
+                            if (isset($errorVistoReciente)) {
+                                echo $errorVistoReciente;
+                                unset($errorVistoReciente);
+                            }
                             ?>
-                            <!-- <div class="col-sm-10 col-md-8 col-lg-6 me-4 mb-4">
-                                <img alt="" class="img-fluid">
-                            </div> -->
-                            <!-- <div class="col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start" id="usuarioContenedorInfoVistoReciente">
-                                <h2 id="usuarioMoto"></h2>
-                                <div id="usuarioHistoriaMoto">
-                                    <i class="fas fa-quote-left me-2"></i>
-                                    <p id="usuarioHistoriaP"></p>
-                                </div>
-                                <a href=""><button type="submit" class="enlacesIconos botonesIconos visto  align-self-end">VER MÁS</button></a>
-                            </div> -->
                         </div>
                     </article>
                     <article id="usuarioArticleComentarios" class="pt-4">
                         <h4>COMENTARIOS RECIENTES</h4>
                         <div id="usuarioComentarioReciente" class="p-5">
-                            <div class="coleccion2CajaComentario">
-                                <div>
-                                    <div class="comentarioUsuario">
-                                        <i class="fi fi-rs-circle-user"></i>
-                                        <p>usuario</p>
-                                        <div class="coleccion2DivIconosEstrellaComentarios">
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                        </div>
-                                    </div>
-                                    <p>fecha</p>
-                                </div>
-                                <p>texto del comentario</p>
-                            </div>
-                            <div class="coleccion2CajaComentario">
-                                <div>
-                                    <div class="comentarioUsuario">
-                                        <i class="fi fi-rs-circle-user"></i>
-                                        <p>usuario</p>
-                                        <div class="coleccion2DivIconosEstrellaComentarios">
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                        </div>
-                                    </div>
-                                    <p>fecha</p>
-                                </div>
-                                <p>texto del comentario</p>
-                            </div>
-                            <div class="coleccion2CajaComentario">
-                                <div>
-                                    <div class="comentarioUsuario">
-                                        <i class="fi fi-rs-circle-user"></i>
-                                        <p>usuario</p>
-                                        <div class="coleccion2DivIconosEstrellaComentarios">
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-ss-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                            <i class="fi fi-rs-star iconoEstrella"></i>
-                                        </div>
-                                    </div>
-                                    <p>fecha</p>
-                                </div>
-                                <p>texto del comentario</p>
-                            </div>
+                            <?php
+                            if (isset($errorComentarios)) {
+                                echo $errorComentarios;
+                                unset($errorComentarios);
+                            }
+                            ?>
                         </div>
                     </article>
                 </section>
                 <script>
+                    //Asignación de variables de php a JavaScipt con JSON
                     let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?>;
                     let resultadoVisto = <?php echo json_encode($resultadoVistoReciente ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let resultadoComentarios = <?php echo json_encode($resultadoComentarios ?? [], JSON_UNESCAPED_UNICODE) ?>;
                 </script>
             </main>
             <footer id="footerUsuario">
