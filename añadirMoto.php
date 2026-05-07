@@ -174,55 +174,23 @@ if (isset($_SESSION['vistoReciente'])) {
                     </div>
                 </div>
             </header>
-            <main class="container">
-                <section id="usuarioSection" class="ps-4 pe-4 pt-4">
-                    <div id="usuarioInfo" class="row pb-2">
-                        <div class="col-sm-12 col-md-8 col-lg-9 my-auto">
-                            <div class="d-flex flex-row">
-                                <p id="usuarioUser" class="pe-2">USUARIO: </p>
-                            </div>
-                            <div class="d-flex flex-row">
-                                <p id="usuarioEmail" class="pe-2">CORREO ELECTRÓNICO: </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-4 col-lg-3 d-flex flex-column align-items-end">
-                            <a href="#"><button class="enlacesIconos botonesIconos visto my-3 ">CERRAR SESIÓN</button></a>
-                            <?php 
-                                if (isset($_SESSION['admin'])) {
-                                    echo "<a href = 'añadirMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>AÑADIR CICLOMOTOR</button></a>";
-                                }
-                            ?>
-                        </div>
-                    </div>
-                    <article id="usuarioArticleVisto" class="pt-4">
-                        <h4>VISTO RECIENTEMENTE</h4>
-                        <div id="usuarioVistoReciente" class="row p-5">
-                            <?php
-                            if (isset($errorVistoReciente)) {
-                                echo $errorVistoReciente;
-                                unset($errorVistoReciente);
-                            }
-                            ?>
-                        </div>
-                    </article>
-                    <article id="usuarioArticleComentarios" class="pt-4">
-                        <h4>COMENTARIOS RECIENTES</h4>
-                        <div id="usuarioComentarioReciente" class="p-5">
-                            <?php
-                            if (isset($errorComentarios)) {
-                                echo $errorComentarios;
-                                unset($errorComentarios);
-                            }
-                            ?>
-                        </div>
-                    </article>
-                </section>
-                <script>
-                    //Asignación de variables de php a JavaScipt con JSON
-                    let resultadoUsuario = <?php echo json_encode($resultadoUsuario ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                    let resultadoVisto = <?php echo json_encode($resultadoVistoReciente ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                    let resultadoComentarios = <?php echo json_encode($resultadoComentarios ?? [], JSON_UNESCAPED_UNICODE) ?>;
-                </script>
+            <main class="container-fluid">
+                <form action="añadirMoto.php" method="post">
+                    <label for="marca">Marca</label>
+                    <input type="text" name="marca" id="marca">
+                    <label for="modelo">Modelo</label>
+                    <input type="text" name="modelo" id="modelo">
+                    <label for="año">Año</label>
+                    <input type="text" name="año" id="año">
+                    <label for="color">Color</label>
+                    <input type="text" name="color" id="color">
+                    <label for="historia">Historia</label>
+                    <input type="text" name="historia" id="historia">
+                    <label for="pais">Pais</label>
+                    <select name="pais" id="pais">
+                        <!-- options con phph -->
+                    </select>
+                </form>
             </main>
             <footer id="footerUsuario">
                 <div class="container-fluid py-5">

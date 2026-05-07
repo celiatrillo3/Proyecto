@@ -9,6 +9,12 @@ HACER
 -> Comentar .css
 -> Poner enlaces en los errores que salen en favoritos.php y usuario.php ✓
 -> Hacer que no se carguen todas las fotos en la galería y de la colección
+-> Añadir formularios para añadir motos
+-> Hacer el funcionamiento del formulario:
+    -> Sanitizar marca y modelos para poder hacer la ruta
+    -> Crear la carpeta
+    -> Validar que sea una imagen y renombrarla
+    -> Mover las fotos a la carpeta
 
 
 ARREGLOS

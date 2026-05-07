@@ -9,17 +9,20 @@ if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
     $user = $_POST['loginUser'];
     $password = SHA1($_POST['loginPassword']);
 
-    $sentencia = "SELECT id_usuario FROM usuarios WHERE usuario = '$user' AND contraseña = '$password'";
+    $sentencia = "SELECT id_usuario, administrador FROM usuarios WHERE usuario = '$user' AND contraseña = '$password'";
 
     $resultado = $db->query($sentencia);
 
-
-    while ($idUsuario = $resultado->fetch_assoc()) {
-        $id = $idUsuario['id_usuario'];
+    while ($usuario = $resultado->fetch_assoc()) {
+        $id = $usuario['id_usuario'];
+        $admin = $usuario['administrador'];
     }
 
     if ($resultado->num_rows > 0) {
         $_SESSION['usuario'] = $id;
+        if ($admin == '1') {
+            $_SESSION['admin'] = true;
+        }
         header("Location: index.php");
         
     } else {
