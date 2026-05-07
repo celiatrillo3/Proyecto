@@ -7,55 +7,13 @@ header("Expires: 0");
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 
-//Comprueba si existe el usuario para rellenar los datos y los comentarios
-if (isset($_SESSION['usuario'])) {
+$sentencia = "SELECT nombre_pais FROM pais;";
+$resultado = $db->query($sentencia);
 
-    //Consulta la información del usuario para rellenar los datos
-    $sentencia = "SELECT usuario, email FROM usuarios WHERE id_usuario = " . $_SESSION['usuario'] . ";";
-    $resultado = $db->query($sentencia);
-    $resultadoUsuario = [];
-    while ($usuario = $resultado->fetch_assoc()) {
-        array_push($resultadoUsuario, $usuario);
-    }
-
-    //Consulta los tres últimos comentarios del usuario
-    $sentencia = "SELECT u.usuario, c.puntuacion, c.texto, c.fecha, c.moto_id 
-            FROM usuarios u 
-            JOIN comentario c ON u.id_usuario = c.usuario_id
-            WHERE c.usuario_id = " . $_SESSION['usuario'] . "
-            ORDER BY id_comentario DESC LIMIT 3;";
-    $resultado = $db->query($sentencia);
-
-    if ($resultado->num_rows > 0) {
-        $resultadoComentarios = [];
-        while ($comentario = $resultado->fetch_assoc()) {
-            array_push($resultadoComentarios, $comentario);
-        }
-    }else{
-        //Si la búsqueda no devuelve nada asigna el error a la variable para mostrarlo mas abajo
-        $errorComentarios = "<a href='coleccion.php'><div class='favoritosDivError'>¡Comparte tus experiencias o conocimientos!</div></a>";
-    }
+$resultadoPaises = [];
+while ($pais = $resultado->fetch_assoc()) {
+    array_push($resultadoPaises, $pais);
 }
-
-
-//Comprueba la última moto vista
-if (isset($_SESSION['vistoReciente'])) {
-    $sentencia = "SELECT m.id_moto, i.ruta_imagen, ma.nombre, m.modelo, m.historia 
-        FROM imagen i 
-        JOIN moto m ON i.moto_id = m.id_moto 
-        JOIN marca ma ON m.marca_id = ma.id_marca 
-        WHERE m.id_moto = " . $_SESSION['vistoReciente'] . " 
-        AND i.ruta_imagen LIKE '%1.JPG%';";
-    $resultado = $db->query($sentencia);
-    $resultadoVistoReciente = [];
-    while ($moto = $resultado->fetch_assoc()) {
-        array_push($resultadoVistoReciente, $moto);
-    }
-} else {
-    //Si no existe la variable de sesión, lanza el error
-    $errorVistoReciente = "<a href='coleccion.php'><div class='favoritosDivError'>¡Explora nuestra maravillosa colección!</div></a>";
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +22,7 @@ if (isset($_SESSION['vistoReciente'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi cuenta - Museo del ciclomotor clásico</title>
+    <title>Añadir ciclomotor - Museo del ciclomotor clásico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estilos/normalize.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
@@ -177,20 +135,26 @@ if (isset($_SESSION['vistoReciente'])) {
             <main class="container-fluid">
                 <form action="añadirMoto.php" method="post">
                     <label for="marca">Marca</label>
-                    <input type="text" name="marca" id="marca">
+                    <input type="text" name="marca" id="marca" required>
                     <label for="modelo">Modelo</label>
-                    <input type="text" name="modelo" id="modelo">
+                    <input type="text" name="modelo" id="modelo" required>
                     <label for="año">Año</label>
-                    <input type="text" name="año" id="año">
+                    <input type="text" name="año" id="año" required>
                     <label for="color">Color</label>
-                    <input type="text" name="color" id="color">
+                    <input type="text" name="color" id="color" required>
                     <label for="historia">Historia</label>
-                    <input type="text" name="historia" id="historia">
-                    <label for="pais">Pais</label>
-                    <select name="pais" id="pais">
-                        <!-- options con phph -->
+                    <input type="text" name="historia" id="historia" required>
+                    <label for="paises">Pais</label>
+                    <select name="paises" id="paises" required>
                     </select>
+                    <label for="archivo">Imágenes del ciclomotor</label>
+                    <input type="file" id="archivos[]" name="archivo" required>
+                    <button type="submit">Añadir</button>
                 </form>
+
+                <script>
+                    let resultadoPaises = <?php echo json_encode($resultadoPaises ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                </script>
             </main>
             <footer id="footerUsuario">
                 <div class="container-fluid py-5">
@@ -222,6 +186,6 @@ if (isset($_SESSION['vistoReciente'])) {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/usuario.js"></script>
+    <script src="js/añadirMoto.js"></script>
 </body>
 </html>
