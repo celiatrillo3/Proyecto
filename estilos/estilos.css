@@ -928,7 +928,7 @@ select {
   color: var(--color-texto1);
 }
 
-.archivo {
+/* .archivo {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
@@ -936,7 +936,7 @@ select {
     position: absolute;
     z-index: -1;
     pointer-events: none;
-}
+} */
 
 .btn-archivo {
     display: inline-flex;
