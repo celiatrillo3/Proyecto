@@ -6,7 +6,6 @@
     $json = file_get_contents('php://input');
 
     $data = json_decode($json, true);
-    error_log($json);
     //Se asegura de que si el valor es null, asigne null a la variable y no de error
     $idMoto = $data['id_moto'] ?? null;
 

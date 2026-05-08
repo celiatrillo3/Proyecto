@@ -186,10 +186,10 @@ if (isset($_SESSION['vistoReciente'])) {
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-4 col-lg-3 d-flex flex-column align-items-end">
-                            <a href="#"><button class="enlacesIconos botonesIconos visto my-3 ">CERRAR SESIÓN</button></a>
+                            <a href="#"><button class="enlacesIconos botonesIconos visto my-3 " onclick="cerrarSesion()">CERRAR SESIÓN</button></a>
                             <?php 
                                 if (isset($_SESSION['admin'])) {
-                                    echo "<a href = 'añadirMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>AÑADIR CICLOMOTOR</button></a>";
+                                    echo "<a href='añadirMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>AÑADIR CICLOMOTOR</button></a>";
                                 }
                             ?>
                         </div>

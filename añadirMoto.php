@@ -80,7 +80,7 @@ while ($pais = $resultado->fetch_assoc()) {
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                     } else {
-                                        echo '<a href="login.php" class="enlacesIconos botonesIconos visto">INICIAR SESIÓN</a>';
+                                        echo '<a href="Input.php" class="enlacesIconos botonesIconos visto">INICIAR SESIÓN</a>';
                                     }
                                     ?>
                                 </li>
@@ -120,12 +120,12 @@ while ($pais = $resultado->fetch_assoc()) {
                             </li>
                             <li class="nav-item ">
                                 <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
-                                <?php 
-                                    if (isset($_SESSION['usuario'])){
-                                        echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
-                                    }else{
-                                        echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
-                                    }
+                                <?php
+                                if (isset($_SESSION['usuario'])) {
+                                    echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
+                                } else {
+                                    echo '<a href="Input.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
+                                }
                                 ?>
                             </li>
                         </ul>
@@ -133,24 +133,69 @@ while ($pais = $resultado->fetch_assoc()) {
                 </div>
             </header>
             <main class="container-fluid">
-                <form action="añadirMoto.php" method="post">
-                    <label for="marca">Marca</label>
-                    <input type="text" name="marca" id="marca" required>
-                    <label for="modelo">Modelo</label>
-                    <input type="text" name="modelo" id="modelo" required>
-                    <label for="año">Año</label>
-                    <input type="text" name="año" id="año" required>
-                    <label for="color">Color</label>
-                    <input type="text" name="color" id="color" required>
-                    <label for="historia">Historia</label>
-                    <input type="text" name="historia" id="historia" required>
-                    <label for="paises">Pais</label>
-                    <select name="paises" id="paises" required>
-                    </select>
-                    <label for="archivo">Imágenes del ciclomotor</label>
-                    <input type="file" id="archivos[]" name="archivo" required>
-                    <button type="submit">Añadir</button>
-                </form>
+                <div class="">
+                    <div id="contenedorAñadirMoto" class="p-3 px-5 w-100 h-100 rounded-3">
+                        <div>
+                            <h1>NUEVO CICLOMOTOR</h1>
+                            <p>Añade una nueva joya clásica a la colección.</p>
+                        </div>
+                        <form action="añadirMoto.php" method="post">
+                            <label for="marca">Marca</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-wrench-simple"></i>
+                                <input type="text" name="marca" id="marca" required>
+                            </div>
+
+                            <label for="modelo">Modelo</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-motorcycle"></i>
+                                <input type="text" name="modelo" id="modelo" required>
+                            </div>
+
+                            <label for="año">Año</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-calendar-days"></i>
+                                <input type="text" name="año" id="año" required>
+                            </div>
+
+                            <label for="color">Color</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-palette"></i>
+                                <input type="text" name="color" id="color" required>
+                            </div>
+
+                            <label for="historia">Historia</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-book-open-cover"></i>
+                                <input type="text" name="historia" id="historia" required>
+                            </div>
+
+                            <label for="paises">Pais</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-globe"></i>
+                                <select name="paises" id="paises" required>
+                                </select>
+                            </div>
+
+                            <label >Imágenes del ciclomotor</label>
+                            <div class="añadirMotoContenedorInput
+                         rounded-3 p-2 mb-4 d-flex">
+                                <i class="fi fi-rs-graphic-style"></i>
+                                <label for="archivo" class="btn-archivo">Seleccionar archivo</label>
+                                <input type="file" id="archivo" name="archivos[]" class="archivo" required>
+                            </div>
+                            <button type="submit">Añadir</button>
+                        </form>
+                    </div>
+                </div>
+
+
 
                 <script>
                     let resultadoPaises = <?php echo json_encode($resultadoPaises ?? [], JSON_UNESCAPED_UNICODE); ?>;
@@ -188,4 +233,5 @@ while ($pais = $resultado->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/añadirMoto.js"></script>
 </body>
+
 </html>

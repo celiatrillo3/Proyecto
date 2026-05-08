@@ -2,7 +2,7 @@ HACER
 -> Ponerle transiciones a los botones FAVORITOS e INICIAR SESIÓN ✓
 -> Acabar html y css usuario.php ✓
 -> Hacer  Js de usuario.php para que funcione visto recientemente y comentarios recientes ✓
--> Botón de cerrar sesión de usuario.php
+-> Botón de cerrar sesión de usuario.php ✓
 -> Poder eliminar de favoritos 
 -> Comentar .php (falta login, registro y usuario)
 -> Comentar .js

@@ -159,14 +159,10 @@ for (const comentario of listaComentarios) {
 }
 
 function favoritos() {
-    console.log("evento boton favoritos");
     let idMoto;
-    console.log(listaMotos);
     for (const element of listaMotos) {
         idMoto = element['id_moto'];
     }
-    console.log(idMoto);
-    console.log(JSON.stringify({ id_moto: idMoto }));
     
     fetch("añadirFavoritos.php", {
         method: "POST",

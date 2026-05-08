@@ -882,6 +882,93 @@ nav a {
 }
 
 
+/* AÑADIR MOTO */
+
+#contenedorAñadirMoto{
+    background-color: var(--color-primario);
+    font-family: playfair;
+    color: var(--color-texto1);
+    border: var(--color-acento) 1px solid;
+    height: 100%;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    animation: aparecer 0.8s ease-out;
+    margin-bottom: 150px;
+}
+#contenedorAñadirMoto h1{
+    color: var(--color-acento);
+    font-weight: bold;
+}
+
+#contenedorAñadirMoto label{
+    font-weight: bold;
+}
+
+
+/* INPUT */
+.añadirMotoContenedorInput{
+    border: rgb(244, 241, 234, 0.3) 1px solid;
+    background-color: var(--color-primario) !important;
+}
+.añadirMotoContenedorInput i{
+    color: var(--color-acento);
+}
+
+#contenedorAñadirMoto input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-texto1);
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: var(--color-primario);
+  color: var(--color-texto1);
+}
+
+.archivo {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.btn-archivo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
+    border-radius: 12px;
+    border: 1px solid var(--color-acento);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.btn-archivo:hover {
+    background-color: var(--color-acento);
+    color: var(--color-texto2);
+    transform: translateY(-1px);
+}
+
+.btn-archivo:focus-visible {
+    outline: 2px solid rgba(199, 137, 22, 0.6);
+    outline-offset: 3px;
+}
+
+.btn-archivo:hover {
+    background-color: var(--color-acento);
+}
+
+
+
 /* FOOTER */
 footer {
     background-color: var(--color-primario);

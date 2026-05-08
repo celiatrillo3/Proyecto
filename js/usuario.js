@@ -30,7 +30,6 @@ if (resultadoVisto.length != 0) {
     div2.setAttribute('class', 'col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start');
     div2.setAttribute('id', 'usuarioContenedorInfoVistoReciente');
 
-
     let h2 = document.createElement('h2');
     h2.setAttribute('id', 'usuarioMoto');
     let h2Texto = resultadoVisto[0]['nombre'] + " " + resultadoVisto[0]['modelo'];
@@ -134,4 +133,26 @@ if (resultadoComentarios.length != 0) {
 
         divComentarios.appendChild(a);
     }
+}
+
+//CERRAR SESIÓN
+let cerrar = false;
+
+//Función para cerrar sesión
+function cerrarSesion() {
+    cerrar = true;
+    fetch("cerrarSesion.php", {
+        method: "POST",
+        credentials: "include",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cerrar)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = 'login.php';
+        }
+    });
 }
