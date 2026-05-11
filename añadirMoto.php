@@ -132,65 +132,65 @@ while ($pais = $resultado->fetch_assoc()) {
                     </div>
                 </div>
             </header>
-            <main class="container-fluid">
-                <div class="">
-                    <div id="contenedorAñadirMoto" class="p-3 px-5 w-100 h-100 rounded-3">
+            <main class=" d-flex justify-content-center align-items-center">
+                <div id="login" class="text-center min-vw-50 mt-5 mb-5">
+                    <div id="contenedorAñadirMoto" class="p-3 px-5 rounded-3">
                         <div>
-                            <h1>NUEVO CICLOMOTOR</h1>
+                            <h1 class="mb-0">NUEVO CICLOMOTOR</h1>
                             <p>Añade una nueva joya clásica a la colección.</p>
                         </div>
-                        <form action="añadirMoto.php" method="post">
-                            <label for="marca">Marca</label>
+                        <form action="añadirMoto.php" method="post" class="d-flex flex-column">
+                            <label for="marca" class="align-self-start">Marca</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-wrench-simple"></i>
-                                <input type="text" name="marca" id="marca" required>
+                                <input type="text" name="marca" id="marca" required autocomplete="off" class="ms-3">
                             </div>
 
-                            <label for="modelo">Modelo</label>
+                            <label for="modelo" class="align-self-start">Modelo</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-motorcycle"></i>
-                                <input type="text" name="modelo" id="modelo" required>
+                                <input type="text" name="modelo" id="modelo" required autocomplete="off" class="ms-3">
                             </div>
 
-                            <label for="año">Año</label>
+                            <label for="año" class="align-self-start">Año</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-calendar-days"></i>
-                                <input type="text" name="año" id="año" required>
+                                <input type="text" name="año" id="año" required autocomplete="off" class="ms-3">
                             </div>
 
-                            <label for="color">Color</label>
+                            <label for="color" class="align-self-start">Color</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-palette"></i>
-                                <input type="text" name="color" id="color" required>
+                                <input type="text" name="color" id="color" required autocomplete="off" class="ms-3">
                             </div>
 
-                            <label for="historia">Historia</label>
+                            <label for="historia" class="align-self-start">Historia</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-book-open-cover"></i>
-                                <input type="text" name="historia" id="historia" required>
+                                <input type="text" name="historia" id="historia" required autocomplete="off" class="ms-3">
                             </div>
 
-                            <label for="paises">Pais</label>
-                            <div class="añadirMotoContenedorInput
+                            <label for="paises" class="align-self-start">Pais</label>
+                            <div class="
                          rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-globe"></i>
-                                <select name="paises" id="paises" required>
+                                
+                                <select name="paises" id="paises" required autocomplete="off">
                                 </select>
                             </div>
 
-                            <label >Imágenes del ciclomotor</label>
-                            <div class="añadirMotoContenedorInput
+                            <label class="align-self-start">Imágenes del ciclomotor</label>
+                            <div class="añadirMotoContenedorInputSinBorde
                          rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-graphic-style"></i>
-                                <label for="archivo" class="btn-archivo">Seleccionar archivo</label>
+                                <i class="fi fi-rs-graphic-style pe-3"></i>
+                                <label for="archivo" class="fw-light" id="labelInputArchivos" class="ms-3">SELECCIONAR ARCHIVOS</label>
                                 <input type="file" id="archivo" name="archivos[]" class="archivo" required>
                             </div>
-                            <button type="submit">Añadir</button>
+                            <button type="submit" id="loginBotonIniciarSesion" class="mt-2 mb-4 p-2 py-2 rounded-3 w-75 align-self-center">Añadir</button>
                         </form>
                     </div>
                 </div>

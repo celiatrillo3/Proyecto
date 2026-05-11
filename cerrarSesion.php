@@ -6,6 +6,7 @@
 
     if ($datos == 1) {
         unset($_SESSION['usuario']);
+        //session_destroy();
         echo json_encode(['success' => true]);
     }
 ?>
