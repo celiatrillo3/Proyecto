@@ -6,6 +6,7 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+$errorAñadirMoto = "";
 
 $sentencia = "SELECT nombre_pais FROM pais;";
 $resultado = $db->query($sentencia);
@@ -13,6 +14,116 @@ $resultado = $db->query($sentencia);
 $resultadoPaises = [];
 while ($pais = $resultado->fetch_assoc()) {
     array_push($resultadoPaises, $pais);
+}
+
+
+// $sentencia = SELECT 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // echo "upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
+    // echo "post_max_size: " . ini_get('post_max_size') . "<br>";
+
+    $marca = ($_POST['marca']);
+    $modelo = ($_POST['modelo']);
+
+    // ini_set('upload_max_filesize', '20M');
+    // ini_set('post_max_size', '20M');
+
+    // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
+    $carpeta_nombre = sanitizar_nombre($marca) . '_' . sanitizar_nombre($modelo);
+    $ruta_carpeta = 'imgs_motos/' . $carpeta_nombre; // carpeta base "motos"
+    var_dump($ruta_carpeta);
+
+    // Si YA EXISTE la carpeta -> error, no se puede añadir la misma moto dos veces
+    if (is_dir($ruta_carpeta)) {
+        $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
+        exit;
+    }
+
+    // Si no existe, la creamos
+    if (!mkdir($ruta_carpeta, 0755, true)) {
+       $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
+       exit;
+    }
+
+    var_dump($_FILES);
+    $archivos = $_FILES['archivos'];
+    $contador = 1;
+    $errores = [];
+
+    // Recorrer cada archivo subido
+    for ($i = 0; $i < count($archivos['name']); $i++) {
+        // Solo procesar si no hubo error en la subida
+        if ($archivos['error'][$i] === UPLOAD_ERR_OK) {
+            $nombre_tmp = $archivos['tmp_name'][$i];
+            $tipo = mime_content_type($nombre_tmp);
+
+            // Validar que sea imagen (puedes ampliar tipos)
+            if (strpos($tipo, 'image/') !== 0) {
+                $errores[] = "El archivo '{$archivos['name'][$i]}' no es una imagen válida.";
+                continue;
+            }
+
+            // Extensiones permitidas (para renombrar usamos .jpg o mantener original)
+            $extension = pathinfo($archivos['name'][$i], PATHINFO_EXTENSION);
+            // Podrías forzar .jpg, pero para mantener calidad, usar la extensión original
+            // O convertir siempre a JPG (requiere GD). Para simplificar, usamos la extensión original
+            $nombre_nuevo = $contador . '.' . $extension;
+            $ruta_destino = $ruta_carpeta . '/' . $nombre_nuevo;
+
+            // Mover temporal a destino final
+            if (move_uploaded_file($nombre_tmp, $ruta_destino)) {
+                $contador++;
+            } else {
+                $errores[] = "Error al guardar el archivo '{$archivos['name'][$i]}'.";
+            }
+        } else {
+            // $errores[] = "Error en la subida del archivo '{$archivos['name'][$i]}' (código: {$archivos['error'][$i]}).";
+            $codigo_error = $archivos['error'][$i];
+            // Obtener el mensaje del código
+            $mensaje_error = mensaje_error_upload($codigo_error);
+            $errores[] = "Error en el archivo '{$archivos['name'][$i]}': $mensaje_error";
+            continue;
+        }
+    }
+
+    if (empty($errores)) {
+        echo "Moto guardada correctamente. Se subieron " . ($contador - 1) . " fotos a la carpeta '$ruta_carpeta'.";
+    } else {
+        echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
+    }
+}
+
+
+
+function sanitizar_nombre($texto)
+{
+    $texto = mb_strtolower($texto, 'UTF-8');
+    $texto = preg_replace('/[^a-z0-9]/', '_', $texto);
+    $texto = preg_replace('/_+/', '_', $texto);
+    return trim($texto, '_');
+}
+
+function mensaje_error_upload($codigo)
+{
+    switch ($codigo) {
+        case UPLOAD_ERR_INI_SIZE:
+            return "El archivo supera el límite de upload_max_filesize en php.ini";
+        case UPLOAD_ERR_FORM_SIZE:
+            return "El archivo supera el límite MAX_FILE_SIZE del formulario";
+        case UPLOAD_ERR_PARTIAL:
+            return "El archivo solo se subió parcialmente";
+        case UPLOAD_ERR_NO_FILE:
+            return "No se subió ningún archivo";
+        case UPLOAD_ERR_NO_TMP_DIR:
+            return "Falta la carpeta temporal en el servidor";
+        case UPLOAD_ERR_CANT_WRITE:
+            return "Error al escribir el archivo en el disco";
+        case UPLOAD_ERR_EXTENSION:
+            return "Una extensión de PHP detuvo la subida";
+        default:
+            return "Código de error desconocido: $codigo";
+    }
 }
 
 ?>
@@ -139,7 +250,12 @@ while ($pais = $resultado->fetch_assoc()) {
                             <h1 class="mb-0">NUEVO CICLOMOTOR</h1>
                             <p>Añade una nueva joya clásica a la colección.</p>
                         </div>
-                        <form action="añadirMoto.php" method="post" class="d-flex flex-column">
+                        <?php
+                        if ($errorAñadirMoto != "") {
+                            echo "<div class='alert alert-danger'> " . $errorAñadirMoto . " </div>";
+                        }
+                        ?>
+                        <form action="añadirMoto.php" method="post" class="d-flex flex-column" enctype="multipart/form-data">
                             <label for="marca" class="align-self-start">Marca</label>
                             <div class="añadirMotoContenedorInput
                          rounded-3 p-2 mb-4 d-flex">
@@ -178,7 +294,7 @@ while ($pais = $resultado->fetch_assoc()) {
                             <label for="paises" class="align-self-start">Pais</label>
                             <div class="
                          rounded-3 p-2 mb-4 d-flex">
-                                
+
                                 <select name="paises" id="paises" required autocomplete="off">
                                 </select>
                             </div>
@@ -188,7 +304,7 @@ while ($pais = $resultado->fetch_assoc()) {
                          rounded-3 p-2 mb-4 d-flex">
                                 <i class="fi fi-rs-graphic-style pe-3"></i>
                                 <label for="archivo" class="fw-light" id="labelInputArchivos" class="ms-3">SELECCIONAR ARCHIVOS</label>
-                                <input type="file" id="archivo" name="archivos[]" class="archivo" required>
+                                <input type="file" id="archivo" name="archivos[]" class="archivo" required accept=".jpg, image/jpg" multiple>
                             </div>
                             <button type="submit" id="loginBotonIniciarSesion" class="mt-2 mb-4 p-2 py-2 rounded-3 w-75 align-self-center">Añadir</button>
                         </form>

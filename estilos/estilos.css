@@ -933,11 +933,11 @@ select {
   color: var(--color-texto1);
 }
 
-.archivo {
+/* .archivo {
     opacity: 0;
     overflow: hidden;
     pointer-events: none;
-}
+} */
 
 /* .btn-archivo {
     display: inline-flex;
