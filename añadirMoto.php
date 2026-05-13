@@ -17,11 +17,9 @@ while ($pais = $resultado->fetch_assoc()) {
 }
 
 
-// $sentencia = SELECT 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // echo "upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
-    // echo "post_max_size: " . ini_get('post_max_size') . "<br>";
+    echo "upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
+    echo "post_max_size: " . ini_get('post_max_size') . "<br>";
 
     $marca = ($_POST['marca']);
     $modelo = ($_POST['modelo']);
@@ -32,21 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
     $carpeta_nombre = sanitizar_nombre($marca) . '_' . sanitizar_nombre($modelo);
     $ruta_carpeta = 'imgs_motos/' . $carpeta_nombre; // carpeta base "motos"
-    var_dump($ruta_carpeta);
+    //var_dump($ruta_carpeta);
 
     // Si YA EXISTE la carpeta -> error, no se puede añadir la misma moto dos veces
     if (is_dir($ruta_carpeta)) {
         $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
-        exit;
-    }
-
-    // Si no existe, la creamos
-    if (!mkdir($ruta_carpeta, 0755, true)) {
+        //exit;
+        
+    }elseif (!mkdir($ruta_carpeta, 0755, true)) { // Si no existe, la creamos
        $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
-       exit;
+       //exit;
     }
 
-    var_dump($_FILES);
+    //var_dump($_FILES);
     $archivos = $_FILES['archivos'];
     $contador = 1;
     $errores = [];
@@ -87,14 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($errores)) {
-        echo "Moto guardada correctamente. Se subieron " . ($contador - 1) . " fotos a la carpeta '$ruta_carpeta'.";
-    } else {
-        echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
-    }
+    // if (empty($errores)) {
+    //     echo "Moto guardada correctamente. Se subieron " . ($contador - 1) . " fotos a la carpeta '$ruta_carpeta'.";
+    // } else {
+    //     echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
+    // }
 }
-
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $sentencia = "INSERT INTO moto(modelo, año, color, historia, tipo, marca_id) VALUES ('" . $_POST[] ."','" . $_POST[] ."','"
+}
 
 function sanitizar_nombre($texto)
 {
