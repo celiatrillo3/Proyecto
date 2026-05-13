@@ -90,7 +90,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sentencia = "INSERT INTO moto(modelo, año, color, historia, tipo, marca_id) VALUES ('" . $_POST[] ."','" . $_POST[] ."','"
+    $sentencia = "SELECT id_marca FROM marca WHERE nombre =" . $_POST['marca'] . ";";
+    $resultado = $db->query($sentencia);
+
+    if ($resultado -> num_rows == 0) {
+        $sentencia = "SELECT id_pais FROM pais WHERE nombre =" . $_POST['pais'] . ";";
+        $resultado = $db->query($sentencia);
+
+        while ($id = $resultado->fetch_assoc()) {
+            $idPais = $id['id_pais'];
+        }
+
+        $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] ."', '" . $idPais ."');";
+        $resultado = $db->query($sentencia);
+        $idMarca = $db->insert_id;
+    }
+
+    $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] ."','" . $_POST['año'] ."','" . $_POST['historia'] ."','" . $idMarca ."')";
+    $resultado = $db->query($sentencia);
 }
 
 function sanitizar_nombre($texto)
