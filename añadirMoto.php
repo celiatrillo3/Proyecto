@@ -36,78 +36,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (is_dir($ruta_carpeta)) {
         $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
         //exit;
-        
-    }elseif (!mkdir($ruta_carpeta, 0755, true)) { // Si no existe, la creamos
-       $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
-       //exit;
-    }
 
-    //var_dump($_FILES);
-    $archivos = $_FILES['archivos'];
-    $contador = 1;
-    $errores = [];
+    } elseif (!mkdir($ruta_carpeta, 0755, true)) { // Si no existe, la creamos
+        $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
+        //exit;
+    } else {
 
-    // Recorrer cada archivo subido
-    for ($i = 0; $i < count($archivos['name']); $i++) {
-        // Solo procesar si no hubo error en la subida
-        if ($archivos['error'][$i] === UPLOAD_ERR_OK) {
-            $nombre_tmp = $archivos['tmp_name'][$i];
-            $tipo = mime_content_type($nombre_tmp);
+        //var_dump($_FILES);
+        $archivos = $_FILES['archivos'];
+        $contador = 1;
+        $errores = [];
 
-            // Validar que sea imagen (puedes ampliar tipos)
-            if (strpos($tipo, 'image/') !== 0) {
-                $errores[] = "El archivo '{$archivos['name'][$i]}' no es una imagen válida.";
+        // Recorrer cada archivo subido
+        for ($i = 0; $i < count($archivos['name']); $i++) {
+            // Solo procesar si no hubo error en la subida
+            if ($archivos['error'][$i] === UPLOAD_ERR_OK) {
+                $nombre_tmp = $archivos['tmp_name'][$i];
+                $tipo = mime_content_type($nombre_tmp);
+
+                // Validar que sea imagen (puedes ampliar tipos)
+                if (strpos($tipo, 'image/') !== 0) {
+                    $errores[] = "El archivo '{$archivos['name'][$i]}' no es una imagen válida.";
+                    continue;
+                }
+
+                // Extensiones permitidas (para renombrar usamos .jpg o mantener original)
+                $extension = pathinfo($archivos['name'][$i], PATHINFO_EXTENSION);
+                // Podrías forzar .jpg, pero para mantener calidad, usar la extensión original
+                // O convertir siempre a JPG (requiere GD). Para simplificar, usamos la extensión original
+                $nombre_nuevo = $contador . '.' . $extension;
+                $ruta_destino = $ruta_carpeta . '/' . $nombre_nuevo;
+
+                // Mover temporal a destino final
+                if (move_uploaded_file($nombre_tmp, $ruta_destino)) {
+                    $contador++;
+                } else {
+                    $errores[] = "Error al guardar el archivo '{$archivos['name'][$i]}'.";
+                }
+            } else {
+                // $errores[] = "Error en la subida del archivo '{$archivos['name'][$i]}' (código: {$archivos['error'][$i]}).";
+                $codigo_error = $archivos['error'][$i];
+                // Obtener el mensaje del código
+                $mensaje_error = mensaje_error_upload($codigo_error);
+                $errores[] = "Error en el archivo '{$archivos['name'][$i]}': $mensaje_error";
                 continue;
             }
+        }
 
-            // Extensiones permitidas (para renombrar usamos .jpg o mantener original)
-            $extension = pathinfo($archivos['name'][$i], PATHINFO_EXTENSION);
-            // Podrías forzar .jpg, pero para mantener calidad, usar la extensión original
-            // O convertir siempre a JPG (requiere GD). Para simplificar, usamos la extensión original
-            $nombre_nuevo = $contador . '.' . $extension;
-            $ruta_destino = $ruta_carpeta . '/' . $nombre_nuevo;
+        // if (empty($errores)) {
+        //     echo "Moto guardada correctamente. Se subieron " . ($contador - 1) . " fotos a la carpeta '$ruta_carpeta'.";
+        // } else {
+        //     echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
+        // }
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $sentencia = "SELECT id_marca FROM marca WHERE nombre = '" . $_POST['marca'] . "';";
+        $resultado = $db->query($sentencia);
 
-            // Mover temporal a destino final
-            if (move_uploaded_file($nombre_tmp, $ruta_destino)) {
-                $contador++;
-            } else {
-                $errores[] = "Error al guardar el archivo '{$archivos['name'][$i]}'.";
+        if ($resultado->num_rows == 0) {
+            $sentencia = "SELECT id_pais FROM pais WHERE nombre = '" . $_POST['pais'] . "';";
+            $resultado = $db->query($sentencia);
+
+            while ($id = $resultado->fetch_assoc()) {
+                $idPais = $id['id_pais'];
             }
-        } else {
-            // $errores[] = "Error en la subida del archivo '{$archivos['name'][$i]}' (código: {$archivos['error'][$i]}).";
-            $codigo_error = $archivos['error'][$i];
-            // Obtener el mensaje del código
-            $mensaje_error = mensaje_error_upload($codigo_error);
-            $errores[] = "Error en el archivo '{$archivos['name'][$i]}': $mensaje_error";
-            continue;
-        }
-    }
 
-    // if (empty($errores)) {
-    //     echo "Moto guardada correctamente. Se subieron " . ($contador - 1) . " fotos a la carpeta '$ruta_carpeta'.";
-    // } else {
-    //     echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
-    // }
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sentencia = "SELECT id_marca FROM marca WHERE nombre =" . $_POST['marca'] . ";";
-    $resultado = $db->query($sentencia);
-
-    if ($resultado -> num_rows == 0) {
-        $sentencia = "SELECT id_pais FROM pais WHERE nombre =" . $_POST['pais'] . ";";
-        $resultado = $db->query($sentencia);
-
-        while ($id = $resultado->fetch_assoc()) {
-            $idPais = $id['id_pais'];
+            $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] . "', '" . $idPais . "');";
+            $resultado = $db->query($sentencia);
+            $idMarca = $db->insert_id;
+        }else{
+            while ($id = $resultado->fetch_assoc()) {
+                $idMarca = $id['id_marca'];
+            }
         }
 
-        $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] ."', '" . $idPais ."');";
+        $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] . "','" . $_POST['año'] . "','" . $_POST['color'] . "','" . $_POST['historia'] . "','" . $idMarca . "')";
         $resultado = $db->query($sentencia);
-        $idMarca = $db->insert_id;
     }
-
-    $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] ."','" . $_POST['año'] ."','" . $_POST['historia'] ."','" . $idMarca ."')";
-    $resultado = $db->query($sentencia);
 }
 
 function sanitizar_nombre($texto)
