@@ -226,6 +226,12 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                 <i class="fas fa-quote-left me-2"></i>
                                 <p id="coleccion2HistoriaP"></p>
                             </div>
+                            <?php 
+                                if (isset($_SESSION['admin'])) {
+                                    echo "<a href='modificarMotoMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>MODIFICAR CICLOMOTOR</button></a>";
+                                    echo "<a href='eliminarMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>ELIMINAR CICLOMOTOR</button></a>";
+                                }
+                            ?>
                             <button id="botonFavoritos">Añadir a favoritos</button>
                         </div>
                     </div>

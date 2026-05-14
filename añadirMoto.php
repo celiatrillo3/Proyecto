@@ -18,8 +18,8 @@ while ($pais = $resultado->fetch_assoc()) {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
-    echo "post_max_size: " . ini_get('post_max_size') . "<br>";
+    // echo "upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
+    // echo "post_max_size: " . ini_get('post_max_size') . "<br>";
 
     $marca = ($_POST['marca']);
     $modelo = ($_POST['modelo']);
@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $archivos = $_FILES['archivos'];
         $contador = 1;
         $errores = [];
+        $rutasImagenes = [];
 
         // Recorrer cada archivo subido
         for ($i = 0; $i < count($archivos['name']); $i++) {
@@ -66,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // O convertir siempre a JPG (requiere GD). Para simplificar, usamos la extensión original
                 $nombre_nuevo = $contador . '.' . $extension;
                 $ruta_destino = $ruta_carpeta . '/' . $nombre_nuevo;
+                array_push($rutasImagenes, $ruta_destino);
 
                 // Mover temporal a destino final
                 if (move_uploaded_file($nombre_tmp, $ruta_destino)) {
@@ -88,8 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // } else {
         //     echo "Se completó con algunos errores:<br>" . implode('<br>', $errores);
         // }
-    }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
         $sentencia = "SELECT id_marca FROM marca WHERE nombre = '" . $_POST['marca'] . "';";
         $resultado = $db->query($sentencia);
 
@@ -104,15 +105,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] . "', '" . $idPais . "');";
             $resultado = $db->query($sentencia);
             $idMarca = $db->insert_id;
-        }else{
+        } else {
             while ($id = $resultado->fetch_assoc()) {
                 $idMarca = $id['id_marca'];
             }
         }
+    
+    $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] . "','" . $_POST['año'] . "','" . $_POST['color'] . "','" . $_POST['historia'] . "','" . $idMarca . "')";
+    $resultado = $db->query($sentencia);
+    $idMoto = $db->insert_id;
 
-        $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] . "','" . $_POST['año'] . "','" . $_POST['color'] . "','" . $_POST['historia'] . "','" . $idMarca . "')";
+    foreach ($rutasImagenes as $key => $value) {
+        $sentencia = "INSERT INTO imagen(ruta_imagen, moto_id) VALUES ('" . $value . "', '" . $idMoto . "');";
         $resultado = $db->query($sentencia);
     }
+}
 }
 
 function sanitizar_nombre($texto)
