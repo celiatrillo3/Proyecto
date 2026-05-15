@@ -7,7 +7,6 @@ header("Expires: 0");
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
 $errorAñadirMoto = "";
-$motoAñadida = "";
 
 $sentencia = "SELECT nombre_pais FROM pais;";
 $resultado = $db->query($sentencia);
@@ -119,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($rutasImagenes as $key => $value) {
         $sentencia = "INSERT INTO imagen(ruta_imagen, moto_id) VALUES ('" . $value . "', '" . $idMoto . "');";
         $resultado = $db->query($sentencia);
-        $motoAñadida = "El ciclomotor fue añadido correctamente";
     }
 }
 }
@@ -281,8 +279,6 @@ function mensaje_error_upload($codigo)
                         <?php
                         if ($errorAñadirMoto != "") {
                             echo "<div class='alert alert-danger'> " . $errorAñadirMoto . " </div>";
-                        }elseif ($motoAñadida != "") {
-                            echo "<div class='alert alert-success'> " . $motoAñadida . " </div>";
                         }
                         ?>
                         <form action="añadirMoto.php" method="post" class="d-flex flex-column" enctype="multipart/form-data">

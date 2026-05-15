@@ -10,7 +10,7 @@ require_once "db.php";
 if (isset($_GET['moto'])) {
     //Variable de sesión que guarda la actividad del usuario para luego mostrarla en su cuenta
     $_SESSION['vistoReciente'] = $_GET['moto'];
-        
+
     //Consulta para la información de la moto
     $sentencia = "SELECT  m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
                 FROM moto m 
@@ -39,7 +39,6 @@ if (isset($_GET['moto'])) {
     while ($comentario = $resultado->fetch_assoc()) {
         array_push($listaResultadoComentarios, $comentario);
     }
-    
 }
 
 //Añade un comentario a la moto
@@ -162,12 +161,12 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                             </li>
                             <li class="nav-item ">
                                 <!-- Muestra una cosa u otra dependiendo de si el usuario inició sesión o no -->
-                                <?php 
-                                    if (isset($_SESSION['usuario'])){
-                                        echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
-                                    }else{
-                                        echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
-                                    }
+                                <?php
+                                if (isset($_SESSION['usuario'])) {
+                                    echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
+                                } else {
+                                    echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
+                                }
                                 ?>
                             </li>
                         </ul>
@@ -187,6 +186,14 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                 <a href="#" class="coleccion2Flechas " id="coleccion2FlechaI" onclick="imgAtras()"><i class="fi fi-rs-angle-left"></i></a>
                                 <a href="#" class="coleccion2Flechas" id="coleccion2FlechaD" onclick="imgAlante()"><i class="fi fi-rs-angle-right"></i></a>
                             </div>
+                            <div class="d-flex justify-content-center">
+                                    <?php 
+                                    if (isset($_SESSION['admin']) && isset($_GET['moto'])) {
+                                        echo "<a href='modificarMoto.php?moto=" . $_GET['moto'] . "'><button class='enlacesIconos botonesIconos visto my-3'>MODIFICAR CICLOMOTOR</button></a>";
+                                        echo "<a href='coleccion.php?moto=" . $_GET['moto'] . "'><button class='enlacesIconos botonesIconos visto my-3'>ELIMINAR CICLOMOTOR</button></a>";
+                                    }
+                                    ?> 
+                                </div> 
                         </div>
 
                         <!-- Información de la moto -->
@@ -226,13 +233,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                 <i class="fas fa-quote-left me-2"></i>
                                 <p id="coleccion2HistoriaP"></p>
                             </div>
-                            <?php 
-                                if (isset($_SESSION['admin'])) {
-                                    echo "<a href='modificarMotoMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>MODIFICAR CICLOMOTOR</button></a>";
-                                    echo "<a href='eliminarMoto.php'><button class='enlacesIconos botonesIconos visto my-3'>ELIMINAR CICLOMOTOR</button></a>";
-                                }
-                            ?>
-                            <button id="botonFavoritos">Añadir a favoritos</button>
+                            <button id="botonFavoritos" class="">Añadir a favoritos</button>
                         </div>
                     </div>
 
@@ -243,7 +244,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                             <h1>Comentarios</h1>
                         </div>
                         <div id="coleccion2Comentarios">
-                            
+
                         </div>
                         <hr>
                         <form action="?moto=<?php echo $_GET['moto']; ?>" method="POST">
