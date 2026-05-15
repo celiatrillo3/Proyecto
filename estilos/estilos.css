@@ -47,14 +47,22 @@
     font-family: crimsonText;
     min-height: 100vh;
     background-color: var(--color-primario);
+
+    /* Nuevo: usar flex para que el footer pueda posicionarse abajo */
+    display: flex;
+    flex-direction: column;
 }
 
 #pagina2 {
     background: linear-gradient(rgba(41, 49, 51, 0.65),
             rgba(41, 49, 51, 0.55),
             rgba(41, 49, 51, 0.65));
-}
 
+    /* Nuevo: permitir que este contenedor se expanda y organice contenido en columna */
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
 a {
     text-decoration: none;
 }
@@ -978,9 +986,7 @@ footer {
     font-family: crimsonText;
     margin-top: 40px;
     border-top: 2px solid var(--color-acento);
-}
-#footerUsuario{
-    margin-top: 0;
+    margin-top: auto;
 }
 
 footer h6 {

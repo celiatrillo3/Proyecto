@@ -190,7 +190,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                     <?php 
                                     if (isset($_SESSION['admin']) && isset($_GET['moto'])) {
                                         echo "<a href='modificarMoto.php?moto=" . $_GET['moto'] . "'><button class='enlacesIconos botonesIconos visto my-3'>MODIFICAR CICLOMOTOR</button></a>";
-                                        echo "<a href='coleccion.php?moto=" . $_GET['moto'] . "'><button class='enlacesIconos botonesIconos visto my-3'>ELIMINAR CICLOMOTOR</button></a>";
+                                        echo "<a href='eliminarMoto.php?moto=" . $_GET['moto'] . "'><button class='enlacesIconos botonesIconos visto my-3'>ELIMINAR CICLOMOTOR</button></a>";
                                     }
                                     ?> 
                                 </div> 
