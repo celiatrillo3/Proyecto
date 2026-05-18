@@ -1,59 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Editar moto</title>
+    <style>
+        .foto-item { display: inline-block; margin: 10px; text-align: center; }
+        .foto-item img { width: 150px; height: auto; border: 1px solid #ccc; }
+        .foto-item label { display: block; margin-top: 5px; }
+    </style>
 </head>
-
 <body>
-    <button class="siguienteTurno">Boton</button>
-    <button class="siguienteTurno">Boton</button>
-    <button class="siguienteTurno">Boton</button>
-    <button class="siguienteTurno">Boton</button>
-    <button>Boton2</button>
-    <button>Boton2</button>
+    <h2>Editar moto: <?= htmlspecialchars($moto['marca'] . ' ' . $moto['modelo']) ?></h2>
+    <form action="actualizar_moto.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= $id ?>">
+        
+        <label>Marca: <input type="text" name="marca" value="<?= htmlspecialchars($moto['marca']) ?>" required></label><br>
+        <label>Modelo: <input type="text" name="modelo" value="<?= htmlspecialchars($moto['modelo']) ?>" required></label><br><br>
 
-    <script>
-        let update = false;
-        document.addEventListener('click', function(event) {
-            let target = event.target;
-            if (target.getAttribute('class') == "siguienteTurno") {
-                console.log("Cambio de turno");
-                update = true;
-            } else {
-                console.log("No cambio de turno");
-                update = false
-            }
+        <h3>Fotos actuales</h3>
+        <?php if (empty($fotos)): ?>
+            <p>No hay fotos para esta moto.</p>
+        <?php else: ?>
+            <?php foreach ($fotos as $index => $foto): 
+                $nombre_archivo = basename($foto);
+            ?>
+                <div class="foto-item">
+                    <img src="<?= $foto ?>" alt="Foto <?= $nombre_archivo ?>">
+                    <label>
+                        <input type="checkbox" name="eliminar_fotos[]" value="<?= $nombre_archivo ?>">
+                        Eliminar esta foto
+                    </label>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
+        <h3>Añadir nuevas fotos</h3>
+        <input type="file" name="nuevas_fotos[]" accept="image/*" multiple><br><br>
 
-            fetch("loQueQuieras.php", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({update: update})
-                })
-                .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(error => {
-                    console.error("Error en fetch:", error);
-                });
-        });
-    </script>
-
-    <!-- loQueQuieras.php -->
-    <?php
-    $json = file_get_contents('php://input');
-
-    //Convertir de json a php
-    $data = json_decode($json, true);
-    error_log($json);
-    //Se asegura de que si el valor es null, asigne null a la variable y no de error
-    $update = $data['update'] ?? null;
-    ?>
+        <button type="submit">Guardar cambios</button>
+        <a href="listar_motos.php">Cancelar</a>
+    </form>
 </body>
-
 </html>

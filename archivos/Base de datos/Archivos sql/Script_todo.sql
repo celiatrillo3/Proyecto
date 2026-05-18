@@ -11,7 +11,7 @@ CREATE TABLE moto(
   año NUMERIC NULL,
   color VARCHAR(20) NOT NULL,
   historia VARCHAR(1000) NULL,
-  tipo VARCHAR(20) NULL,
+  tipo VARCHAR(20) NULL DEFAULT "Ciclomotor",
   marca_id INTEGER NOT NULL
 ) ENGINE InnoDB;
 

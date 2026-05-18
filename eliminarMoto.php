@@ -6,7 +6,8 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
-$errorAñadirMoto = "";
+$motoEliminada = "";
+$carpetaBorrada = false;
 
 if (isset($_GET['moto'])) {
     $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id =" . $_GET['moto'] . ";";
@@ -16,29 +17,51 @@ if (isset($_GET['moto'])) {
     while ($ruta = $resultado->fetch_assoc()) {
         array_push($resultadoRutas, $ruta);
     }
-
-    var_dump($resultadoRutas);
     $contador = 0;
     $barra = "/";
     $rutaCarpeta = "";
-    var_dump($resultadoRutas[0]['ruta_imagen']);
-    var_dump(strlen($resultadoRutas[0]['ruta_imagen']));
-    for ($i=0; $i < strlen($resultadoRutas[0]['ruta_imagen']); $i++) { 
+    for ($i = 0; $i < strlen($resultadoRutas[0]['ruta_imagen']); $i++) {
         if ($resultadoRutas[0]['ruta_imagen'][$i] != $barra) {
-            $rutaCarpeta = $rutaCarpeta + $resultadoRutas[0]['ruta_imagen'][$i];
-        }elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 0) {
-            $rutaCarpeta = $rutaCarpeta + $resultadoRutas[0]['ruta_imagen'][$i];
-        }elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 1) {
+            $rutaCarpeta = $rutaCarpeta . $resultadoRutas[0]['ruta_imagen'][$i];
+        } elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 0) {
+            $rutaCarpeta = $rutaCarpeta . $resultadoRutas[0]['ruta_imagen'][$i];
+            $contador++;
+        } elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 1) {
             break;
         }
     }
 
-    var_dump($rutaCarpeta);
+
+    if (is_dir($rutaCarpeta)) {
+        $archivos = glob($rutaCarpeta . '/*');
+        foreach ($archivos as $archivo) {
+            if (is_file($archivo)) {
+                unlink($archivo);
+            }
+        }
+
+        if (rmdir($rutaCarpeta)) {
+            $carpetaBorrada = true;
+        }
+    }
+
+    if ($carpetaBorrada) {
+        $sentencia = "DELETE FROM imagen WHERE moto_id = " . $_GET['moto'] . ";";
+        $resultado = $db->query($sentencia);
+
+        if ($resultado) {
+            if ($db->affected_rows > 0) {
+                $sentencia = "DELETE FROM moto WHERE id_moto = " . $_GET['moto'] . ";";
+                $resultado = $db->query($sentencia);
+                if ($db->affected_rows > 0) {
+                    $motoEliminada = "<a href='coleccion.php' class='mt-5'><div class='favoritosDivError'>El ciclomotor fue eliminado correctamente.</div></a>";
+                }
+            }
+        }
+    }
 }
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -156,7 +179,11 @@ if (isset($_GET['moto'])) {
                 </div>
             </header>
             <main>
-
+                <?php
+                if (isset($motoEliminada)) {
+                    echo $motoEliminada;
+                }
+                ?>
             </main>
             <footer id="footerUsuario">
                 <div class="container-fluid py-5">

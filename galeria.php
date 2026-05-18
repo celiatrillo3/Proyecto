@@ -64,7 +64,7 @@ while ($ruta = $resultado->fetch_assoc()) {
                                     <a href="galeria.php" class="enlacesMenu">GALERÍA</i></a>
                                 </li>
                                 <li class="nav-item d-flex">
-                                    <a href="coleccion.php" class="enlacesIconos d-flex align-self-start" id="buscador"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                    <a href="coleccion.php" class="enlacesIconos d-flex align-self-start" id="buscador"><i class="fa-solid fa-magnifying-glass mt-2"></i></a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="favoritos.php" class="enlacesIconos botonesIconos visto">FAVORITOS</a>
