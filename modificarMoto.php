@@ -23,9 +23,9 @@ if ($_GET['moto']) {
 
     $sentencia = "SELECT ruta_imagen FROM imagen WHERE mot_id = " . $_GET['moto'] . ";";
     $resultado = $db->query($sentencia);
-    $listaRutas
+    $listaRutas = [];
     while ($ruta = $resultado->fetch_assoc()) {
-        
+        ar_p
     }
 }
 ?>
