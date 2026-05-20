@@ -21,7 +21,12 @@ if ($_GET['moto']) {
         array_push($listaMoto, $moto);
     }
 
-    var_dump($listaMoto);
+    $sentencia = "SELECT ruta_imagen FROM imagen WHERE mot_id = " . $_GET['moto'] . ";";
+    $resultado = $db->query($sentencia);
+    $listaRutas
+    while ($ruta = $resultado->fetch_assoc()) {
+        
+    }
 }
 ?>
 <!DOCTYPE html>
