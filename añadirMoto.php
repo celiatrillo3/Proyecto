@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function sanitizar_nombre($texto)
 {
-    $texto = mb_strtolower($texto, 'UTF-8');
+    $texto = strtolower($texto);
     $texto = preg_replace('/[^a-z0-9]/', '_', $texto);
     $texto = preg_replace('/_+/', '_', $texto);
     return trim($texto, '_');
