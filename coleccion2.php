@@ -6,6 +6,7 @@ session_start();
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+$textoFavoritos = "";
 
 if (isset($_GET['moto'])) {
     //Variable de sesión que guarda la actividad del usuario para luego mostrarla en su cuenta
@@ -39,6 +40,15 @@ if (isset($_GET['moto'])) {
     while ($comentario = $resultado->fetch_assoc()) {
         array_push($listaResultadoComentarios, $comentario);
     }
+
+    //Consulta favoritos
+    $sentencia = "SELECT moto_id FROM favoritos WHERE moto_id = " . $_GET['moto'] . ";";
+    $resultado = $db->query($sentencia);
+    if ($resultado -> num_rows == 0) {
+        $textoFavoritos = "Añadir a favoritos";
+    }else{
+        $textoFavoritos = "Eliminar de favoritos";
+    }
 }
 
 //Añade un comentario a la moto
@@ -57,6 +67,7 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
         exit;
     }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -233,7 +244,10 @@ if (isset($_POST['nuevoComentario']) && isset($_POST['puntuacion'])) {
                                 <i class="fas fa-quote-left me-2"></i>
                                 <p id="coleccion2HistoriaP"></p>
                             </div>
-                            <button id="botonFavoritos" class="">Añadir a favoritos</button>
+                            <?php 
+                                echo "<button id='botonFavoritos'>" . $textoFavoritos . "</button>";
+                            ?>
+                            
                         </div>
                     </div>
 

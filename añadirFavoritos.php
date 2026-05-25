@@ -26,6 +26,9 @@
         if ($resultado -> num_rows == 0) {
             $sentencia = "INSERT INTO favoritos(usuario_id, moto_id) VALUES ($idUsuario, $idMoto)";
             $resultado = $db->query($sentencia);
+        }else{
+            $sentencia = "DELETE FROM favoritos WHERE moto_id = " . $idMoto . ";";
+            $resultado = $db->query($sentencia);
         }
     } else {
         header("Location: login.php");
