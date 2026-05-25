@@ -158,10 +158,19 @@ for (const comentario of listaComentarios) {
     divComentarios.appendChild(div);
 }
 
+//Manda a PHP el id de la moto para añadirla o eliminarla de favoritos
 function favoritos() {
     let idMoto;
     for (const element of listaMotos) {
         idMoto = element['id_moto'];
+    }
+
+    if (botonFavoritos.textContent == "Añadir a favoritos") {
+        botonFavoritos.textContent = "Eliminar de favoritos";
+        console.log("eliminar");
+    }else{
+        botonFavoritos.textContent = "Añadir a favoritos";
+        console.log("añadir");
     }
     
     fetch("añadirFavoritos.php", {

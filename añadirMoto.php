@@ -94,9 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sentencia = "SELECT id_marca FROM marca WHERE nombre = '" . $_POST['marca'] . "';";
         $resultado = $db->query($sentencia);
-
-        if ($resultado->num_rows == 0) {
-            $sentencia = "SELECT id_pais FROM pais WHERE nombre = '" . $_POST['pais'] . "';";
+        
+        
+        if ($resultado->num_rows <= 0) {
+            $sentencia = "SELECT id_pais FROM pais WHERE nombre_pais = '" . $_POST['paises'] . "';";
             $resultado = $db->query($sentencia);
 
             while ($id = $resultado->fetch_assoc()) {
@@ -111,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $idMarca = $id['id_marca'];
             }
         }
-    
+        
     $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] . "','" . $_POST['año'] . "','" . $_POST['color'] . "','" . $_POST['historia'] . "','" . $idMarca . "')";
     $resultado = $db->query($sentencia);
     $idMoto = $db->insert_id;

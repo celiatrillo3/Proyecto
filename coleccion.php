@@ -52,7 +52,8 @@ if (isset($listaResultadoBuscador)) {
                     JOIN moto m ON i.moto_id = m.id_moto 
                     JOIN marca ma ON m.marca_id = ma.id_marca 
                     JOIN pais p ON ma.pais_id = p.id_pais 
-                    WHERE i.ruta_imagen LIKE '%1.JPG';";
+                    WHERE i.ruta_imagen LIKE '%1.JPG'
+                    ORDER BY id_moto DESC";
     $resultado = $db->query($sentencia);
 
     while ($moto = $resultado->fetch_assoc()) {
