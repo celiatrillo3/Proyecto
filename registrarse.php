@@ -4,6 +4,7 @@
         require_once "db.php";
     $errorLogin = "";
 
+    //Se comprueban los valores uno a uno para identificar más facil los errores y guardarlo en la variable, solo se guarda el primer error porque si salta error ya no pasa por las demás comprobaciones
     if (isset($_POST['user'], $_POST['email'], $_POST['password'], $_POST['password2'])) {
         $user = $_POST['user'];
         $email = $_POST['email'];
@@ -56,6 +57,7 @@
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
     <link rel="stylesheet" href="estilos/estilos.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 </head>
 <!-- EL DROPDOWN MENU ORDENADO POR AÑOS -->
 
@@ -67,8 +69,9 @@
                     <div class="container-fluid">
                         <div id="titulo" >
                             <a href="index.php" class="ms-5 mb-2 d-flex flex-column p-0">
-                                <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
-                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4>
+                                <!-- <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
+                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4> -->
+                                <img src="img/logomc.png" class="imgLogo" alt="">
                             </a>
                         </div>
 
@@ -277,7 +280,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/registrarse.js"></script>
+    <script src="js/login.js"></script>
 </body>
 
 </html>

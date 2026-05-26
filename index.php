@@ -29,7 +29,7 @@
                             <a href="index.php" class="ms-5 mb-2 d-flex flex-column p-0">
                                 <!-- <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
                                 <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4> -->
-                                <img src="img/logomc.png" alt="" style="width: 30vh; height:auto;">
+                                <img src="img/logomc.png" class="imgLogo" alt="">
                             </a>
                         </div>
 

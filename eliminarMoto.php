@@ -17,9 +17,13 @@ if (isset($_GET['moto'])) {
     while ($ruta = $resultado->fetch_assoc()) {
         array_push($resultadoRutas, $ruta);
     }
+
+    //El contador cuenta el numero de barras
     $contador = 0;
     $barra = "/";
     $rutaCarpeta = "";
+
+    //Recorre la ruta hasta que llegue a una /, y se corta el bucle si el contador esta en uno. Para saber cual es la carpeta necesitamos "imgs_motos/nombre_carpeta" por lo que la primera barra es necesaria pero cuando llegue a la segunda barra quiere decir que son las imagenes y eso no hace falta entonces corta el bucle
     for ($i = 0; $i < strlen($resultadoRutas[0]['ruta_imagen']); $i++) {
         if ($resultadoRutas[0]['ruta_imagen'][$i] != $barra) {
             $rutaCarpeta = $rutaCarpeta . $resultadoRutas[0]['ruta_imagen'][$i];
@@ -32,6 +36,7 @@ if (isset($_GET['moto'])) {
     }
 
 
+    //Si la ruta es un directorio borra todos los archivos del interior para poder borrar la carpeta después
     if (is_dir($rutaCarpeta)) {
         $archivos = glob($rutaCarpeta . '/*');
         foreach ($archivos as $archivo) {
@@ -40,11 +45,13 @@ if (isset($_GET['moto'])) {
             }
         }
 
+        //Borra la carpeta
         if (rmdir($rutaCarpeta)) {
             $carpetaBorrada = true;
         }
     }
 
+    //Si la carpeta se borro, borra primero las rutas de las imagenes y despues la moto
     if ($carpetaBorrada) {
         $sentencia = "DELETE FROM imagen WHERE moto_id = " . $_GET['moto'] . ";";
         $resultado = $db->query($sentencia);
@@ -77,9 +84,8 @@ if (isset($_GET['moto'])) {
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
     <link rel="stylesheet" href="estilos/estilos.css">
-    <link rel="icon" type="image/x-icon" href="img/favicon4.png">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
 
@@ -90,8 +96,9 @@ if (isset($_GET['moto'])) {
                     <div class="container-fluid">
                         <div id="titulo">
                             <a href="index.php" class="ms-5 mb-2 d-flex flex-column p-0">
-                                <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
-                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4>
+                                <!-- <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
+                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4> -->
+                                <img src="img/logomc.png" class="imgLogo" alt="">
                             </a>
                         </div>
 

@@ -1,3 +1,4 @@
+//Función para mostrar la contraseña
 function mostrarContraseña(event) {
     let target = event.currentTarget;
     let input = target.previousElementSibling;

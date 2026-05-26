@@ -9,12 +9,15 @@ if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
     $user = $_POST['loginUser'];
     $password = SHA1($_POST['loginPassword']);
 
+    //Comprueba que el usuario y la contraseña sean los correctos
     $sentencia = "SELECT id_usuario, administrador FROM usuarios WHERE usuario = '$user' AND contraseña = '$password'";
 
     $resultado = $db->query($sentencia);
 
     while ($usuario = $resultado->fetch_assoc()) {
         $id = $usuario['id_usuario'];
+
+        //Admin es una variable booleana que si esta a true tienes permisos de administrador
         $admin = $usuario['administrador'];
     }
 
@@ -45,6 +48,7 @@ if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
     <link rel="stylesheet"
         href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
     <link rel="stylesheet" href="estilos/estilos.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 </head>
 <!-- EL DROPDOWN MENU ORDENADO POR AÑOS -->
 
@@ -56,8 +60,9 @@ if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
                     <div class="container-fluid">
                         <div id="titulo">
                             <a href="index.php" class="ms-5 mb-2 d-flex flex-column p-0">
-                                <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
-                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4>
+                                <!-- <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
+                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4> -->
+                                <img src="img/logomc.png" class="imgLogo" alt="">
                             </a>
                         </div>
 
@@ -146,6 +151,7 @@ if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
                             <p>Accede a tu cuenta</p>
                         </div>
                         <?php
+                        //Error de inicio de sesión
                         if ($errorLogin != "") {
                             echo "<div class='alert alert-danger'> " . $errorLogin . " </div>";
                         }

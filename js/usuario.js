@@ -11,21 +11,20 @@ if (resultadoUsuario.length != 0) {
     usuarioEmail.parentNode.appendChild(usuarioCorreo);
 }
 
-
-
 //Añadir última moto vista
 if (resultadoVisto.length != 0) {
-    console.log("entra");
     let vistoReciente = document.getElementById('usuarioVistoReciente');
+
+    //Añade la imagen
     let div = document.createElement('div');
     div.setAttribute('class', 'col-sm-10 col-md-8 col-lg-6 me-4 mb-4');
     let img = document.createElement('img');
     img.setAttribute('src', resultadoVisto[0]['ruta_imagen']);
     img.setAttribute('class', 'img-fluid');
-    console.log(resultadoVisto[0]['ruta_imagen']);
     div.appendChild(img);
     vistoReciente.appendChild(div);
 
+    //Añade la información de la moto
     let div2 = document.createElement('div');
     div2.setAttribute('class', 'col-sm-10 col-md-8 col-lg-5 mb-4 d-flex flex-column align-items-start');
     div2.setAttribute('id', 'usuarioContenedorInfoVistoReciente');
@@ -55,6 +54,7 @@ if (resultadoVisto.length != 0) {
     button.setAttribute('class', 'enlacesIconos botonesIconos visto  align-self-end');
     button.textContent = "VER MÁS";
 
+    //AppendChilds
     div3.appendChild(i);
     div3.appendChild(p);
 
@@ -66,10 +66,6 @@ if (resultadoVisto.length != 0) {
 
     vistoReciente.appendChild(div2);
 }
-
-
-
-
 
 
 //Añadir últimos comentarios

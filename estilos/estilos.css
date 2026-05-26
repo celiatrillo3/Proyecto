@@ -23,10 +23,11 @@
 }
 
 .fs-10 {
-  font-size: calc(1.375rem + 3.5vw) !important;
+    font-size: calc(1.375rem + 3.5vw) !important;
 }
+
 .min-vw-50 {
-  min-width: 50vw !important;
+    min-width: 50vw !important;
 }
 
 /* BODY */
@@ -43,7 +44,7 @@
 }
 
 /* Fondo gris */
-#paginaGris{
+#paginaGris {
     font-family: crimsonText;
     min-height: 100vh;
     background-color: var(--color-primario);
@@ -63,6 +64,7 @@
     display: flex;
     flex-direction: column;
 }
+
 a {
     text-decoration: none;
 }
@@ -80,15 +82,20 @@ header a {
 
 
 /* TITULO */
-#titulo {
+/* #titulo {
     font-family: playfair;
-}
+} */
 
-#titulo h1{
+/* #titulo h1{
     letter-spacing: 2px;
     background: linear-gradient(135deg, #fff, var(--color-acento));
     background-clip: text;
     color: transparent;
+} */
+
+.imgLogo {
+    width: 30vh;
+    height: auto;
 }
 
 /* NAV */
@@ -117,12 +124,12 @@ nav a {
     transition: all 0.3s ease;
 }
 
-.subcontenedorMenuDinamico{
+.subcontenedorMenuDinamico {
     margin: 10px;
     min-width: 140px;
 }
 
-.subcontenedorMenuDinamico:not(:last-child){
+.subcontenedorMenuDinamico:not(:last-child) {
     border-right: var(--color-acento) 1px solid;
 }
 
@@ -132,11 +139,11 @@ nav a {
     padding-right: 15px;
 }
 
-#contenedorMenuDinamico ul{
+#contenedorMenuDinamico ul {
     padding-left: 0;
 }
 
-#contenedorMenuDinamico li{
+#contenedorMenuDinamico li {
     list-style: none;
 }
 
@@ -311,7 +318,7 @@ nav a {
 /* MAIN LOGIN */
 
 /* SECTION LOGIN */
-#contenedorLogin{
+#contenedorLogin {
     background-color: var(--color-primario);
     font-family: playfair;
     color: var(--color-texto1);
@@ -327,76 +334,81 @@ nav a {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-#contenedorLogin h1{
+#contenedorLogin h1 {
     color: var(--color-acento);
     font-weight: bold;
 }
 
 /* LABEL */
-#contenedorLogin label{
+#contenedorLogin label {
     font-weight: bold;
 }
 
 /* INPUT */
-.loginContenedorInput{
+.loginContenedorInput {
     border: rgb(244, 241, 234, 0.3) 1px solid;
     background-color: var(--color-primario) !important;
 }
-.loginContenedorInput i{
+
+.loginContenedorInput i {
     color: var(--color-acento);
 }
 
-#contenedorLogin input{
+#contenedorLogin input {
     background-color: transparent;
     border: none;
     outline: none;
     color: var(--color-texto1);
 }
 
-.loginSeparador::before, .loginSeparador::after{
+.loginSeparador::before,
+.loginSeparador::after {
     content: '';
     flex: 1;
     border-bottom: 1px solid var(--color-texto1);
 }
 
-.loginSeparador span{
+.loginSeparador span {
     padding: 0 10px;
     font-size: 0.9rem;
 }
 
 /* BOTON INICIAR SESION */
-#loginBotonIniciarSesion{
+#loginBotonIniciarSesion {
     background-color: var(--color-acento);
     border: none;
     font-weight: bold;
     transition: 0.3s;
 }
-#loginBotonIniciarSesion:hover{
-    text-shadow: 0 0 5px var(--color-acento), 
-                 0 0 25px var(--color-acento), 
-                 0 0 50px var(--color-acento);
+
+#loginBotonIniciarSesion:hover {
+    text-shadow: 0 0 5px var(--color-acento),
+        0 0 25px var(--color-acento),
+        0 0 50px var(--color-acento);
 
 }
 
-#registro a{
+#registro a {
     color: var(--color-texto1);
     transition: 0.3s;
 }
-#registro a:hover{
+
+#registro a:hover {
     color: #fff;
-    text-shadow: 0 0 5px var(--color-acento), 
-                 0 0 25px var(--color-acento), 
-                 0 0 50px var(--color-acento);
+    text-shadow: 0 0 5px var(--color-acento),
+        0 0 25px var(--color-acento),
+        0 0 50px var(--color-acento);
 }
 
 /* ICONOS DE MARCAS LOGIN */
-.loginContenedorIconos a{
+.loginContenedorIconos a {
     color: var(--color-texto1);
     text-decoration: none;
 
@@ -411,7 +423,7 @@ nav a {
 
 }
 
-.loginContenedorIconos a:hover{
+.loginContenedorIconos a:hover {
     color: var(--color-primario);
     background-color: var(--color-acento);
 }
@@ -419,7 +431,7 @@ nav a {
 /* MAIN REGISTRO */
 
 /* SECTION REGISTRO */
-#contenedorRegistro{
+#contenedorRegistro {
     background-color: var(--color-primario);
     font-family: playfair;
     color: var(--color-texto1);
@@ -430,26 +442,27 @@ nav a {
     margin-bottom: 150px;
 }
 
-#contenedorRegistro h1{
+#contenedorRegistro h1 {
     color: var(--color-acento);
     font-weight: bold;
 }
 
 /* LABEL */
-#contenedorLogin label{
+#contenedorLogin label {
     font-weight: bold;
 }
 
 /* INPUT */
-.registroContenedorInput{
+.registroContenedorInput {
     border: rgb(244, 241, 234, 0.3) 1px solid;
     background-color: var(--color-primario) !important;
 }
-.registroContenedorInput i{
+
+.registroContenedorInput i {
     color: var(--color-acento);
 }
 
-#contenedorRegistro input{
+#contenedorRegistro input {
     background-color: transparent;
     border: none;
     outline: none;
@@ -457,16 +470,17 @@ nav a {
 }
 
 /* BOTON INICIAR SESION */
-#registroBotonIniciarSesion{
+#registroBotonIniciarSesion {
     background-color: var(--color-acento);
     border: none;
     font-weight: bold;
     transition: 0.3s;
 }
-#registroBotonIniciarSesion:hover{
-    text-shadow: 0 0 5px var(--color-acento), 
-                 0 0 25px var(--color-acento), 
-                 0 0 50px var(--color-acento);
+
+#registroBotonIniciarSesion:hover {
+    text-shadow: 0 0 5px var(--color-acento),
+        0 0 25px var(--color-acento),
+        0 0 50px var(--color-acento);
 
 }
 
@@ -476,54 +490,54 @@ nav a {
 
 /* Contenedor del buscador */
 .search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 400px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  padding: 5px 10px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 5px 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
 }
 
 /* Input */
 .search-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 10px;
-  background: transparent;
-  color: white;
-  font-size: 14px;
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+    background: transparent;
+    color: white;
+    font-size: 14px;
 }
 
 /* Placeholder */
 .search-container input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* Botón */
 .search-container button {
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 8px 10px;
-  cursor: pointer;
-  color: white;
-  transition: 0.3s;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
 }
 
 /* Hover */
 .search-container button:hover {
-  background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 
 
 /* CONTENEDOR DE LA IMAGEN DE LA MOTO */
-.coleccionImagenMoto{
+.coleccionImagenMoto {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
@@ -531,14 +545,15 @@ nav a {
     background: var(--color-texto1);
     cursor: pointer;
 }
-.coleccionImagenMoto img{
+
+.coleccionImagenMoto img {
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
 /* TEXTO DE LAS IMAGENES */
-.coleccionInformacionMoto{
+.coleccionInformacionMoto {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -546,6 +561,7 @@ nav a {
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
 .coleccionInformacionMoto h5 {
     font-family: playfair;
     font-weight: bold;
@@ -578,7 +594,7 @@ nav a {
 }
 
 /* BORDE DE LA FOTO */
-.coleccionImagenMoto::after{
+.coleccionImagenMoto::after {
     content: '';
     position: absolute;
     top: 0;
@@ -591,7 +607,7 @@ nav a {
     transition: opacity 0.3s ease, top 0.3s ease, left 0.3s ease, right 0.3s ease, bottom 0.3s ease;
 }
 
-.coleccionImagenMoto:hover::after{
+.coleccionImagenMoto:hover::after {
     opacity: 1;
     top: 10px;
     left: 10px;
@@ -601,21 +617,67 @@ nav a {
 
 
 /* MAIN GALERIA */
-.imgGaleria img{
+#galeriaDivMain{
+    position: relative;
+}
+
+#galeriaDivPopUp{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgb(41, 49, 51, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    padding: 400px;
+}
+
+@media (max-width: 1300px){
+    #galeriaDivPopUp{
+        padding: 300px;
+    }
+}
+
+@media (max-width: 1100px){
+    #galeriaDivPopUp{
+        padding: 250px;
+    }
+}
+
+@media (max-width: 800px){
+    #galeriaDivPopUp{
+        padding: 100px;
+    }
+}
+
+@media (max-width: 600px){
+    #galeriaDivPopUp{
+        background-color: rgb(41, 49, 51, 0);
+        width: 0;
+        height: 0;
+    }
+}
+#galeriaDivPopUp img{
     border-radius: 12px;
 }
 
+.imgGaleria img {
+    border-radius: 12px;
+}
 /* MAIN COLECCION 2 */
 
 /* CONTENEDOR DE LA IMAGEN */
-#coleccion2ContenedorImg{
+#coleccion2ContenedorImg {
     padding-left: 20px;
     padding-right: 20px;
 }
-#coleccion2ContenedorImg div{
+
+#coleccion2ContenedorImg div {
     position: relative;
 }
-.coleccion2Flechas{
+
+.coleccion2Flechas {
     position: absolute;
     color: var(--color-acento);
     height: 100%;
@@ -624,38 +686,44 @@ nav a {
     justify-content: center;
     top: 0;
 }
-.coleccion2Flechas{
+
+.coleccion2Flechas {
     padding-left: 20px;
     padding-right: 20px;
 }
-.coleccion2Flechas i{
+
+.coleccion2Flechas i {
     font-size: 2rem;
 }
-#coleccion2FlechaI{
+
+#coleccion2FlechaI {
     left: 0;
 }
-#coleccion2FlechaD{
+
+#coleccion2FlechaD {
     right: 0;
 }
 
-#coleccion2Img{
+#coleccion2Img {
     border-radius: 12px;
     box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
-    transition: opacity 0.2s ease-in-out; 
+    transition: opacity 0.2s ease-in-out;
     opacity: 1;
 }
+
 .img-oculta {
     opacity: 0 !important;
 }
 
 /* CONTENEDOR DE LA INFORMACIÓN DE LA MOTO */
-#coleccion2ContenedorInfo{
+#coleccion2ContenedorInfo {
     border: 1px solid rgb(199, 137, 22, 0.5);
     border-radius: 12px;
     box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
     padding: 30px;
 }
-#coleccion2ContenedorInfo h2{
+
+#coleccion2ContenedorInfo h2 {
     color: var(--color-acento);
     font-family: playfair;
     font-weight: bold;
@@ -663,33 +731,38 @@ nav a {
     display: inline-block;
     margin-bottom: 30px;
 }
-#coleccion2Caracteristicas div{
+
+#coleccion2Caracteristicas div {
     display: flex;
 }
-#coleccion2Caracteristicas p{
+
+#coleccion2Caracteristicas p {
     margin-bottom: 0;
 }
 
-.coleccion2CaracteristicasDiv{
+.coleccion2CaracteristicasDiv {
     margin-bottom: 10px;
     padding: 8px;
     border-bottom: 2px dashed rgb(244, 241, 234, 0.2);
 }
-.coleccion2LabelInfo{
+
+.coleccion2LabelInfo {
     color: var(--color-acento);
     width: 100px;
     font-weight: bold;
 }
-.coleccion2LabelInfo p{
+
+.coleccion2LabelInfo p {
     margin-left: 15px;
     color: var(--color-acento);
 }
-.coleccion2CaracteristicasDiv > p{
+
+.coleccion2CaracteristicasDiv>p {
     color: var(--color-texto1);
-    
+
 }
 
-#coleccion2Historia{
+#coleccion2Historia {
     background-color: rgb(0, 0, 0, 0.4);
     color: var(--color-texto1);
     font-style: italic;
@@ -699,13 +772,16 @@ nav a {
     margin-bottom: 30px;
     text-align: justify;
 }
-#coleccion2Historia i{
+
+#coleccion2Historia i {
     color: var(--color-acento);
 }
-#coleccion2Historia p{
+
+#coleccion2Historia p {
     display: inline;
 }
-#coleccion2ContenedorInfo button{
+
+#coleccion2ContenedorInfo button {
     font-family: playfair;
     padding: 7px;
     background-color: var(--color-acento);
@@ -715,14 +791,15 @@ nav a {
     display: block;
     transition: all 0.3s ease;
 }
-#coleccion2ContenedorInfo button:hover{
+
+#coleccion2ContenedorInfo button:hover {
     background-color: var(--color-primario);
     color: var(--color-texto1);
     border: var(--color-acento) 2px solid;
 }
 
 /* CONTENEDOR COMENTARIOS */
-#coleccion2ContenedorComentarios{
+#coleccion2ContenedorComentarios {
     border: 1px solid rgb(199, 137, 22, 0.5);
     border-radius: 12px;
     box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
@@ -730,89 +807,104 @@ nav a {
     margin-top: 30px;
 }
 
-#coleccion2ComentariosTitulo{
+#coleccion2ComentariosTitulo {
     color: var(--color-acento);
 
     display: flex;
     flex-direction: row;
 }
-#coleccion2ComentariosTitulo i{
+
+#coleccion2ComentariosTitulo i {
     font-size: 2rem;
 }
-#coleccion2ComentariosTitulo h1{
+
+#coleccion2ComentariosTitulo h1 {
     margin-top: 0;
     padding-left: 10px;
 }
 
-#coleccion2Comentarios{
+#coleccion2Comentarios {
     max-height: 600px;
     overflow-y: auto;
 }
-.coleccion2CajaComentario{
+
+.coleccion2CajaComentario {
     background-color: rgb(0, 0, 0, 0.4);
     padding: 15px;
     border-radius: 12px;
     color: var(--color-texto1);
     margin-bottom: 20px;
 }
-.coleccion2CajaComentario div{
+
+.coleccion2CajaComentario div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.coleccion2CajaComentario > p{
+
+.coleccion2CajaComentario>p {
     margin-left: 35px;
 }
-.comentarioUsuario{
+
+.comentarioUsuario {
     font-size: 1.5em;
     color: var(--color-acento);
 }
-.comentarioUsuario > i{
+
+.comentarioUsuario>i {
     padding-right: 10px;
     margin-top: 2px;
 }
-.comentarioUsuario p{
+
+.comentarioUsuario p {
     margin-right: 10px;
 }
-.iconoEstrella{
+
+.iconoEstrella {
     font-size: 1.25rem;
     margin-top: 7px;
 }
-#coleccion2DivIconosEstrella{
+
+#coleccion2DivIconosEstrella {
     margin-top: 2px;
 }
-.estrella{
+
+.estrella {
     font-size: 1rem;
 }
 
-#coleccion2ContenedorComentarios hr{
+#coleccion2ContenedorComentarios hr {
     color: var(--color-acento);
 }
 
-#coleccion2DejaComentario{
+#coleccion2DejaComentario {
     display: flex;
     flex-direction: row;
     color: var(--color-acento);
 }
+
 /* #coleccion2DejaComentario i{
     margin-right: 10px;
 } */
-#coleccion2DejaComentario > p{
+#coleccion2DejaComentario>p {
     margin-right: 10px;
     margin-left: 10px;
 }
-#coleccion2ContenedorComentarios textarea{
+
+#coleccion2ContenedorComentarios textarea {
     height: 100px;
     width: 100%;
     resize: none;
-    box-sizing: border-box; /* importante */
+    box-sizing: border-box;
+    /* importante */
     background-color: rgb(0, 0, 0, 0.4);
     border-radius: 12px;
     border: 1px solid rgb(199, 137, 22, 0.5);
     padding: 10px;
     color: var(--color-texto1);
 }
-#coleccion2ContenedorComentarios button{
+
+#coleccion2ContenedorComentarios button {
     font-family: playfair;
     padding: 7px;
     background-color: var(--color-acento);
@@ -828,7 +920,7 @@ nav a {
 }
 
 /* FAVORITOS */
-.favoritosDivError{
+.favoritosDivError {
     background-color: var(--color-primario);
     padding: 15px;
     border-radius: 12px;
@@ -840,39 +932,45 @@ nav a {
 
 
 /* USUARIO */
-#usuarioSection{
+#usuarioSection {
     background-color: var(--color-primario);
     color: var(--color-texto1);
 }
-#usuarioInfo, #usuarioArticleVisto{
+
+#usuarioInfo,
+#usuarioArticleVisto {
     border-bottom: 1px solid var(--color-acento);
 }
-#usuarioUser, #usuarioEmail{
+
+#usuarioUser,
+#usuarioEmail {
     color: var(--color-acento);
 }
 
-#usuarioSection h4{
+#usuarioSection h4 {
     color: var(--color-acento);
 }
 
-#usuarioVistoReciente img{
+#usuarioVistoReciente img {
     border-radius: 12px;
 }
-#usuarioContenedorInfoVistoReciente{
+
+#usuarioContenedorInfoVistoReciente {
     border: 1px solid rgb(199, 137, 22, 0.5);
     border-radius: 12px;
     box-shadow: 0 15px 30px rgb(0, 0, 0, 0.5);
     padding: 30px;
 }
 
-#usuarioMoto{
+#usuarioMoto {
     color: var(--color-acento);
     font-family: playfair;
     font-weight: bold;
     border-bottom: 2px solid var(--color-acento);
     display: inline-block;
 }
-#usuarioHistoriaMoto{
+
+#usuarioHistoriaMoto {
     background-color: rgb(0, 0, 0, 0.4);
     color: var(--color-texto1);
     font-style: italic;
@@ -882,21 +980,23 @@ nav a {
     margin-bottom: 30px;
     text-align: justify;
 }
-#usuarioHistoriaMoto i{
+
+#usuarioHistoriaMoto i {
     color: var(--color-acento);
 }
-#usuarioHistoriaMoto p{
+
+#usuarioHistoriaMoto p {
     display: inline;
 }
 
-#usuarioArticleComentarios h4{
+#usuarioArticleComentarios h4 {
     margin-bottom: 0;
 }
 
 
 /* AÑADIR MOTO */
 
-#contenedorAñadirMoto{
+#contenedorAñadirMoto {
     background-color: var(--color-primario);
     font-family: playfair;
     color: var(--color-texto1);
@@ -907,38 +1007,42 @@ nav a {
     margin-top: 30px;
     margin-bottom: 30px;
 }
-#contenedorAñadirMoto h1{
+
+#contenedorAñadirMoto h1 {
     color: var(--color-acento);
     font-weight: bold;
 }
 
-#contenedorAñadirMoto label{
+#contenedorAñadirMoto label {
     font-weight: bold;
 }
 
 
 /* INPUT */
-.añadirMotoContenedorInput{
+.añadirMotoContenedorInput {
     border: rgb(244, 241, 234, 0.3) 1px solid;
     background-color: var(--color-primario) !important;
 }
-.añadirMotoContenedorInput, .añadirMotoContenedorInputSinBorde i{
+
+.añadirMotoContenedorInput,
+.añadirMotoContenedorInputSinBorde i {
     color: var(--color-acento);
 }
 
-#contenedorAñadirMoto input{
+#contenedorAñadirMoto input {
     background-color: transparent;
     border: none;
     outline: none;
     color: var(--color-texto1);
 }
+
 select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: var(--color-primario);
-  color: var(--color-texto1);
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--color-primario);
+    color: var(--color-texto1);
 }
 
 /* .archivo {

@@ -1,3 +1,4 @@
+//A partir de un array que se pasa de PHP a JavaScript se muestran todas las motos
 let contedorImgsColeccion = document.getElementById('contenedorImgsColeccion');
 for (const element of listaMotos) {
     //DIV1
@@ -47,7 +48,6 @@ for (const element of listaMotos) {
 
 
     //AppendChilds
-
     div5.appendChild(p1);
     div5.appendChild(p2);
     div5.appendChild(p3);

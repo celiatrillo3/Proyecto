@@ -44,7 +44,7 @@ if ($_GET['moto']) {
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
     <link rel="stylesheet" href="estilos/estilos.css">
-    <link rel="icon" type="image/x-icon" href="img/favicon4.png">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 </head>
 <!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
@@ -57,8 +57,9 @@ if ($_GET['moto']) {
                     <div class="container-fluid">
                         <div id="titulo">
                             <a href="index.php" class="ms-5 mb-2 d-flex flex-column p-0">
-                                <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
-                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4>
+                                <!-- <h1 class="mt-3 align-self-center fw-bold h2">MUSEO</h1>
+                                <h4 class="mt-0 align-self-center fw-bold h6">— DEL CICLOMOTOR CLÁSICO —</h4> -->
+                                <img src="img/logomc.png" class="imgLogo" alt="">
                             </a>
                         </div>
 

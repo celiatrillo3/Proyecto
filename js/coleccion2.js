@@ -1,7 +1,6 @@
 //Carrusel de las imagenes de la moto
 
-// listaRutas = JSON.stringify(listaRutas);
-// listaRutas = JSON.parse(listaRutas);
+//Se guarda en localStorage la foto que se estaba viendo para que si sales o recargas, guarda la imagen específica en la que estabas
 let coleccion2Img = document.getElementById('coleccion2Img');
 let posicion;
 if (localStorage.getItem("posicion") == null) {
@@ -13,6 +12,7 @@ if (localStorage.getItem("posicion") == null) {
 coleccion2Img.setAttribute('src', listaRutas[posicion]['ruta_imagen']);
 
 
+//Función para ponerle un efecto al cambiar de imagen, me ayude mucho con la ia en esta función
 function cambiarImagenConEfecto(nuevaPosicion) {
     let imgElement = document.getElementById('coleccion2Img');
     let rutaNueva = listaRutas[nuevaPosicion]['ruta_imagen'];
@@ -32,44 +32,60 @@ function cambiarImagenConEfecto(nuevaPosicion) {
     }
 }
 
-
+//Funciones para ir hacia alante y hacia atrás en el carrusel de imágenes de la moto
 function imgAtras() {
     let pos = parseInt(localStorage.getItem("posicion") || 0);
-    let nueva = (pos <= 0) ? listaRutas.length - 1 : pos - 1;
+    let nueva;
+    if (pos <= 0) {
+        nueva = listaRutas.length - 1;
+    } else {
+        nueva = pos - 1;
+    }
     cambiarImagenConEfecto(nueva);
 }
 
 function imgAlante() {
     let pos = parseInt(localStorage.getItem("posicion") || 0);
-    let nueva = (pos >= listaRutas.length - 1) ? 0 : pos + 1;
+    let nueva;
+    if (pos >= listaRutas.length - 1) {
+        nueva = 0;
+    } else {
+        nueva = pos + 1;
+    }
     cambiarImagenConEfecto(nueva);
 }
 
 //Mostar infomación de la moto
 for (const element of listaMotos) {
+
+    //Marca y modelo
     let marcaModelo = document.getElementById('coleccion2MarcaModelo');
     let marcaModeloTexto = element['nombre'] + " " + element['modelo'];
     marcaModelo.textContent = marcaModeloTexto;
 
+    //Año
     let año = document.getElementById('coleccion2Año');
     año.textContent = element['año'];
 
+    //Color
     let color = document.getElementById('coleccion2Color');
     color.textContent = element['color'];
 
+    //Tipo
     let tipo = document.getElementById('coleccion2Tipo');
     tipo.textContent = element['tipo'];
 
+    //Origen
     let origen = document.getElementById('coleccion2Origen');
     origen.textContent = element['nombre_pais'];
 
+    //Historia
     let historia = document.getElementById('coleccion2HistoriaP');
     historia.textContent = element['historia'];
 }
 
 
 //Evento para pintar y despintar las estrellas
-
 function pintarEstrella(estrella) {
     if (estrella.getAttribute('class') == "fi fi-rs-star estrella") {
         while (estrella.previousElementSibling != null) {
@@ -88,7 +104,6 @@ function pintarEstrella(estrella) {
 }
 
 //Delegación de eventos para pintar las estrellas 
-
 let divIconosEstrella = document.getElementById('coleccion2DivIconosEstrella');
 divIconosEstrella.addEventListener('click', function (event) {
     let target = event.target;
@@ -104,31 +119,39 @@ divIconosEstrella.addEventListener('click', function (event) {
     }
 });
 
-    //Escribir comentarios de la base de datos
+//Escribir comentarios de la base de datos
 for (const comentario of listaComentarios) {
 
-    let divComentarios= document.getElementById('coleccion2Comentarios');
+    let divComentarios = document.getElementById('coleccion2Comentarios');
 
+    //DIV1
     let div = document.createElement('div');
     div.setAttribute('class', 'coleccion2CajaComentario');
 
+    //DIV2
     let div2 = document.createElement('div');
 
+    //P1
     let p = document.createElement('p');
     p.textContent = comentario['texto'];
 
+    //DIV3
     let div3 = document.createElement('div');
     div3.setAttribute('class', 'comentarioUsuario');
 
+    //P2
     let p2 = document.createElement('p');
     p2.textContent = comentario['fecha'];
 
+    //ICONO
     let i = document.createElement('i');
     i.setAttribute('class', 'fi fi-rs-circle-user');
 
+    //P3
     let p3 = document.createElement('p');
     p3.textContent = comentario['usuario'];
 
+    //DIV4
     let div4 = document.createElement('div');
     div4.setAttribute('class', 'coleccion2DivIconosEstrellaComentarios');
 
@@ -145,6 +168,7 @@ for (const comentario of listaComentarios) {
         div4.appendChild(estrella);
     }
 
+    //AppendChilds
     div3.appendChild(i);
     div3.appendChild(p3);
     div3.appendChild(div4);
@@ -168,11 +192,11 @@ function favoritos() {
     if (botonFavoritos.textContent == "Añadir a favoritos") {
         botonFavoritos.textContent = "Eliminar de favoritos";
         console.log("eliminar");
-    }else{
+    } else {
         botonFavoritos.textContent = "Añadir a favoritos";
         console.log("añadir");
     }
-    
+
     fetch("añadirFavoritos.php", {
         method: "POST",
         credentials: "include",
@@ -181,11 +205,11 @@ function favoritos() {
         },
         body: JSON.stringify({ id_moto: idMoto })
     })
-    .then(response => response.text())
-    .then(data => console.log(data))
-    .catch(error => {
-        console.error("Error en fetch:", error);
-    });
+        .then(response => response.text())
+        .then(data => console.log(data))
+        .catch(error => {
+            console.error("Error en fetch:", error);
+        });
 
 }
 let botonFavoritos = document.getElementById('botonFavoritos');
