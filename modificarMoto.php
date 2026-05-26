@@ -6,7 +6,14 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+$errorAñadirMoto = "";
 
+$sentencia = "SELECT nombre_pais FROM pais;";
+$resultado = $db->query($sentencia);
+$resultadoPaises = [];
+while ($pais = $resultado->fetch_assoc()) {
+    array_push($resultadoPaises, $pais);
+}
 
 if ($_GET['moto']) {
     $sentencia = "SELECT m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
@@ -21,7 +28,7 @@ if ($_GET['moto']) {
         array_push($listaMoto, $moto);
     }
 
-    $sentencia = "SELECT ruta_imagen FROM imagen WHERE mot_id = " . $_GET['moto'] . ";";
+    $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_GET['moto'] . ";";
     $resultado = $db->query($sentencia);
     $listaRutas = [];
     while ($ruta = $resultado->fetch_assoc()) {
@@ -150,8 +157,8 @@ if ($_GET['moto']) {
                 <div id="login" class="text-center min-vw-50 mt-5 mb-5">
                     <div id="contenedorAñadirMoto" class="p-3 px-5 rounded-3">
                         <div>
-                            <h1 class="mb-0">NUEVO CICLOMOTOR</h1>
-                            <p>Añade una nueva joya clásica a la colección.</p>
+                            <h1 class="mb-0">MODIFICA EL CICLOMOTOR</h1>
+                            <p>Un pequeño paso por el taller.</p>
                         </div>
                         <?php
                         if ($errorAñadirMoto != "") {
@@ -219,6 +226,7 @@ if ($_GET['moto']) {
                 <script>
                     let listaMoto = <?php echo json_encode($listaMoto ?? [], JSON_UNESCAPED_UNICODE); ?>;
                     let listaRutas = <?php echo json_encode($listaRutas ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let resultadoPaises = <?php echo json_encode($resultadoPaises ?? [], JSON_UNESCAPED_UNICODE); ?>;
                 </script>
             </main>
             <footer id="footerUsuario">

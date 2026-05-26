@@ -1,24 +1,39 @@
+let optionsPaises = document.getElementById('paises');
+
+for (const pais of resultadoPaises) {
+    let option = document.createElement('option');
+    option.setAttribute('value', pais['nombre_pais']);
+    option.textContent = pais['nombre_pais'];
+    optionsPaises.appendChild(option);
+}
+
+
 let formulario = document.forms[0];
 
 for (let i = 0; i < formulario.length; i++) {
+
     switch (i) {
-        case "0":
-            formulario[0].value = listaMoto['marca'];
+        case 0:
+            formulario[i].value = listaMoto[0]['nombre'];
             break;
-        case "1":
-            formulario[0].value = listaMoto['modelo'];
+
+        case 1:
+            formulario[i].value = listaMoto[0]['modelo'];
             break;
-        case "2":
-            formulario[0].value = listaMoto['año'];
+
+        case 2:
+            formulario[i].value = listaMoto[0]['año'];
             break;
-        case "3":
-            formulario[0].value = listaMoto['color'];
+
+        case 3:
+            formulario[i].value = listaMoto[0]['color'];
             break;
-        case "4":
-            formulario[0].value = listaMoto['historia'];
+
+        case 4:
+            formulario[i].value = listaMoto[0]['historia'];
             break;
-        case "5":
-            formulario[0].value = listaMoto['nombre_pais'];
+        case 5:
+            formulario[i].value = listaMoto[0]['nombre_pais'];
             break;
     }
 }
