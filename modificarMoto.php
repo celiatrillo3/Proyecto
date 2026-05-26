@@ -25,7 +25,7 @@ if ($_GET['moto']) {
     $resultado = $db->query($sentencia);
     $listaRutas = [];
     while ($ruta = $resultado->fetch_assoc()) {
-        ar_p
+        array_push($listaRutas, $ruta);
     }
 }
 ?>
@@ -217,7 +217,8 @@ if ($_GET['moto']) {
 
 
                 <script>
-                    let resultadoPaises = <?php echo json_encode($resultadoPaises ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let listaMoto = <?php echo json_encode($listaMoto ?? [], JSON_UNESCAPED_UNICODE); ?>;
+                    let listaRutas = <?php echo json_encode($listaRutas ?? [], JSON_UNESCAPED_UNICODE); ?>;
                 </script>
             </main>
             <footer id="footerUsuario">
@@ -250,7 +251,7 @@ if ($_GET['moto']) {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/añadirMoto.js"></script>
+    <script src="js/modificarMoto.js"></script>
 </body>
 
 </html>
