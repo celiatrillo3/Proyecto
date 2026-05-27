@@ -48,11 +48,11 @@ for (let i = 0; i < listaRutas.length; i++) {
     let img = document.createElement('img');
     img.setAttribute('src', listaRutas[i]['ruta_imagen']);
     img.setAttribute('class', 'img-fluid');
-    img.setAttribute('name', 'imagenes[]');
-    img.setAttribute('value', i);
 
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
+    input.setAttribute('name', 'imagenes[]');
+    input.setAttribute('value', i);
 
     div.appendChild(img);
     div.appendChild(input);

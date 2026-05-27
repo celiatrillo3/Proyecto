@@ -6,37 +6,13 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
-$errorAñadirMoto = "";
+$motoModificada = "";
 
-$sentencia = "SELECT nombre_pais FROM pais;";
-$resultado = $db->query($sentencia);
-$resultadoPaises = [];
-while ($pais = $resultado->fetch_assoc()) {
-    array_push($resultadoPaises, $pais);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    var_dump($_POST['imagenes']);
 }
-
-if ($_GET['moto']) {
-    $sentencia = "SELECT m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
-                FROM moto m 
-                JOIN marca ma ON m.marca_id = ma.id_marca 
-                JOIN pais p ON ma.pais_id = p.id_pais 
-                WHERE m.id_moto = " . $_GET['moto'] . ";";
-
-    $resultado = $db->query($sentencia);
-    $listaMoto = [];
-    while ($moto = $resultado->fetch_assoc()) {
-        array_push($listaMoto, $moto);
-    }
-
-    $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_GET['moto'] . ";";
-    $resultado = $db->query($sentencia);
-    $listaRutas = [];
-    while ($ruta = $resultado->fetch_assoc()) {
-        array_push($listaRutas, $ruta);
-    }
-}
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,11 +30,10 @@ if ($_GET['moto']) {
     <link rel="stylesheet" href="estilos/estilos.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
 </head>
-<!-- EL DROPDOWN MENU ORDENADO POR AÑOS!!!! -->
 
 <body>
 
-    <div id="pagina">
+    <div id="paginaGris">
         <div id="pagina2" class="min-vh-100">
             <header>
                 <nav class="navbar navbar-expand-lg" id="menuSuperior">
@@ -154,82 +129,12 @@ if ($_GET['moto']) {
                     </div>
                 </div>
             </header>
-            <main class=" d-flex justify-content-center align-items-center">
-                <div id="login" class="text-center min-vw-50 mt-5 mb-5">
-                    <div id="contenedorAñadirMoto" class="p-3 px-5 rounded-3">
-                        <div>
-                            <h1 class="mb-0">MODIFICA EL CICLOMOTOR</h1>
-                            <p>Un pequeño paso por el taller.</p>
-                        </div>
-                        <?php
-                        if ($errorAñadirMoto != "") {
-                            echo "<div class='alert alert-danger'> " . $errorAñadirMoto . " </div>";
-                        }
-                        ?>
-                        <form action="modificarMoto2.php" method="post" class="d-flex flex-column" enctype="multipart/form-data">
-                            <label for="marca" class="align-self-start">Marca</label>
-                            <div class="añadirMotoContenedorInput rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-wrench-simple"></i>
-                                <input type="text" name="marca" id="marca" required autocomplete="off" class="ms-3">
-                            </div>
-
-                            <label for="modelo" class="align-self-start">Modelo</label>
-                            <div class="añadirMotoContenedorInput rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-motorcycle"></i>
-                                <input type="text" name="modelo" id="modelo" required autocomplete="off" class="ms-3">
-                            </div>
-
-                            <label for="año" class="align-self-start">Año</label>
-                            <div class="añadirMotoContenedorInput
-                         rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-calendar-days"></i>
-                                <input type="text" name="año" id="año" required autocomplete="off" class="ms-3">
-                            </div>
-
-                            <label for="color" class="align-self-start">Color</label>
-                            <div class="añadirMotoContenedorInput
-                         rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-palette"></i>
-                                <input type="text" name="color" id="color" required autocomplete="off" class="ms-3">
-                            </div>
-
-                            <label for="historia" class="align-self-start">Historia</label>
-                            <div class="añadirMotoContenedorInput
-                         rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-book-open-cover"></i>
-                                <input type="text" name="historia" id="historia" required autocomplete="off" class="ms-3">
-                            </div>
-
-                            <label for="paises" class="align-self-start">Pais</label>
-                            <div class="
-                         rounded-3 p-2 mb-4 d-flex">
-
-                                <select name="paises" id="paises" required autocomplete="off">
-                                </select>
-                            </div>
-
-                            <label class="align-self-start">Imágenes del ciclomotor</label>
-                            <div class="añadirMotoContenedorInputSinBorde
-                         rounded-3 p-2 mb-4 d-flex">
-                                <i class="fi fi-rs-graphic-style pe-3"></i>
-                                <label for="archivo" class="fw-light" id="labelInputArchivos" class="ms-3">SELECCIONAR ARCHIVOS</label>
-                                <input type="file" id="archivo" name="archivos[]" class="archivo" accept=".jpg, image/jpg" multiple>
-                            </div>
-
-                            <label for="" id="labelModificarImagenes">Imágenes existentes, selecciona las que quieras <span>MANTENER</span></label>
-                            <div id="modificarImagenes" class="row justify-content-center mt-3 gap-3">
-                                
-                            </div>
-                            <button type="submit" id="loginBotonIniciarSesion" class="mt-2 mb-4 p-2 py-2 rounded-3 w-75 align-self-center">Modificar</button>
-                        </form>
-                    </div>
-                </div>
-
-                <script>
-                    let listaMoto = <?php echo json_encode($listaMoto ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                    let listaRutas = <?php echo json_encode($listaRutas ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                    let resultadoPaises = <?php echo json_encode($resultadoPaises ?? [], JSON_UNESCAPED_UNICODE); ?>;
-                </script>
+            <main>
+                <?php
+                if (isset($motoModificada)) {
+                    echo $motoModificada;
+                }
+                ?>
             </main>
             <footer id="footerUsuario">
                 <div class="container-fluid py-5">
@@ -261,7 +166,7 @@ if ($_GET['moto']) {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/modificarMoto.js"></script>
+    <script src="js/añadirMoto.js"></script>
 </body>
 
 </html>
