@@ -1045,11 +1045,11 @@ select {
     color: var(--color-texto1);
 }
 
-/* .archivo {
+.archivo {
     opacity: 0;
     overflow: hidden;
     pointer-events: none;
-} */
+}
 
 /* .btn-archivo {
     display: inline-flex;
@@ -1082,6 +1082,17 @@ select {
 }
 
 
+/* MODIFICAR MOTO */
+#labelModificarImagenes span{
+    color: var(--color-acento);
+}
+
+#modificarImagenes img{
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 12px;
+}
 
 /* FOOTER */
 footer {

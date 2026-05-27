@@ -216,12 +216,26 @@ if ($_GET['moto']) {
                                 <label for="archivo" class="fw-light" id="labelInputArchivos" class="ms-3">SELECCIONAR ARCHIVOS</label>
                                 <input type="file" id="archivo" name="archivos[]" class="archivo" required accept=".jpg, image/jpg" multiple>
                             </div>
-                            <button type="submit" id="loginBotonIniciarSesion" class="mt-2 mb-4 p-2 py-2 rounded-3 w-75 align-self-center">Añadir</button>
+
+                            <label for="" id="labelModificarImagenes">Imágenes existentes, selecciona las que quieras <span>MANTENER</span></label>
+                            <div id="modificarImagenes" class="row justify-content-center mt-3 gap-3">
+                                <!-- <div class="col-sm-11 col-md-5 col-lg-3">
+                                    <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid">
+                                    <input type="checkbox">
+                                </div> 
+                                <div class="col-sm-11 col-md-5 col-lg-3">
+                                    <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid">
+                                    <input type="checkbox">
+                                </div>
+                                <div class="col-sm-11 col-md-5 col-lg-3">
+                                    <img src="imgs_motos/atala_califfone/1.JPG" alt="" class="img-fluid">
+                                    <input type="checkbox">
+                                </div> -->
+                            </div>
+                            <button type="submit" id="loginBotonIniciarSesion" class="mt-2 mb-4 p-2 py-2 rounded-3 w-75 align-self-center">Modificar</button>
                         </form>
                     </div>
                 </div>
-
-
 
                 <script>
                     let listaMoto = <?php echo json_encode($listaMoto ?? [], JSON_UNESCAPED_UNICODE); ?>;
