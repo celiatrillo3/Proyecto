@@ -52,7 +52,9 @@ for (let i = 0; i < listaRutas.length; i++) {
     let input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('name', 'imagenes[]');
-    input.setAttribute('value', i);
+    let i2 = i + 1;
+    let valorInput = i2 + ".JPG";
+    input.setAttribute('value', valorInput);
 
     div.appendChild(img);
     div.appendChild(input);

@@ -49,3 +49,22 @@ function crearCarpeta($contador){
         return $rutasImagenesNueva;
     }
 }
+
+function buscarRutaCarpeta($ruta){
+    $contador = 0;
+    $barra = "/";
+    $rutaCarpeta = "";
+
+    for ($i = 0; $i < strlen($ruta); $i++) {
+        if ($ruta[$i] != $barra) {
+            $rutaCarpeta = $rutaCarpeta . $ruta[$i];
+        } elseif ($ruta[$i] == $barra && $contador == 0) {
+            $rutaCarpeta = $rutaCarpeta . $ruta[$i];
+            $contador++;
+        } elseif ($ruta[$i] == $barra && $contador == 1) {
+            break;
+        }
+    }
+
+    return $rutaCarpeta;
+}

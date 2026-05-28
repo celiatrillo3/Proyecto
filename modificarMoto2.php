@@ -13,19 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
     $imagenes = $_POST['imagenes'];
+    var_dump($imagenes);
 
     $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
     $resultado = $db->query($sentencia);
     $rutaAnterior = [];
     while ($ruta = $resultado->fetch_assoc()) {
         foreach ($imagenes as $key => $value) {
-            if (!str_contains($ruta['ruta_imagen'], $value)) {
+            if (str_contains($ruta['ruta_imagen'], $value)) {
                 array_push($rutaAnterior, $ruta);
             }
-        }    
-    
+        }
     }
 
+    echo "ruta anterior";
     var_dump($rutaAnterior);
 
     // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
@@ -36,7 +37,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
     // $rutaCarpetaAnterior = 'imgs_motos/' . $carpetaNombreAnterior;
 
     if (is_dir($rutaCarpeta)) {
-        $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
+        // $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
+
+        $imagenesCarpeta = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
+        $contador = 1;
+        $rutasImagenes = [];
+
+        foreach ($imagenesCarpeta as $rutaAntigua) {
+            $mantener = false;
+            foreach ($imagenes as $imagen) {
+                if (str_contains($rutaAntigua, $imagen)) {
+                    $mantener = true;
+                    break;
+                }
+            }
+            if (!$mantener && is_file($rutaAntigua)) {
+                echo "unlink";
+                var_dump($rutaAntigua);
+                unlink($rutaAntigua);
+            }
+        }
+
+        $imagenesCarpeta = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
+
+        foreach ($imagenesCarpeta as $rutaAntigua) {
+            $nombreNuevo = $contador . ".JPG";
+            $rutaNueva = $rutaCarpeta . "/" . $nombreNuevo;
+
+            if (rename($rutaAntigua, $rutaNueva)) {
+                $contador++;
+            }
+        }
+
+        if ($_FILES['archivos'] != null) {
+            $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
+        }
+
+        
 
         // Si no existe, la creamos
     } elseif (!mkdir($rutaCarpeta, 0755, true)) {
@@ -47,22 +84,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
 
         if ($imagenes != null) {
             for ($i = 0; $i < count($imagenes); $i++) {
-                $rutaArchivoNueva = $rutaCarpeta . "/" . $imagenes[$i];
+                $rutaArchivoNueva = $rutaCarpeta . "/" . $contador . ".JPG";
                 if (rename($rutaAnterior[$i]['ruta_imagen'], $rutaArchivoNueva)) {
                     $contador++;
                     array_push($rutasImagenes, $rutaArchivoNueva);
-                    
                 }
             }
 
+            echo "rutas imagenes antes de la funcion";
             var_dump($rutasImagenes);
 
             if ($_FILES['archivos'] != null) {
                 $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
+
+                echo "rutas imagenes nuevas";
+                var_dump($rutasImagenesNuevas);
             }
-        }else if ($_FILES['archivos'] != null) {
+        } else if ($_FILES['archivos'] != null) {
             $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
+            var_dump($rutasImagenesNuevas);
         }
+    }
+
+    $sentencia = "UPDATE moto m
+                    JOIN marca ma ON m.marca_id = ma.id_marca
+                    JOIN pais p ON ma.pais_id = p.id_pais
+                    SET ma.nombre = '" . $_POST['marca'] . "',
+                        m.modelo = '" . $_POST['modelo'] . "',
+                        m.año = " . $_POST['año'] . ",
+                        m.color = '" . $_POST['color'] . "',
+                        m.historia = '" . $_POST['historia'] . "',
+                        p.nombre_pais = '" . $_POST['paises'] . "'
+                    WHERE m.id_moto = " . $_SESSION['motoModificada'] . ";";
+        $resultado = $db->query($sentencia);
+
+    $sentencia = "DELETE FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
+    $resultado = $db->query($sentencia);
+
+    $rutasImagenes = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
+    foreach ($rutasImagenes as $rutaImagen) {
+        $sentencia = "INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('" . $rutaImagen . "', '" . $_SESSION['motoModificada'] . "')";
+        $resultado = $db->query($sentencia);
     }
 }
 ?>

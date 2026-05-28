@@ -6,6 +6,7 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+require_once "funciones.php";
 $motoEliminada = "";
 $carpetaBorrada = false;
 
@@ -18,23 +19,8 @@ if (isset($_GET['moto'])) {
         array_push($resultadoRutas, $ruta);
     }
 
-    //El contador cuenta el numero de barras
-    $contador = 0;
-    $barra = "/";
-    $rutaCarpeta = "";
-
-    //Recorre la ruta hasta que llegue a una /, y se corta el bucle si el contador esta en uno. Para saber cual es la carpeta necesitamos "imgs_motos/nombre_carpeta" por lo que la primera barra es necesaria pero cuando llegue a la segunda barra quiere decir que son las imagenes y eso no hace falta entonces corta el bucle
-    for ($i = 0; $i < strlen($resultadoRutas[0]['ruta_imagen']); $i++) {
-        if ($resultadoRutas[0]['ruta_imagen'][$i] != $barra) {
-            $rutaCarpeta = $rutaCarpeta . $resultadoRutas[0]['ruta_imagen'][$i];
-        } elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 0) {
-            $rutaCarpeta = $rutaCarpeta . $resultadoRutas[0]['ruta_imagen'][$i];
-            $contador++;
-        } elseif ($resultadoRutas[0]['ruta_imagen'][$i] == $barra && $contador == 1) {
-            break;
-        }
-    }
-
+    //Llama a la función para buscar la ruta de la carpeta
+    $rutaCarpeta = buscarRutaCarpeta($resultadoRutas[0]['ruta_imagen']);
 
     //Si la ruta es un directorio borra todos los archivos del interior para poder borrar la carpeta después
     if (is_dir($rutaCarpeta)) {

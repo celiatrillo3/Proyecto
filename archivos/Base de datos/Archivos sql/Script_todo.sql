@@ -444,10 +444,10 @@ INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/gimson_elite_2/2.J
 INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/gimson_elite_2/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Elite 2' AND ma.nombre = 'Gimson'));
 
 -- Inserts para la carpeta: guzzi_dingo (Moto: Moto Guzzi - Dingo)
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_dingo/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_dingo/2.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_dingo/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_dingo/4.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
+INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/moto_guzzi_dingo/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
+INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/moto_guzzi_dingo/2.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
+-- INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/moto_guzzi_dingo/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
+-- INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/moto_guzzi_dingo/4.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dingo' AND ma.nombre = 'Moto Guzzi'));
 
 -- Inserts para la carpeta: guzzi_hispania_dingo (Moto: Moto Guzzi - Hispania dingo)
 INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_hispania_dingo/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Hispania dingo' AND ma.nombre = 'Moto Guzzi'));
@@ -455,9 +455,9 @@ INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_hispania_din
 INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/guzzi_hispania_dingo/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Hispania dingo' AND ma.nombre = 'Moto Guzzi'));
 
 -- Inserts para la carpeta: makal_dakar_junior (Moto: Macal - Dakar junior)
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/makal_dakar_junior/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/makal_dakar_junior/2.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
-INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/makal_dakar_junior/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
+INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/macal_dakar_junior/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
+INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/macal_dakar_junior/2.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
+INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/macal_dakar_junior/3.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Dakar junior' AND ma.nombre = 'Macal'));
 
 -- Inserts para la carpeta: mobylette_cady_e14 (Moto: Mobylette - Cady E14)
 INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('imgs_motos/mobylette_cady_e14/1.JPG', (SELECT m.id_moto FROM moto m INNER JOIN marca ma ON m.marca_id = ma.id_marca WHERE m.modelo = 'Cady E14' AND ma.nombre = 'Mobylette'));
