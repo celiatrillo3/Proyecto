@@ -34,6 +34,8 @@ if ($_GET['moto']) {
     while ($ruta = $resultado->fetch_assoc()) {
         array_push($listaRutas, $ruta);
     }
+
+    $_SESSION['motoModificada'] = $_GET['moto'];
 }
 
 ?>

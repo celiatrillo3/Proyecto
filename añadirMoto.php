@@ -6,6 +6,7 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+require_once "funciones.php";
 $errorAñadirMoto = "";
 $motoAñadida = "";
 
@@ -20,81 +21,32 @@ while ($pais = $resultado->fetch_assoc()) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $marca = ($_POST['marca']);
-    $modelo = ($_POST['modelo']);
+    $rutasImagenes = crearCarpeta(1);
 
-    // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
-    $carpeta_nombre = sanitizar_nombre($marca) . '_' . sanitizar_nombre($modelo);
-    $ruta_carpeta = 'imgs_motos/' . $carpeta_nombre; // carpeta base "motos"
-    //var_dump($ruta_carpeta);
-
-    // Si YA EXISTE la carpeta da error, no se puede añadir la misma moto dos veces
-    if (is_dir($ruta_carpeta)) {
-        $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
-
-    // Si no existe, la creamos
-    } elseif (!mkdir($ruta_carpeta, 0755, true)) { 
-        $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
-    } else {
-
-        $archivos = $_FILES['archivos'];
-        $contador = 1;
-        $errores = [];
-        $rutasImagenes = [];
-
-        // Recorrer cada archivo subido
-        for ($i = 0; $i < count($archivos['name']); $i++) {
-            // Solo procesar si no hubo error en la subida
-            if ($archivos['error'][$i] === UPLOAD_ERR_OK) {
-                $nombre_tmp = $archivos['tmp_name'][$i];
-                $tipo = mime_content_type($nombre_tmp);
-
-                // Validar que sea imagen (puedes ampliar tipos)
-                if (strpos($tipo, 'image/') !== 0) {
-                    $errores[] = "El archivo '{$archivos['name'][$i]}' no es una imagen válida.";
-                    continue;
-                }
-
-                // Extensiones permitidas (para renombrar usamos .jpg o mantener original)
-                $extension = pathinfo($archivos['name'][$i], PATHINFO_EXTENSION);
-                $nombre_nuevo = $contador . '.' . $extension;
-                $ruta_destino = $ruta_carpeta . '/' . $nombre_nuevo;
-                array_push($rutasImagenes, $ruta_destino);
-
-                // Mover temporal a destino final
-                if (move_uploaded_file($nombre_tmp, $ruta_destino)) {
-                    $contador++;
-                } else {
-                    $errores[] = "Error al guardar el archivo '{$archivos['name'][$i]}'.";
-                }
-            }
-        }
+    //Hacemos una consulta para saber si existe la marca
+    $sentencia = "SELECT id_marca FROM marca WHERE nombre = '" . $_POST['marca'] . "';";
+    $resultado = $db->query($sentencia);
 
 
-        //Hacemos una consulta para saber si existe la marca
-        $sentencia = "SELECT id_marca FROM marca WHERE nombre = '" . $_POST['marca'] . "';";
+    //Si no exite, miramos el id del pais e insertamos en la base de datos la marca con el pais asociado y guardamos su id
+    if ($resultado->num_rows <= 0) {
+        $sentencia = "SELECT id_pais FROM pais WHERE nombre_pais = '" . $_POST['paises'] . "';";
         $resultado = $db->query($sentencia);
-        
-        
-        //Si no exite, miramos el id del pais e insertamos en la base de datos la marca con el pais asociado y guardamos su id
-        if ($resultado->num_rows <= 0) {
-            $sentencia = "SELECT id_pais FROM pais WHERE nombre_pais = '" . $_POST['paises'] . "';";
-            $resultado = $db->query($sentencia);
 
-            while ($id = $resultado->fetch_assoc()) {
-                $idPais = $id['id_pais'];
-            }
-
-            $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] . "', '" . $idPais . "');";
-            $resultado = $db->query($sentencia);
-            $idMarca = $db->insert_id;
-        } else {
-            //Guardamos el id de la marca que si existe
-            while ($id = $resultado->fetch_assoc()) {
-                $idMarca = $id['id_marca'];
-            }
+        while ($id = $resultado->fetch_assoc()) {
+            $idPais = $id['id_pais'];
         }
-        
+
+        $sentencia = "INSERT INTO marca(nombre, pais_id) VALUES ('" . $_POST['marca'] . "', '" . $idPais . "');";
+        $resultado = $db->query($sentencia);
+        $idMarca = $db->insert_id;
+    } else {
+        //Guardamos el id de la marca que si existe
+        while ($id = $resultado->fetch_assoc()) {
+            $idMarca = $id['id_marca'];
+        }
+    }
+
     //Hacemos el instert en la tabla moto
     $sentencia = "INSERT INTO moto(modelo, año, color, historia, marca_id) VALUES ('" . $_POST['modelo'] . "','" . $_POST['año'] . "','" . $_POST['color'] . "','" . $_POST['historia'] . "','" . $idMarca . "')";
     $resultado = $db->query($sentencia);
@@ -106,16 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $resultado = $db->query($sentencia);
         $motoAñadida = "El ciclomotor fue añadido correctamente";
     }
-}
-}
-
-//Función hecha por la ia, sanitiza la marca y el modelo para poder crear las carpetas sin errores
-function sanitizar_nombre($texto)
-{
-    $texto = strtolower($texto);
-    $texto = preg_replace('/[^a-z0-9]/', '_', $texto);
-    $texto = preg_replace('/_+/', '_', $texto);
-    return trim($texto, '_');
 }
 
 ?>
@@ -183,7 +125,7 @@ function sanitizar_nombre($texto)
                                     if (isset($_SESSION['usuario'])) {
                                         echo '<a href="usuario.php" class="enlacesIconos botonesIconos visto">MI CUENTA</a>';
                                     } else {
-                                        echo '<a href="Input.php" class="enlacesIconos botonesIconos visto">INICIAR SESIÓN</a>';
+                                        echo '<a href="login.php" class="enlacesIconos botonesIconos visto">INICIAR SESIÓN</a>';
                                     }
                                     ?>
                                 </li>
@@ -227,7 +169,7 @@ function sanitizar_nombre($texto)
                                 if (isset($_SESSION['usuario'])) {
                                     echo '<a href="usuario.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">MI CUENTA</a>';
                                 } else {
-                                    echo '<a href="Input.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
+                                    echo '<a href="login.php" class="enlacesIconos botonesIconos oculto" id="botonIniciarSesion2">INICIAR SESIÓN</a>';
                                 }
                                 ?>
                             </li>
@@ -245,7 +187,7 @@ function sanitizar_nombre($texto)
                         <?php
                         if ($errorAñadirMoto != "") {
                             echo "<div class='alert alert-danger'> " . $errorAñadirMoto . " </div>";
-                        }elseif ($motoAñadida != "") {
+                        } elseif ($motoAñadida != "") {
                             echo "<div class='alert alert-success'> " . $motoAñadida . " </div>";
                         }
                         ?>

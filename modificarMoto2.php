@@ -6,10 +6,64 @@ header("Expires: 0");
 
 //Llamada al archivo para conectar con la base de datos
 require_once "db.php";
+require_once "funciones.php";
 $motoModificada = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    var_dump($_POST['imagenes']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) {
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $imagenes = $_POST['imagenes'];
+
+    $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
+    $resultado = $db->query($sentencia);
+    $rutaAnterior = [];
+    while ($ruta = $resultado->fetch_assoc()) {
+        foreach ($imagenes as $key => $value) {
+            if (!str_contains($ruta['ruta_imagen'], $value)) {
+                array_push($rutaAnterior, $ruta);
+            }
+        }    
+    
+    }
+
+    var_dump($rutaAnterior);
+
+    // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
+    $carpetaNombre = sanitizaNombre($marca) . '_' . sanitizaNombre($modelo);
+    $rutaCarpeta = 'imgs_motos/' . $carpetaNombre;
+
+    // $carpetaNombreAnterior = sanitizaNombre($marcaModeloAnterior[0]['nombre']) . '_' . sanitizaNombre($marcaModeloAnterior[0]['modelo']);
+    // $rutaCarpetaAnterior = 'imgs_motos/' . $carpetaNombreAnterior;
+
+    if (is_dir($rutaCarpeta)) {
+        $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
+
+        // Si no existe, la creamos
+    } elseif (!mkdir($rutaCarpeta, 0755, true)) {
+        $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
+    } else {
+        $contador = 1;
+        $rutasImagenes = [];
+
+        if ($imagenes != null) {
+            for ($i = 0; $i < count($imagenes); $i++) {
+                $rutaArchivoNueva = $rutaCarpeta . "/" . $imagenes[$i];
+                if (rename($rutaAnterior[$i]['ruta_imagen'], $rutaArchivoNueva)) {
+                    $contador++;
+                    array_push($rutasImagenes, $rutaArchivoNueva);
+                    
+                }
+            }
+
+            var_dump($rutasImagenes);
+
+            if ($_FILES['archivos'] != null) {
+                $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
+            }
+        }else if ($_FILES['archivos'] != null) {
+            $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
+        }
+    }
 }
 ?>
 
