@@ -15,6 +15,7 @@ while ($pais = $resultado->fetch_assoc()) {
     array_push($resultadoPaises, $pais);
 }
 
+//Consulta para mostrar los datos de la moto que se quiera modificar
 if ($_GET['moto']) {
     $sentencia = "SELECT m.id_moto, ma.nombre, m.modelo, m.año, m.color, m.historia, m.tipo, p.nombre_pais 
                 FROM moto m 

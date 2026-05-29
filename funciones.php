@@ -7,13 +7,16 @@ function sanitizaNombre($texto){
     return trim($texto, '_');
 }
 
+//Esta función añade arachivos nuevos
 function añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes){
     $archivos = $_FILES['archivos'];
 
     // Recorrer cada archivo subido
     for ($i = 0; $i < count($archivos['name']); $i++) {
+        //Guarda el nombre temporal
         $nombreTemporal = $archivos['tmp_name'][$i];
 
+        //Le pone el nombre correcto
         $nombreNuevo = $contador . '.JPG';
         $rutaDestino = $rutaCarpeta . '/' . $nombreNuevo;
         array_push($rutasImagenes, $rutaDestino);
@@ -27,6 +30,7 @@ function añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes){
     return $rutasImagenes;
 }
 
+//Crea carpetas para nuevas motos o para motos modificadas
 function crearCarpeta($contador){
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
@@ -50,6 +54,7 @@ function crearCarpeta($contador){
     }
 }
 
+//Busca la ruta de la carpeta si tenemos la ruta del archivo
 function buscarRutaCarpeta($ruta){
     $contador = 0;
     $barra = "/";

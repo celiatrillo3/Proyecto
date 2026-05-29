@@ -21,6 +21,7 @@ while ($pais = $resultado->fetch_assoc()) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    //Llamamos a la funcion para crear la carpeta
     $rutasImagenes = crearCarpeta(1);
 
     //Hacemos una consulta para saber si existe la marca

@@ -9,16 +9,24 @@ require_once "db.php";
 require_once "funciones.php";
 $motoModificada = "";
 
+//Comprueba si el array esta vacio, para poder añadirle un valor para que se pueda comprobar
+if (empty($_POST['imagenes'])) {
+    $_POST['imagenes'] = ['0'];
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) {
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
+
+    //Array de imagenes 
     $imagenes = $_POST['imagenes'];
-    var_dump($imagenes);
+
 
     $sentencia = "SELECT ruta_imagen FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
     $resultado = $db->query($sentencia);
     $rutaAnterior = [];
     while ($ruta = $resultado->fetch_assoc()) {
+        //Comprueba cuales de las rutas de la base de datos coinciden con las imagenes que el usuario quiere conservar
         foreach ($imagenes as $key => $value) {
             if (str_contains($ruta['ruta_imagen'], $value)) {
                 array_push($rutaAnterior, $ruta);
@@ -26,23 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
         }
     }
 
-    echo "ruta anterior";
-    var_dump($rutaAnterior);
-
-    // Crear nombre de carpeta: "marca_modelo" (limpio de caracteres raros)
+    // Crear nombre de carpeta: "marca_modelo" 
     $carpetaNombre = sanitizaNombre($marca) . '_' . sanitizaNombre($modelo);
     $rutaCarpeta = 'imgs_motos/' . $carpetaNombre;
 
-    // $carpetaNombreAnterior = sanitizaNombre($marcaModeloAnterior[0]['nombre']) . '_' . sanitizaNombre($marcaModeloAnterior[0]['modelo']);
-    // $rutaCarpetaAnterior = 'imgs_motos/' . $carpetaNombreAnterior;
-
     if (is_dir($rutaCarpeta)) {
-        // $errorAñadirMoto = "Error: Ya existe una moto con esta marca y modelo. No se permiten duplicados.";
 
+        //Guarda en un array las rutas de todas las imagenes de la carpeta de la moto
         $imagenesCarpeta = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
+        //El contador empieza en uno para los nombres de las fotos
         $contador = 1;
         $rutasImagenes = [];
 
+        //elimina los archivos de la carpeta que no coincidan con el array imagenes
         foreach ($imagenesCarpeta as $rutaAntigua) {
             $mantener = false;
             foreach ($imagenes as $imagen) {
@@ -51,15 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
                     break;
                 }
             }
+
+            //Borra el archivo
             if (!$mantener && is_file($rutaAntigua)) {
-                echo "unlink";
-                var_dump($rutaAntigua);
                 unlink($rutaAntigua);
             }
         }
 
+        //Guarda en un array las rutas de todas las imagenes de la carpeta de la moto, hay que sobreescribirlo porque puede que se borraran archivos
         $imagenesCarpeta = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
 
+        //Renombra todos los archivos empezando en 1 para que no quede ningun numero suelto por el medio
         foreach ($imagenesCarpeta as $rutaAntigua) {
             $nombreNuevo = $contador . ".JPG";
             $rutaNueva = $rutaCarpeta . "/" . $nombreNuevo;
@@ -69,21 +75,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
             }
         }
 
+        //Comprueba que se subieron archivos nuevos para llamar a la función que los añade a la carpeta
         if ($_FILES['archivos'] != null) {
             $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
         }
 
-        
-
-        // Si no existe, la creamos
+        //Entra aqui cuando se modifica la marca o el modelo de la moto porque se tiene que crear otra carpeta con el nuevo nombre
     } elseif (!mkdir($rutaCarpeta, 0755, true)) {
         $errorAñadirMoto = "No se pudo crear la carpeta para la moto.";
     } else {
+        //El contador empieza en uno para los nombres de las fotos
         $contador = 1;
         $rutasImagenes = [];
 
         if ($imagenes != null) {
             for ($i = 0; $i < count($imagenes); $i++) {
+                //Se crea una nueva ruta para cada archivo, se mueve el archivo y se guarda la ruta en un array
                 $rutaArchivoNueva = $rutaCarpeta . "/" . $contador . ".JPG";
                 if (rename($rutaAnterior[$i]['ruta_imagen'], $rutaArchivoNueva)) {
                     $contador++;
@@ -91,21 +98,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
                 }
             }
 
-            echo "rutas imagenes antes de la funcion";
-            var_dump($rutasImagenes);
-
+            //Comprueba que se subieron archivos nuevos para llamar a la función que los añade a la carpeta
             if ($_FILES['archivos'] != null) {
                 $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
-
-                echo "rutas imagenes nuevas";
-                var_dump($rutasImagenesNuevas);
             }
+
+            //Comprueba que se subieron archivos nuevos para llamar a la función que los añade a la carpeta
         } else if ($_FILES['archivos'] != null) {
             $rutasImagenesNuevas = añadirArchivoACarpeta($contador, $rutaCarpeta, $rutasImagenes);
             var_dump($rutasImagenesNuevas);
         }
     }
 
+    //Hace el update en la base de datos
     $sentencia = "UPDATE moto m
                     JOIN marca ma ON m.marca_id = ma.id_marca
                     JOIN pais p ON ma.pais_id = p.id_pais
@@ -116,15 +121,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['motoModificada'])) 
                         m.historia = '" . $_POST['historia'] . "',
                         p.nombre_pais = '" . $_POST['paises'] . "'
                     WHERE m.id_moto = " . $_SESSION['motoModificada'] . ";";
-        $resultado = $db->query($sentencia);
-
-    $sentencia = "DELETE FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
     $resultado = $db->query($sentencia);
 
-    $rutasImagenes = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
-    foreach ($rutasImagenes as $rutaImagen) {
-        $sentencia = "INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('" . $rutaImagen . "', '" . $_SESSION['motoModificada'] . "')";
+    if ($resultado) {
+        //Borra todas las rutas de las imagenes de las motos y crea otras nuevas
+        $sentencia = "DELETE FROM imagen WHERE moto_id = " . $_SESSION['motoModificada'] . ";";
         $resultado = $db->query($sentencia);
+
+        if ($resultado) {
+            $rutasImagenes = glob($rutaCarpeta . "/*.JPG", GLOB_BRACE);
+            foreach ($rutasImagenes as $rutaImagen) {
+                $sentencia = "INSERT INTO imagen (ruta_imagen, moto_id) VALUES ('" . $rutaImagen . "', '" . $_SESSION['motoModificada'] . "')";
+                $resultado = $db->query($sentencia);
+            }
+
+            $motoModificada = "<a href='coleccion.php' class='mt-5'><div class='favoritosDivError'>El ciclomotor fue modificado correctamente.</div></a>";
+        }
     }
 }
 ?>
